@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	       http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		   http://www.springframework.org/schema/context
+		   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="helloApi" class="com.spring.ioc.model.HelloImpl" primary="true"/>
+	
+	 <!-- 从自动装配候选者中去除 -->
+    <bean class="com.spring.ioc.model.HelloImpl" autowire-candidate="false"/>
+
+    <!-- 通过构造器注入 -->
+    <bean id="bean_byName" 
+          class="com.spring.ioc.model.HelloApiDecorator" 
+          autowire="byName"/>
+          
+   <bean id="bean_byType1" 
+          class="com.spring.ioc.model.HelloApiDecorator" 
+          autowire="byType"/>
+          
+   <bean id="bean_byType2" 
+          class="com.spring.ioc.model.HelloApiDecorator" 
+          autowire="byType"/>
+          
+   <bean id="bean_byType3" 
+          class="com.spring.ioc.model.HelloApiDecorator" 
+          autowire="byType"/>       
+          
+   <bean id="bean_constructor" 
+          class="com.spring.ioc.model.HelloApiDecorator" 
+          autowire="constructor"/>        
+          
+  <bean id="listBean" 
+          class="com.spring.ioc.model.ListBean" 
+          autowire="byType"/>                   
+</beans>

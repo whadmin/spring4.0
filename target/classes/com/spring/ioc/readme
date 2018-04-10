@@ -1,0 +1,19 @@
+Spring IOC 
+
+Spring IOC 是一个容器，用来方便管理那些装配到其中的对象
+
+构造一个容器的方式
+
+1 定义一个IOC容器配置
+  a xml方式
+
+
+  b javaconfig方式
+  
+
+2 装载Bean
+
+
+
+
+3 装载bean的方式
