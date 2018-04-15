@@ -51,7 +51,7 @@ public class UsedBeanXmlBeanDefinitionReader {
 
 	@Test
 	public void instantiationContainerAnnotation1() {
-		Resource resource = new ClassPathResource("ioc/instantiationContainerAnnotation.xml");
+		Resource resource = new ClassPathResource("ioc/instantiationBeanAnnotation.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
@@ -94,8 +94,9 @@ public class UsedBeanXmlBeanDefinitionReader {
 		Assert.assertNotNull(service.getDao());
 	}
 
+	@Test
 	public void instantiationContainerAnnotation2() {
-		Resource resource = new ClassPathResource("ioc/instantiationContainerAnnotation.xml");
+		Resource resource = new ClassPathResource("ioc/instantiationBeanAnnotation.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);

@@ -37,6 +37,10 @@ public class InstantiationBeanForXml {
 		// 获取根据参数名字依赖注入的Bean
 		HelloApi byName = beanFactory.getBean("bean2_byName", HelloApi.class);
 		byName.sayHello();
+		
+		HelloApi bean2_byRef = beanFactory.getBean("bean2_byRef", HelloApi.class);
+		bean2_byRef.sayHello();
+		
 	}
 
 	@Test

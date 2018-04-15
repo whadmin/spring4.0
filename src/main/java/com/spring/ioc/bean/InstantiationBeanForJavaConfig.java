@@ -22,6 +22,9 @@ public class InstantiationBeanForJavaConfig {
 
         HelloApi bean2 = context.getBean("bean2", HelloApi.class);
         bean2.sayHello();
+        
+        HelloApi bean2_byRef = context.getBean("bean2_byRef", HelloApi.class);
+        bean2_byRef.sayHello();
     }
 
     @Test
@@ -44,16 +47,4 @@ public class InstantiationBeanForJavaConfig {
         bean4.sayHello();
 
     }
-    
-    @Test
-    public void testSetterDependencyInject() {
-        // 1.准备spring Java配置文件
-        // 2.初始化容器
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(InstantiatingBean.class);
-        // 3、从容器中获取Bean
-        HelloApi bean5 = context.getBean("bean5", HelloApi.class);
-        bean5.sayHello();
-
-    }
-
 }

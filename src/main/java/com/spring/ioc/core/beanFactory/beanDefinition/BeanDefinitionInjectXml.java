@@ -23,7 +23,7 @@ public class BeanDefinitionInjectXml {
 	@Test
 	public void testInstantiatingBeanByInject() throws ClassNotFoundException {
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/instantiatingBeanInject.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
@@ -72,7 +72,7 @@ public class BeanDefinitionInjectXml {
 	@Test
 	public void testInstantiatingBeanByInject2() throws ClassNotFoundException {
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/instantiatingBeanInject.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 

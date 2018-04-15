@@ -13,7 +13,7 @@
 	<bean id="bean5" class="com.spring.ioc.model.HelloImpl4">
 		<property name="message" value="Hello World!" />
 		<property name="index">
-			<value>1</value>
+			<value>4</value>
 		</property>
 	</bean>
 	
@@ -223,5 +223,10 @@
 		<constructor-arg index="0" value="test" />
 	</bean>
 
-
+	<bean id="message" class="java.lang.String">
+		<constructor-arg index="0" value="Hello World!" />
+	</bean>
+	<bean id="index" class="java.lang.String">
+		<constructor-arg index="0" value="4" />
+	</bean>
 </beans>

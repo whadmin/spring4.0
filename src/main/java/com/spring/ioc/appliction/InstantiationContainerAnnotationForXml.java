@@ -13,7 +13,7 @@ import com.spring.ioc.model.annotation.TestServiceImpl;
 
 public class InstantiationContainerAnnotationForXml {
 
-    private static String             configLocation = "classpath:ioc/instantiationContainerAnnotation.xml";
+    private static String             configLocation = "classpath:ioc/instantiationBeanAnnotation.xml";
     private static ApplicationContext ctx            = new ClassPathXmlApplicationContext(configLocation);
 
     @Test

@@ -1,46 +1,58 @@
 package com.spring.ioc.javaConig;
 
-import java.lang.annotation.ElementType;
-
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
-import com.spring.ioc.model.DependencyInjectByInstanceFactory;
-import com.spring.ioc.model.DependencyInjectByStaticFactory;
 import com.spring.ioc.model.HelloApi;
+import com.spring.ioc.model.HelloApiDecorator;
 import com.spring.ioc.model.HelloImpl;
 import com.spring.ioc.model.HelloImpl3;
 import com.spring.ioc.model.HelloImpl4;
+import com.spring.ioc.model.ListBean;
 
 @Configuration
 public class InstantiatingBean {
-    
-    @Bean(initMethod="init",destroyMethod="destroy")
-    public HelloApi bean1() {
-        return new HelloImpl();
-    }
-    
-    @Bean
-    public HelloApi bean2() {
-        return new HelloImpl3("Hello Spring!",1);
-    }
-    
-    @Bean
-    public HelloApi bean3() {
-        return DependencyInjectByStaticFactory.newInstance("Hello Spring!",2);
-    }
-    
-    @Bean
-    public HelloApi bean4() {
-        return new DependencyInjectByInstanceFactory().newInstance("Hello Spring!",3);
-    }
-    
-    @Bean
-    public HelloApi bean5() {
-    	HelloImpl4 helloImpl4= new HelloImpl4();
-    	helloImpl4.setMessage("Hello World!");
-    	helloImpl4.setIndex(1);
-    	return helloImpl4;
-    }
 
+	@Bean
+	public String message() {
+		return "Hello World!";
+	}
+
+	@Bean
+	public int index() {
+		return 1;
+	}
+	
+	@Bean
+	public HelloApi helloApi() {
+		return new HelloImpl();
+	}
+
+	@Bean(initMethod = "init", destroyMethod = "destroy")
+	@Primary
+	public HelloApi bean1() {
+		return new HelloImpl3();
+	}
+
+	@Bean
+	public HelloApi bean2(String message,int index) {
+		return new HelloImpl3(message, index);
+	}
+	
+	@Bean(autowire=Autowire.BY_NAME)
+	public HelloApi bean_byName() {
+		return new HelloApiDecorator();
+	}
+	
+	@Bean(autowire=Autowire.BY_TYPE)
+	public HelloApi bean_byType() {
+		return new HelloApiDecorator();
+	}
+	
+	@Bean(autowire=Autowire.BY_TYPE)
+	public ListBean listBean() {
+		return new ListBean();
+	}
 }
