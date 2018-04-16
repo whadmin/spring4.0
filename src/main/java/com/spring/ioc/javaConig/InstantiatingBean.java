@@ -25,10 +25,7 @@ public class InstantiatingBean {
 		return 1;
 	}
 	
-	@Bean
-	public HelloApi helloApi() {
-		return new HelloImpl();
-	}
+
 
 	@Bean(initMethod = "init", destroyMethod = "destroy")
 	@Primary
@@ -39,20 +36,5 @@ public class InstantiatingBean {
 	@Bean
 	public HelloApi bean2(String message,int index) {
 		return new HelloImpl3(message, index);
-	}
-	
-	@Bean(autowire=Autowire.BY_NAME)
-	public HelloApi bean_byName() {
-		return new HelloApiDecorator();
-	}
-	
-	@Bean(autowire=Autowire.BY_TYPE)
-	public HelloApi bean_byType() {
-		return new HelloApiDecorator();
-	}
-	
-	@Bean(autowire=Autowire.BY_TYPE)
-	public ListBean listBean() {
-		return new ListBean();
 	}
 }

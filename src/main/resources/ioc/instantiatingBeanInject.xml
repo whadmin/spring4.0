@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 	       http://www.springframework.org/schema/beans
 	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -16,10 +15,10 @@
 			<value>4</value>
 		</property>
 	</bean>
-	
+
 	<bean id="bean5_ref" class="com.spring.ioc.model.HelloImpl4">
 		<property name="message" ref="message" />
-		<property name="index" ref="index"/>
+		<property name="index" ref="index" />
 	</bean>
 	<!-- setterDependencyInject end -->
 
@@ -89,8 +88,7 @@
 	<!-- setInject end -->
 
 	<!-- collectionInject star -->
-	<bean id="bean10_1"
-		class="com.spring.ioc.model.CollectionTestBean">
+	<bean id="bean10_1" class="com.spring.ioc.model.CollectionTestBean">
 		<property name="values">
 			<list>
 				<value>1</value>
@@ -100,8 +98,7 @@
 		</property>
 	</bean>
 
-	<bean id="bean10_2"
-		class="com.spring.ioc.model.CollectionTestBean">
+	<bean id="bean10_2" class="com.spring.ioc.model.CollectionTestBean">
 		<property name="values">
 			<set>
 				<value>1</value>
@@ -156,8 +153,7 @@
 	<!-- mapInject end -->
 
 	<!-- propertiesInject star -->
-	<bean id="bean13_1"
-		class="com.spring.ioc.model.PropertiesTestBean">
+	<bean id="bean13_1" class="com.spring.ioc.model.PropertiesTestBean">
 		<property name="values">
 			<props value-type="int" merge="default">
 				<prop key="1">12sw</prop>
@@ -166,8 +162,7 @@
 		</property>
 	</bean>
 
-	<bean id="bean13_2"
-		class="com.spring.ioc.model.PropertiesTestBean">
+	<bean id="bean13_2" class="com.spring.ioc.model.PropertiesTestBean">
 		<property name="values">
 			<value>
 				1=11
@@ -181,8 +176,7 @@
 
 	<!-- beanInject star -->
 	<!-- 定义依赖Bean -->
-	<bean id="helloApi" class="com.spring.ioc.model.HelloImpl"
-		scope="prototype" />
+	<bean id="helloApi" class="com.spring.ioc.model.HelloImpl" scope="prototype" />
 	<!-- 通过构造器注入 -->
 	<bean id="bean14_1" class="com.spring.ioc.model.HelloApiDecorator">
 		<constructor-arg index="0" ref="helloApi" />
@@ -208,9 +202,13 @@
 			<ref local="helloApi1" />
 		</constructor-arg>
 	</bean>
-	<!-- 通过parent注入 <bean id="bean16_1" class="com.spring.ioc.model.HelloApiDecorator"> 
-		<property name="helloApi"> <ref parent="helloApi1" /> </property> </bean> -->
-	<!-- beanInject star -->
+	<!-- 通过parent注入 -->
+	<bean id="bean15_2" class="com.spring.ioc.model.HelloApiDecorator">
+		<property name="helloApi">
+			<ref parent="helloApi1" />
+		</property>
+	</bean> 
+
 
 
 	<bean id="bean17" class="com.spring.ioc.model.HelloApiDecorator">
@@ -218,6 +216,28 @@
 			<bean id="helloApi2" class="com.spring.ioc.model.HelloImpl" />
 		</property>
 	</bean>
+
+	<bean id="beanIdref1" class="java.lang.String">
+		<constructor-arg index="0" value="test" />
+	</bean>
+
+	<bean id="beanIdref2" class="java.lang.String">
+		<constructor-arg index="0" value="test" />
+	</bean>
+	
+	<bean id="idrefBean1" class="com.spring.ioc.model.IdRefTestBean">
+		<property name="id">
+			<idref bean="beanIdref1" />
+		</property>
+	</bean>
+
+	<bean id="idrefBean2" class="com.spring.ioc.model.IdRefTestBean">
+		<property name="id">
+			<idref local="beanIdref2" />
+		</property>
+	</bean>
+
+
 
 	<bean id="string3" class="java.lang.String">
 		<constructor-arg index="0" value="test" />

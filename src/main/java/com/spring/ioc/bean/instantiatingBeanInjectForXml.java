@@ -189,8 +189,8 @@ public class instantiatingBeanInjectForXml {
 	@Test
 	public void testPNamespaceBeanInject() {
 		ApplicationContext context = new ClassPathXmlApplicationContext("ioc/instantiatingBeanInject.xml");
-		Assert.assertEquals("value", context.getBean("idrefBean1", IdRefTestBean.class).getId());
-		Assert.assertEquals("test", context.getBean("idrefBean2", IdRefTestBean.class).getId());
+		Assert.assertEquals("beanIdref1", context.getBean("idrefBean1", IdRefTestBean.class).getId());
+		Assert.assertEquals("beanIdref2", context.getBean("idrefBean2", IdRefTestBean.class).getId());
 
 	}
 

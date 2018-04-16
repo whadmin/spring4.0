@@ -1,34 +1,76 @@
 package com.spring.ioc.model;
 
-import java.util.List;
+import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-public class HelloApiDecorator implements HelloApi {
-    
-    private HelloApi helloApi;
-    
-    private String message;
-    
-    public HelloApiDecorator() {
-    }
-    
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    
-    public HelloApiDecorator(HelloApi helloApi) {
-        this.helloApi = helloApi;
-    }
-    
-    public void setHelloApi(HelloApi helloApi) {
-        this.helloApi = helloApi;
-    }
-    
-    @Override
-    public void sayHello() {
-        System.out.println("==========装饰开始===========");
-        helloApi.sayHello();
-        System.out.println("==========装饰完毕===========");
-    }
-    
+import com.spring.ioc.model.qualifier.DataBase;
+import com.spring.ioc.model.qualifier.DataSourceType;
+import com.spring.ioc.model.qualifier.Mysql;
+import com.spring.ioc.model.qualifier.Oracle;
+
+public class HelloApiDecorator implements HelloApiDataSource {
+
+	private HelloApi helloApi;
+
+	private String message;
+
+	private DataSource dataSource;
+
+	private DataSource dataSource1;
+
+	private DataSource dataSource2;
+
+	public HelloApiDecorator() {
+	}
+
+	public HelloApiDecorator(HelloApi helloApi) {
+		this.helloApi = helloApi;
+	}
+
+	public void setDataSource(
+			@Qualifier("mysqlDataSource") DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	public void setDataSource1(@Mysql DataSource dataSource1) {
+		this.dataSource1 = dataSource1;
+	}
+
+	public void setDataSource2(
+			@DataSourceType(ip = "localhost", database = DataBase.MYSQL) DataSource dataSource2) {
+		this.dataSource2 = dataSource2;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setHelloApi(HelloApi helloApi) {
+		this.helloApi = helloApi;
+	}
+	
+	public HelloApi getHelloApi() {
+		return helloApi;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	@Override
+	public DataSource getDataSource() {
+		return this.dataSource;
+	}
+
+	@Override
+	public DataSource getDataSource1() {
+		return this.dataSource1;
+	}
+
+	@Override
+	public DataSource getDataSource2() {
+		return this.dataSource2;
+	}
 }

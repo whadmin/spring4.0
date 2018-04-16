@@ -1,4 +1,4 @@
-package com.spring.ioc.bean;
+package com.spring.ioc.bean.javaConfig;
 
 import junit.framework.Assert;
 

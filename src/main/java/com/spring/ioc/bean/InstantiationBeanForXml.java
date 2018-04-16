@@ -22,7 +22,8 @@ public class InstantiationBeanForXml {
 	@Test
 	public void testInstantiatingBeanByConstructor() {
 		// 使用构造器
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/instantiatingBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext(
+				"ioc/instantiatingBean.xml");
 		HelloApi bean1 = beanFactory.getBean("bean1", HelloApi.class);
 		bean1.sayHello();
 
@@ -37,16 +38,17 @@ public class InstantiationBeanForXml {
 		// 获取根据参数名字依赖注入的Bean
 		HelloApi byName = beanFactory.getBean("bean2_byName", HelloApi.class);
 		byName.sayHello();
-		
-		HelloApi bean2_byRef = beanFactory.getBean("bean2_byRef", HelloApi.class);
+
+		HelloApi bean2_byRef = beanFactory.getBean("bean2_byRef",
+				HelloApi.class);
 		bean2_byRef.sayHello();
-		
 	}
 
 	@Test
 	public void testInstantiatingBeanByStaticFactory() {
 		// 使用静态工厂方法
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/instantiatingBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext(
+				"ioc/instantiatingBean.xml");
 		// 获取根据参数索引依赖注入的Bean
 		HelloApi byIndex = beanFactory.getBean("bean3_byIndex", HelloApi.class);
 		byIndex.sayHello();
@@ -63,7 +65,8 @@ public class InstantiationBeanForXml {
 	@Test
 	public void testInstantiatingBeanByInstanceFactory() {
 		// 使用实例工厂方法
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/instantiatingBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext(
+				"ioc/instantiatingBean.xml");
 		// 获取根据参数索引依赖注入的Bean
 		HelloApi byIndex = beanFactory.getBean("bean4_byIndex", HelloApi.class);
 		byIndex.sayHello();
