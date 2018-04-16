@@ -1,4 +1,4 @@
-package com.spring.ioc.bean;
+package com.spring.ioc.bean.xml;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +16,12 @@ import com.spring.ioc.model.MapTestBean;
 import com.spring.ioc.model.PropertiesTestBean;
 import com.spring.ioc.model.SetTestBean;
 
-public class instantiatingBeanInjectForXml {
+/**
+ * 通过xml手动设置bean的对象之间的依赖关系，在构造bean的时候方便注入
+ * @author wuhao.w
+ *
+ */
+public class InstantiatingBeanInjectForXml {
 	
 	@Test
 	public void testSetterDependencyInject() {

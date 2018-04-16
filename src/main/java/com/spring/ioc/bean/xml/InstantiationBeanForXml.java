@@ -1,4 +1,4 @@
-package com.spring.ioc.bean;
+package com.spring.ioc.bean.xml;
 
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
@@ -16,6 +16,7 @@ import com.spring.ioc.model.PropertiesTestBean;
 import com.spring.ioc.model.SetTestBean;
 
 import junit.framework.Assert;
+
 
 public class InstantiationBeanForXml {
 

@@ -12,7 +12,9 @@ import com.spring.ioc.model.HelloApi;
 
 /**
  * 
- * @author wuhao.w
+ *  通过使用JavaConfig做为SpringIOC容器的描述
+ *  
+ *  所有bean的构造都是通过实例工厂的方式，工厂对象为容器对象InstantiatingBean,构造方法为@bean 注解的方法，自动注入的方式默认为AUTOWIRE_CONSTRUCTOR
  *
  */
 public class InstantiationBeanForJavaConfig {

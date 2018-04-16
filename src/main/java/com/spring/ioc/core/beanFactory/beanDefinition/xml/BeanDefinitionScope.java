@@ -1,4 +1,4 @@
-package com.spring.ioc.core.beanFactory.beanDefinition;
+package com.spring.ioc.core.beanFactory.beanDefinition.xml;
 
 import java.io.IOException;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import com.spring.ioc.model.Printer;
 
-public class BeanDefinitionScopeXml {
+public class BeanDefinitionScope {
 
 	@Test
 	public void readSouceCode() {

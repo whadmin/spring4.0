@@ -1,4 +1,4 @@
-package com.spring.ioc.bean;
+package com.spring.ioc.bean.xml;
 
 import org.junit.Test;
 import org.springframework.beans.factory.BeanCurrentlyInCreationException;
@@ -19,7 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author xu.jianguo
  *
  */
-public class CircleBean {
+public class InstantiatingCircleBean {
     
     @Test(expected = BeanCurrentlyInCreationException.class)
     public void testcircleByConstructor() throws Throwable {

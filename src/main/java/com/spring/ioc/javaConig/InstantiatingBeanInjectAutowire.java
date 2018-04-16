@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.spring.ioc.model.HelloApi;
+import com.spring.ioc.model.HelloApiDataSource;
 import com.spring.ioc.model.HelloApiDecorator;
 import com.spring.ioc.model.HelloImpl;
 import com.spring.ioc.model.ListBean;
@@ -28,12 +29,12 @@ public class InstantiatingBeanInjectAutowire {
 	}
 	
 	@Bean(autowire=Autowire.BY_NAME)
-	public HelloApi bean_byName() {
+	public HelloApiDataSource bean_byName() {
 		return new HelloApiDecorator();
 	}
 	
 	@Bean(autowire=Autowire.BY_TYPE)
-	public HelloApi bean_byType() {
+	public HelloApiDataSource bean_byType() {
 		return new HelloApiDecorator();
 	}
 	
@@ -54,5 +55,11 @@ public class InstantiatingBeanInjectAutowire {
 		return new DriverManagerDataSource();
 		
 	}
+	
+	@Bean
+	public String message() {
+		return "Hello World!";
+	}
+	
 
 }

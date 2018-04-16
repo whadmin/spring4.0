@@ -1,11 +1,14 @@
-package com.spring.ioc.bean;
+package com.spring.ioc.bean.xml;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.spring.ioc.model.HelloApi;
@@ -18,11 +21,12 @@ import com.spring.ioc.model.qualifier.Mysql;
 import junit.framework.Assert;
 
 /**
- * Spring 自动注入属性Demo
- * @author wuhao.w
+ * Spring 可以通过通过XMl 设置初始化属性,和设置注入属性
+ * 当我们的配置中存在大量ref注入，能否让属性自动按名称或类型自动注入
+ * 
  *
  */
-public class instantiatingBeanInjectAutowireForXml {
+public class InstantiatingBeanInjectAutowireForXml {
 
 	
 	/**
@@ -95,22 +99,28 @@ public class instantiatingBeanInjectAutowireForXml {
 			this.dataSource2 = dataSource2;
 		}
 	    
-	    HelloApiDecorator中所有属性只要在bean容器中存在相同类型的bean会注入到其属性中
+	    HelloApiDecorator中所有属性只要在bean容器中存在相同类型的bean会注入到其属性中,如遇到竞争通过qualifier,primary,autowire-candidate赛选
        
 	 */
 	@Test
-	public void testAutowireByType1() throws IOException {
+	public void testAutowireByType() throws IOException {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
 				"ioc/instantiatingBeanInjectAutowire.xml");
 		HelloApiDataSource helloApi = context.getBean("bean_byType", HelloApiDataSource.class);
+		System.out.println(context.getBeanFactory().getBeanNamesForType(BeanPostProcessor.class, true, false));
+		System.out.println(context.getBeanFactoryPostProcessors());
 		System.out.println(helloApi.getDataSource());
 		System.out.println(helloApi.getDataSource1());
 		System.out.println(helloApi.getDataSource2());
 		helloApi.getHelloApi().sayHello();
 	}
 
+	/**
+	 * 当注入的属性类型为List 注入其泛型类型的多个对象
+            当注入的属性为ArrayList，注入的List类型的对象
+	 */
 	@Test
-	public void testAutowireByType2_3() throws IOException {
+	public void testAutowireByType2() throws IOException {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
 				"ioc/instantiatingBeanInjectAutowire.xml");
 		ListBean listBean = context.getBean("listBean", ListBean.class);
@@ -120,12 +130,15 @@ public class instantiatingBeanInjectAutowireForXml {
 		Assert.assertTrue(listBean.getList2() == null);
 	}
 
+	/**
+	 * 针对bean初始化参数的按类型注入
+	 */
 	@Test
 	public void testAutowireByConstructor() throws IOException {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
 				"ioc/instantiatingBeanInjectAutowire.xml");
 		HelloApiDataSource helloApi = context.getBean("bean_constructor", HelloApiDataSource.class);
-		helloApi.sayHello();
+		helloApi.getHelloApi().sayHello();
 	}
 
 }

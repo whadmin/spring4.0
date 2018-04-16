@@ -1,4 +1,4 @@
-package com.spring.ioc.core.beanFactory.beanDefinition;
+package com.spring.ioc.core.beanFactory.beanDefinition.xml;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -18,14 +18,22 @@ import org.springframework.core.io.Resource;
 
 import com.spring.ioc.model.HelloApi;
 
-public class BeanDefinitionInjectXml {
+public class BeanDefinitionInject {
 	
 	@Test
 	public void testInstantiatingBeanByInject() throws ClassNotFoundException {
-
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInject.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		
+		Resource resource = new ClassPathResource("ioc/instantiatingBeanInject.xml");
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+		reader.loadBeanDefinitions(resource);
+		
+		BeanDefinition bean5 = beanFactory.getBeanDefinition("bean5");
+		System.out.println(ReflectionToStringBuilder.toString(bean5, ToStringStyle.MULTI_LINE_STYLE));
+		
+		HelloApi bean = beanFactory.getBean("bean5", HelloApi.class);
+		bean.sayHello();
 
 		/**
 			<!-- 通过setter方式进行依赖注入 -->
@@ -56,25 +64,26 @@ public class BeanDefinitionInjectXml {
 		beanDefinition1.getPropertyValues().addPropertyValue(pv1);
 		beanDefinition1.getPropertyValues().addPropertyValue(pv2);
 
-		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-		reader.loadBeanDefinitions(resource);
 		BeanDefinition bean5_at = beanFactory.getBeanDefinition("bean5_at");
-		BeanDefinition bean5 = beanFactory.getBeanDefinition("bean5");
 		System.out.println(ReflectionToStringBuilder.toString(bean5_at, ToStringStyle.MULTI_LINE_STYLE));
-		System.out.println(ReflectionToStringBuilder.toString(bean5, ToStringStyle.MULTI_LINE_STYLE));
-		
-		HelloApi bean = beanFactory.getBean("bean5_at", HelloApi.class);
-		bean.sayHello();
-		bean = beanFactory.getBean("bean5", HelloApi.class);
+
+		bean = beanFactory.getBean("bean5_at", HelloApi.class);
 		bean.sayHello();
 	}
 	
 	@Test
 	public void testInstantiatingBeanByInject2() throws ClassNotFoundException {
-
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInject.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		Resource resource = new ClassPathResource("ioc/instantiatingBeanInject.xml");
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+		reader.loadBeanDefinitions(resource);
+		
+		BeanDefinition bean5_ref = beanFactory.getBeanDefinition("bean5_ref");
+		System.out.println(ReflectionToStringBuilder.toString(bean5_ref, ToStringStyle.MULTI_LINE_STYLE));
+		
+		HelloApi bean = beanFactory.getBean("bean5_ref", HelloApi.class);
+		bean.sayHello();
 
 		/**
 			<bean id="bean5_ref" class="com.spring.ioc.model.HelloImpl4">
@@ -104,16 +113,10 @@ public class BeanDefinitionInjectXml {
 		beanDefinition1.getPropertyValues().addPropertyValue(pv1);
 		beanDefinition1.getPropertyValues().addPropertyValue(pv2);
 
-		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-		reader.loadBeanDefinitions(resource);
 		BeanDefinition bean5_ref_at = beanFactory.getBeanDefinition("bean5_ref_at");
-		BeanDefinition bean5_ref = beanFactory.getBeanDefinition("bean5_ref");
 		System.out.println(ReflectionToStringBuilder.toString(bean5_ref_at, ToStringStyle.MULTI_LINE_STYLE));
-		System.out.println(ReflectionToStringBuilder.toString(bean5_ref, ToStringStyle.MULTI_LINE_STYLE));
-		
-		HelloApi bean = beanFactory.getBean("bean5_ref_at", HelloApi.class);
-		bean.sayHello();
-		bean = beanFactory.getBean("bean5_ref", HelloApi.class);
+			
+		bean = beanFactory.getBean("bean5_ref_at", HelloApi.class);
 		bean.sayHello();
 	}
 
