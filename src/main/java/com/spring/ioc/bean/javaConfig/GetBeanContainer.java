@@ -7,12 +7,11 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.spring.ioc.javaConig.GetBeanContainer;
 import com.spring.ioc.javaConig.InstantiatContainer;
 import com.spring.ioc.model.HelloApi;
 import com.spring.ioc.model.HelloApi2;
 
-public class GetBeanContainerForJavaConfig {
+public class GetBeanContainer {
 
     @Test
     public void test1() {

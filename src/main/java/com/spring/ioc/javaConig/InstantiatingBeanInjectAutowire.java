@@ -10,6 +10,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import com.spring.ioc.model.HelloApi;
 import com.spring.ioc.model.HelloApiDataSource;
 import com.spring.ioc.model.HelloApiDecorator;
+import com.spring.ioc.model.HelloApiDecorator2;
 import com.spring.ioc.model.HelloImpl;
 import com.spring.ioc.model.ListBean;
 import com.spring.ioc.model.qualifier.Mysql;
@@ -42,6 +43,12 @@ public class InstantiatingBeanInjectAutowire {
 	public ListBean listBean() {
 		return new ListBean();
 	}
+	
+	@Bean
+	public HelloApiDataSource bean_Autowired() {
+		 return new HelloApiDecorator2();
+	}
+	
 	
 	@Bean
 	@Qualifier(value="mysqlDataSource")

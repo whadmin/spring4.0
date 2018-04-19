@@ -31,7 +31,12 @@
 	<bean id="listBean" class="com.spring.ioc.model.ListBean"
 		autowire="byType" />
 
-
+	<bean id="bean_Autowired" class="com.spring.ioc.model.HelloApiDecorator2"/>
+	
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
+	
+	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"></bean>
+	
 	<bean id="mysqlDataSourceBean"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<qualifier value="mysqlDataSource" />

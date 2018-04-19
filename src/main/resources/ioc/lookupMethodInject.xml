@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+    <!-- prototype -->
+    <bean id="prototypePrinter" class="com.spring.ioc.model.Printer" scope="prototype"/>
+    <!-- singleton -->
+    <bean id="singletonPrinter" class="com.spring.ioc.model.Printer" scope="singleton"/>
+
+
+    <bean id="helloApi1" class="com.spring.ioc.model.HelloImpl5" scope="singleton">
+        <property name="printer" ref="prototypePrinter"/>
+        <lookup-method name="createPrototypePrinter" bean="prototypePrinter"/>
+        <lookup-method name="createSingletonPrinter" bean="singletonPrinter"/>
+    </bean>           
+    
+    <bean id="helloApi2" class="com.spring.ioc.model.HelloImpl5" scope="prototype">
+        <property name="printer" ref="prototypePrinter"/>
+        <lookup-method name="createPrototypePrinter" bean="prototypePrinter"/>
+        <lookup-method name="createSingletonPrinter" bean="singletonPrinter"/>
+    </bean>           
+          
+</beans>

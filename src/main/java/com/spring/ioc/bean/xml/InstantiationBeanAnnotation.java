@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.spring.ioc.model.HelloApiDataSource;
 
-public class InstantiationBeanAnnotationForXml {
+public class InstantiationBeanAnnotation {
 	
 	@Test
 	public void testAutowireByName() throws IOException {

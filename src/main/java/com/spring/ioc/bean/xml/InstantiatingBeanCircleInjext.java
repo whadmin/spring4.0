@@ -19,7 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author xu.jianguo
  *
  */
-public class InstantiatingCircleBean {
+public class InstantiatingBeanCircleInjext {
     
     @Test(expected = BeanCurrentlyInCreationException.class)
     public void testcircleByConstructor() throws Throwable {

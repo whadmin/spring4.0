@@ -21,7 +21,7 @@ import com.spring.ioc.model.SetTestBean;
  * @author wuhao.w
  *
  */
-public class InstantiatingBeanInjectForXml {
+public class InstantiatingBeanInject {
 	
 	@Test
 	public void testSetterDependencyInject() {

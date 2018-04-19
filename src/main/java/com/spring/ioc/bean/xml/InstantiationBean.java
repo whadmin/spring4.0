@@ -18,7 +18,7 @@ import com.spring.ioc.model.SetTestBean;
 import junit.framework.Assert;
 
 
-public class InstantiationBeanForXml {
+public class InstantiationBean {
 
 	@Test
 	public void testInstantiatingBeanByConstructor() {

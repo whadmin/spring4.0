@@ -10,7 +10,7 @@ import com.spring.ioc.model.HelloApi;
 import com.spring.ioc.model.HelloApi2;
 
 
-public class GetBeanContainerForXml {
+public class GetBeanContainer {
 
     @Test
     public void test1() {
