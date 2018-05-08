@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+
+    <!-- 配置注解扫描 -->
+    <context:component-scan base-package="com.spring.ioc.appliction.scheduler.model"/>
+
+    <task:scheduler id="taskScheduler" pool-size="100" />
+    
+    <task:annotation-driven scheduler="taskScheduler"/>
+
+    <task:scheduled-tasks scheduler="taskScheduler"> 
+        <task:scheduled ref="scheduledTaskService" method="execute3" cron="*/5 * * * * ?"/>
+        <task:scheduled ref="scheduledTaskService" method="execute4" cron="15,30,45 * * * * ?"/>
+    </task:scheduled-tasks>
+
+</beans>
