@@ -1,4 +1,4 @@
-package com.spring.ioc.appliction.propertySource;
+package com.spring.ioc.core.common.propertySource;
 
 import java.io.IOException;
 import java.util.HashMap;

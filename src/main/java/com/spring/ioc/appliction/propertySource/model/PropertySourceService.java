@@ -1,10 +1,10 @@
-package com.spring.ioc.appliction.propertySource;
+package com.spring.ioc.appliction.propertySource.model;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DemoService {
+public class PropertySourceService {
 	@Value("其他类的属性") //①
     private String another;
 
