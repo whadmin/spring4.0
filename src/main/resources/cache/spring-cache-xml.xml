@@ -16,20 +16,29 @@
     <!-- spring AOP支持 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
-    <!-- spring AOP切面指定  指定缓存管理器cacheManager 指定key生成策略userKeyGenerator -->
+    <!-- spring AOP切面指定  指定缓存管理器cacheManager 指定key-generator 缓存key生成策略userKeyGenerator -->
 	<cache:advice id="cacheAdvice" cache-manager="cacheManager"
 		key-generator="userKeyGenerator">
-		<!-- 指定使用指定缓存管理器中cache的名称  default表示spring自带ConcurrentMapCache的名称 -->
+		<!-- 指定使用指定缓存管理器中cache的名称  default表示spring自带ConcurrentMapCache的名称 
 		<cache:caching cache="default">
 			<cache:cacheable method="get*" />
 			<cache:cache-evict method="delete*" />
 			<cache:cache-put method="update*" />
 		</cache:caching>
-		
+		-->
+		<!-- 指定使用指定缓存管理器中cache的名称  encache表示表示ehche中的名称
 		<cache:caching cache="encache">
 			<cache:cacheable method="get*" />
 			<cache:cache-evict method="delete*" />
 			<cache:cache-put method="update*" />
+		</cache:caching>
+		 -->
+		<!-- 指定使用指定缓存管理器中cache的名称  encache表示表示ehche中的名称 -->
+		<cache:caching cache="rediscache">
+			<cache:cacheable method="get*" />
+			<cache:cache-evict method="delete*" />
+			<cache:cache-put method="update*" />
+			<cache:cache-evict method="deleteAll*"  all-entries="true"/>
 		</cache:caching>
 	</cache:advice>
 
@@ -54,28 +63,31 @@
 		<property name="fallbackToNoOpCache" value="true" />
 	</bean>
 
-    <!-- 指定SimpleCacheManager  caches中可以指定多个cache-->
-	<bean id="simpleCacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+	<!-- 指定SimpleCacheManager caches中可以指定多个cache -->
+	<bean id="simpleCacheManager"
+		class="org.springframework.cache.support.SimpleCacheManager">
 		<property name="caches">
 			<set>
-				<ref bean="defaultCache" />
+				<bean id="defaultCache"
+					class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+					<property name="name" value="default" /><!-- 缓存名称 -->
+				</bean>
+				<bean class="org.springframework.data.redis.cache.RedisCache">
+                    <constructor-arg index="0" name="name" value="rediscache"/>
+                    <constructor-arg index="1"><null/></constructor-arg>
+                    <constructor-arg index="2" name="redisOperations" ref="redisTemplate"/>
+                    <constructor-arg index="3" name="expiration" value="100"/>
+                </bean>
 			</set>
 		</property>
 	</bean>
-	<!--spring 默认缓存配置,缓存项目为永久生效不会自动过期 -->
-	<bean id="defaultCache"
-		class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-		<property name="name" value="default" /><!-- 缓存名称 -->
+
+	<!-- EhCacheCacheManager -->
+	<bean id="ehcacheManager"
+		class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehManagerFactory" />
 	</bean>
 	
-	
-    <bean id="ehManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">      
-        <property name="configLocation"  value="classpath:cache/ehcache.xml"/>     
-    </bean>   
-        
-    <!-- 默认是EhCacheCacheManager -->    
-    <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">      
-        <property name="cacheManager"  ref="ehManagerFactory"/>      
-    </bean>
- 
+    <import resource="classpath:cache/spring-ehache.xml"/>
+    <import resource="classpath:redis/spring-redis.xml"/>
 </beans>

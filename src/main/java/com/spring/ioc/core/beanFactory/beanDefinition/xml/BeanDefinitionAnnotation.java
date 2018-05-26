@@ -15,6 +15,10 @@ import org.springframework.core.io.Resource;
 
 import com.spring.ioc.model.annotation.TestServiceImpl;
 
+
+/**
+ *  xml component-scan ,API实现
+ */
 public class BeanDefinitionAnnotation {
 
 	@Test

@@ -20,6 +20,9 @@ import org.springframework.core.io.Resource;
 
 import com.spring.ioc.model.HelloApi;
 
+/**
+ *  xml静态工厂创建bean,API实现
+ */
 public class BeanDefinitionInstantiatingStaticFactory {
 
 	@Test

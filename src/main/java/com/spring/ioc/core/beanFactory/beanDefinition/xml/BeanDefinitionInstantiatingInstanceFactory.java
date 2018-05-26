@@ -20,6 +20,9 @@ import org.springframework.core.io.Resource;
 
 import com.spring.ioc.model.HelloApi;
 
+/**
+ *  xml实例工厂创建bean,API实现
+ */
 public class BeanDefinitionInstantiatingInstanceFactory {
 
 	@Test

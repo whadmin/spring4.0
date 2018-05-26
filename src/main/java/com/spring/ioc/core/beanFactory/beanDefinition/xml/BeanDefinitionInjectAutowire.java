@@ -1,6 +1,7 @@
 package com.spring.ioc.core.beanFactory.beanDefinition.xml;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,6 +38,10 @@ import org.springframework.core.io.Resource;
 import com.spring.ioc.core.beanFactory.beanDefinition.PostProcessorRegistrationDelegate;
 import com.spring.ioc.model.HelloApiDataSource;
 
+
+/**
+ *  xml构造方法 主动注入bean,API实现
+ */
 public class BeanDefinitionInjectAutowire{
 
 	@Test
@@ -49,6 +54,10 @@ public class BeanDefinitionInjectAutowire{
 		reader.loadBeanDefinitions(resource);
 	}
 
+	/**
+	 * 属性名称自动注入
+	 * @throws ClassNotFoundException
+	 */
 	@Test
 	public void testInstantiatingBeanByName() throws ClassNotFoundException {
 		// 2.初始化容器
@@ -59,7 +68,6 @@ public class BeanDefinitionInjectAutowire{
 		
 		BeanDefinition bean_byName = beanFactory.getBeanDefinition("bean_byName");
 		System.out.println(ReflectionToStringBuilder.toString(bean_byName, ToStringStyle.MULTI_LINE_STYLE));
-		
 		HelloApiDataSource helloApi = beanFactory.getBean("bean_byName", HelloApiDataSource.class);
 		System.out.println(helloApi.getMessage());
 		helloApi.getHelloApi().sayHello();
@@ -86,6 +94,10 @@ public class BeanDefinitionInjectAutowire{
 		helloApi.getHelloApi().sayHello();
 	}
 
+	/**
+	 * 属性类型自动注入
+	 * @throws ClassNotFoundException
+	 */
 	@Test
 	public  void testInstantiatingBeanByType() throws ClassNotFoundException {
 		// 2.初始化容器
@@ -134,6 +146,47 @@ public class BeanDefinitionInjectAutowire{
 		helloApi.getHelloApi().sayHello();
 	}
 	
+	/**
+	 * 构造函数自动注入
+	 * @throws ClassNotFoundException
+	 */
+	@Test
+	public void testInstantiatingBeanByConstructor() throws ClassNotFoundException {
+		// 2.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+		Resource resource = new ClassPathResource("ioc/instantiatingBeanInjectAutowire.xml");
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+		reader.loadBeanDefinitions(resource);
+		
+		BeanDefinition bean_constructor = beanFactory.getBeanDefinition("bean_constructor");
+		System.out.println(ReflectionToStringBuilder.toString(bean_constructor, ToStringStyle.MULTI_LINE_STYLE));
+		
+		HelloApiDataSource helloApi = beanFactory.getBean("bean_constructor", HelloApiDataSource.class);
+		helloApi.getHelloApi().sayHello();
+		/**
+		 * <!-- 通过构造器注入 -->
+		 * <bean id="bean_constructor" class="com.spring.ioc.model.HelloApiDecorator"
+		 * autowire="constructor"/>
+		 **/
+		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
+
+		AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null,
+				"com.spring.ioc.model.HelloApiDecorator", null);
+		beanDefinition1.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
+
+		BeanDefinitionReaderUtils.registerBeanDefinition(
+				new BeanDefinitionHolder(beanDefinition1, "bean_constructor_at", null), beanFactory);
+
+		
+		BeanDefinition bean_constructor_at = beanFactory.getBeanDefinition("bean_constructor_at");
+		System.out.println(ReflectionToStringBuilder.toString(bean_constructor_at, ToStringStyle.MULTI_LINE_STYLE));
+		
+
+		helloApi = beanFactory.getBean("bean_constructor_at", HelloApiDataSource.class);
+		helloApi.getHelloApi().sayHello();
+	}
+	
 	@Test
 	public void testInstantiatingBeanByAutowired() throws ClassNotFoundException {
 		// 2.初始化容器
@@ -142,6 +195,8 @@ public class BeanDefinitionInjectAutowire{
 		Resource resource = new ClassPathResource("ioc/instantiatingBeanInjectAutowire.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
+
+		
 		
 		AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null,
 				"com.spring.ioc.model.HelloApiDecorator2", null);
@@ -149,6 +204,14 @@ public class BeanDefinitionInjectAutowire{
 
 		BeanDefinitionReaderUtils.registerBeanDefinition(
 				new BeanDefinitionHolder(beanDefinition1, "bean_Autowired_at", null), beanFactory);
+		
+		
+		//注解注入需要先在bean中添加注解解析器
+		/**
+		  	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
+	        <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"></bean>
+		 */
+		System.out.println(Arrays.toString(beanFactory.getBeanDefinitionNames()));
 		
 		//读取xml中装配的CustomAutowireConfigurer类型为beanFactory.getBeanNamesForType(BeanFactoryPostProcessor.class, true, false)的bean描述
 		//用来支持@Qualifier
@@ -189,43 +252,6 @@ public class BeanDefinitionInjectAutowire{
 		System.out.println(helloApi.getDataSource());
 		System.out.println(helloApi.getDataSource1());
 		System.out.println(helloApi.getDataSource2());
-		helloApi.getHelloApi().sayHello();
-	}
-
-	@Test
-	public void testInstantiatingBeanByConstructor() throws ClassNotFoundException {
-		// 2.初始化容器
-		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInjectAutowire.xml");
-		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-		reader.loadBeanDefinitions(resource);
-		
-		BeanDefinition bean_constructor = beanFactory.getBeanDefinition("bean_constructor");
-		System.out.println(ReflectionToStringBuilder.toString(bean_constructor, ToStringStyle.MULTI_LINE_STYLE));
-		
-		HelloApiDataSource helloApi = beanFactory.getBean("bean_constructor", HelloApiDataSource.class);
-		helloApi.getHelloApi().sayHello();
-		/**
-		 * <!-- 通过构造器注入 -->
-		 * <bean id="bean_constructor" class="com.spring.ioc.model.HelloApiDecorator"
-		 * autowire="constructor"/>
-		 **/
-		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
-
-		AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.HelloApiDecorator", null);
-		beanDefinition1.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
-
-		BeanDefinitionReaderUtils.registerBeanDefinition(
-				new BeanDefinitionHolder(beanDefinition1, "bean_constructor_at", null), beanFactory);
-
-		
-		BeanDefinition bean_constructor_at = beanFactory.getBeanDefinition("bean_constructor_at");
-		System.out.println(ReflectionToStringBuilder.toString(bean_constructor_at, ToStringStyle.MULTI_LINE_STYLE));
-		
-
-		helloApi = beanFactory.getBean("bean_constructor_at", HelloApiDataSource.class);
 		helloApi.getHelloApi().sayHello();
 	}
 	
