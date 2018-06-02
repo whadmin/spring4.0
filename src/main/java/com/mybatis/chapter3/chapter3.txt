@@ -1,0 +1,48 @@
+第三章 配置
+MyBatis的配置文件顺序是不能颠倒次序的，如果颠倒次序了，MyBatis在解析XML文件的时候会出现异常。
+MyBatis的全部配置：
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration><!-- 配置 -->
+    <properties/><!-- 属性 -->
+    <settings/>设置
+    <typeAliases/>类型命名
+    <typeHandlers/>类型处理器
+    <objectFactory/>对象工厂
+    <plugins/>插件
+    <environments>配置环境
+        <enviroment/>环境变量
+            <transactionManager/>事务管理器
+            <dataSource/>数据源
+        <enviroment/>
+    <environments/>
+    <databaseIdProvider/>数据库厂商标识
+    <mappers/>映射器
+</configuration>
+
+properties元素：是一个配置属性的元素，让我们在配置文件的上下文中使用它。
+    property子元素
+<properties>
+    <property name="driver" value="com.mysql.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/migo2"/>
+    <property name="username" value="root"/>
+    <property name="password" value="123456"/>
+</properties>
+那么就可以子啊数据源配置的时候使用它了，例如：<property name="driver" value="${driver}">
+也可以使用properties配置文件，在xml文件中加入<properties resource=jdbc.properties>
+#数据库配置文件
+jdbc.driver= com.mysql.jdbc.Driver
+jdbc.url =jdbc:mysql://localhost:3306/migo2?characterEncoding=utf-8
+jdbc.username = root
+jdbc.password =123456
+
+为了便于对数据库密码的加密对运维人员不可见，使用了加密操作，SqlSessionFactoryUtil
+
+优先级：
+    1、在properties元素体内指定的属性首先被读取
+    2、根据properties元素中的resource属性读取类路径下属性文件，或者根据url属性指定的路径读取属性文件，并覆盖已经读取的同名属性
+    3、读取作为方法参数传递的属性，并覆盖已经读取的同名属性
+    因此，通过方法参数传递的属性具有最高优先级，resource/url属性中指定的配置文件次之，最低优先级是properties属性中指定的属性。
+
+ObjectFactory
+    使用objectFactory（对象工厂）去构建POJO，在MyBatis中可以定制自己的对象工厂，一般来说使用我们默认的即可，大部分场景下不需要
+    修改，使用默认的就行org.apache.ibatis.reflection.factory.DefaultObjectFactory。

@@ -1,0 +1,60 @@
+第二章 MyBatis入门
+2.1 开发环境准备
+    mybatis下载网址：https://github.com/mybatis/mybatis-3/releases进入mybatis官网就可下载mybatis。
+    可以下载到jar包和源码包。
+    使用mybatis项目可以参考：http://mybatis.org/mybatis-3/zh/index.html
+    使用mybatis-spring项目可以参考：http://mybatis.org/spring/zh/index.html
+
+    下载的mybatis-3.4.6.zip内包jar包分为两类，其中mybatis.jar为mybatis本身的jar包，lib内为mybatis的依赖jar包
+
+2.2 MyBatis的基本构成
+    MyBatis的核心组件：
+        SqlSessionfactoryBuilder（构造器）：会根据配置信息或者代码来生成SqlSessionfactory（工厂接口）。
+        SqlSessionfactory：依赖工厂来生成SqlSession（会话）
+        SqlSession：是一个既可以发送SQL去执行并返回结果，也可以获取Mapper的接口。
+        SqlMapper：它是MyBatis新设计的组件，它是由一个Java接口和XML文件（或者注解）构成的，需要给出对应的SQL和映射规则
+            它负责发送SQL去执行，并返回结果。
+    MyBatis的解析程序会将mybatis-config.xml文件配置的信息解析到Configuration类对象里面，然后利用SqlSessionFactoryBuilder
+    读取这个对象为我们创建SqlSessionFactory。
+
+        用代码的方式构建：（不推荐）核心思想，目的是构建SqlSessionFactory工厂，创建Configuration，用它来构建SqlSessionFactory
+            如何构建Configuration：1，datasource  2，environment   3，transaction
+
+    创建SqlSession--公司前台美女客服，扮演着门面作用.真正干活的是Executor--接口（理解我工程师）
+        开发者只需关注：    1、要给美女客服什么信息参数和功能参数
+                           2、美女客服会返回什么结果
+        这个过程是个黑箱操作。
+        MyBatis中的SqlSession接口的实现类有两个，DefaultSqlSession和SqlSessionManager。（理解为JDBC中的Connection），所以
+    每次使用完关闭资源，将资源归还给数据库。
+        SqlSession用途：
+            1、获取映射器，让映射器通过命名空间和方法名称找到对应的SQL，发送给数据库执行后返回结果。
+            2、直接通过命名信息去执行SQL返回结果，这是ibatis留下的方式。在SqlSession中可以通过update、insert、delete、select方法
+                带上SQL的ID来操作XML中配置好的SQL。通过commit、rollback来提交和回滚事务。
+
+    映射器是由Java接口和XML文件（注解）来组成的。
+        定义参数类型
+        描述缓存
+        描述SQL语句
+        定义查询结果和POJO的映射关系
+
+        作者推荐使用xml配置，理由：
+            Java注解是受限的，功能较少，而MyBatis的Mapper内容相当多，而且相当复杂，功能强大。
+            如果SQL很复杂，条件多，尤其是存在动态SQl的时候，写在Java文件中的可读性较差，增加了维护的成本。
+
+    使用Mapper的必要性：
+        Mapper是一个接口，相对而言，可以进一步屏蔽SqlSession这个对象，使得它具有更强的业务可读性。
+        1、sqlSession.selectOne是功能性代码，长长的字符串比较晦涩难懂，不包含业务逻辑的含义，不符合面向对象的规范，而对于
+            roleMaper.getRole()这样的才是符合面向对象的编程，也符合逻辑。
+        2、使用Mapper方式，IDE可以检查Java语法，避免不必要的错误。
+        这是MyBatis特有的接口编程模式，而iBatis只能通过SqlSession用SQL的id过滤SQL去执行。
+
+    SqlSession和Mapper是我们使用的核心和难点，Mapper虽是接口，但是是使用动态代理来实现功能的。
+2.3 生命周期
+    SqlSessionFactoryBuild：构建完SqlSessionFactory，就失去了作用，我们就可以废弃它，生命周期值存在于方法的局部。
+    SqlSessionFactory：作用是创建SqlSession，SqlSession是一个会话，相当于一个JDBC中的Connection对象，每次应用程序都要
+        访问数据库，所以SqlSession的应用周期应该是整个生命周期，不能一个数据库创建多个SqlSessionFactory，消耗资源，所以
+        使用单例的模式。正确做法事每个数据库使用一个SqlSessionFactory，管理好数据库资源的分配，避免过多的Connection被消耗。
+    SqlSession：是一个会话。是一个线程不安全的对象，生命周期应该是在请求数据库处理事务的过程中，多线程使用的时候，应该当心，
+        操作数据库需要注意其隔离级别，它长期存在会使得数据库资源连接池的活动资源减少，对性能的影响大。
+        通过finally语句块来正确关闭SqlSession。
+    Mapper：作用是发送Sql。然后返回我们需要的结果，因此是一个SqlSession事务方法之内，是一个方法级别的东西。

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--configuration实例来构建sqlsessionfactory -->
+<!--里面的配置有顺序 -->
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="Integer" type="java.lang.Integer" />
+		<typeAlias alias="Long" type="java.lang.Long" />
+		<typeAlias alias="HashMap" type="java.util.HashMap" />
+		<typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+		<typeAlias alias="ArrayList" type="java.util.ArrayList" />
+		<typeAlias alias="LinkedList" type="java.util.LinkedList" />
+		<typeAlias alias="user" type="com.mybatis.entity.User" />
+	</typeAliases>
+
+	<typeHandlers>
+		<typeHandler handler="com.mybatis.typeHandler.UniversalEnumHandler"
+			javaType="com.mybatis.enums.TypeEnum" jdbcType="INTEGER" />
+	</typeHandlers>
+
+	<environments default="development">
+		<environment id="development">
+			<!-- type="JDBC" 代表使用JDBC的提交和回滚来管理事务 -->
+			<transactionManager type="JDBC" />
+			<!-- mybatis提供了3种数据源类型，分别是：POOLED,UNPOOLED,JNDI -->
+			<!-- POOLED 表示支持JDBC数据源连接池 -->
+			<!-- UNPOOLED 表示不支持数据源连接池 -->
+			<!-- JNDI 表示支持外部数据源连接池 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/mybatis-plus" />
+				<property name="username" value="root" />
+				<property name="password" value="" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="mybatis/UserMapper.xml" />
+	</mappers>
+
+
+</configuration>
