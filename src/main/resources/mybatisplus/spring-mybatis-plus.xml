@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- Service包(自动注入) -->
+	<context:component-scan base-package="com.springdb.mybatisplus.service" />
+
+	<!-- Spring整合Mybatis，更多查看文档：http://mp.baomidou.com -->
+	<bean id="sqlSessionFactory"
+		class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描Mapping.xml文件 -->
+		<property name="mapperLocations" value="classpath:mybatisplus/mapper/*.xml" />
+		<property name="configLocation" value="classpath:mybatisplus/mybatis-config.xml" />
+		<property name="typeAliasesPackage" value="com.springdb.mybatisplus.entity" />
+		<property name="typeEnumsPackage" value="com.springdb.mybatisplus.entity.enums" />
+		<property name="plugins">
+			<array>
+				<!-- 分页插件配置 -->
+				<bean id="paginationInterceptor"
+					class="com.baomidou.mybatisplus.plugins.PaginationInterceptor" />
+				<!-- 乐观锁插件 -->
+				<bean id="optimisticLockerInterceptor"
+					class="com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor">
+				</bean>
+				<!-- 性能拦截器，兼打印sql，不建议生产环境配置 -->
+				<bean id="performanceInterceptor"
+					class="com.baomidou.mybatisplus.plugins.PerformanceInterceptor" />	
+			</array>
+		</property>
+		<!-- 全局配置注入 -->
+		<property name="globalConfig" ref="globalConfig" />
+	</bean>
+	
+    <!-- XML文件热加载
+	     enabled:是否开启动态加载  默认:false
+	     delaySeconds:项目启动延迟加载时间  单位：秒  默认:10s
+	     sleepSeconds:刷新时间间隔  单位：秒 默认:20s
+	 -->
+	<bean class="com.baomidou.mybatisplus.spring.MybatisMapperRefresh">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <constructor-arg name="mapperLocations" value="classpath*:mybatisplus/mappers/*/*.xml"/>
+        <constructor-arg name="enabled" value="true"/>
+    </bean>
+
+
+	<bean id="globalConfig" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+		<!--表关键词 key 生成器-->
+		<property name="idType" value="2" />
+		<!-- 全局表为下划线命名设置 true -->
+		 <property name="dbColumnUnderline" value="true" /> 
+		
+		
+		<!-- 自定义全局操作逻辑删除 -->
+		<property name="sqlInjector">
+			<bean class="com.baomidou.mybatisplus.mapper.LogicSqlInjector" />
+		</property>
+		<property name="logicDeleteValue" value="Y" />
+        <property name="logicNotDeleteValue" value="N" />
+		
+		<!-- 公共字段填充器 -->
+		<property name="metaObjectHandler">
+			<bean class="com.springdb.mybatisplus.common.CommonMetaObjectHandler" />
+		</property>
+	</bean>
+	
+	<!-- 乐观锁插件 实体字段@Version  **仅支持int,Integer,long,Long,Date,Timestamp -->
+	<bean class="com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor"/>
+	
+
+	<!-- MyBatis 动态扫描 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.springdb.mybatisplus.mapper" />
+	</bean>
+
+
+	<import resource="classpath:dataSource/spring-dataSource.xml" />
+	<import resource="classpath:tx/spring-tx.xml" />
+</beans>
