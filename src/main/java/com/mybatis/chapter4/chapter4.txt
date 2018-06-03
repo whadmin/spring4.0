@@ -1,4 +1,0 @@
-第四章 映射器
-
-是MyBatis最强大的工具，主要元素有：
-    select,insert,update,delete,parameterMap,sql,resultMap,cache,cache-ref

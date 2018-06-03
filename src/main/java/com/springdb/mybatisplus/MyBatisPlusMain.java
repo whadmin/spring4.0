@@ -8,20 +8,15 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.mybatis.enums.TypeEnum;
 import com.springdb.mybatisplus.entity.SysUser;
 import com.springdb.mybatisplus.service.MPSysUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:mybatis/plus/spring-mybatisPlus.xml" })
-public class myBatisPlusMain {
+@ContextConfiguration(locations = { "classpath:mybatisplus/spring-mybatis-plus.xml" })
+//@ContextConfiguration(class = {  })
+public class MyBatisPlusMain {
 
 	@Autowired
 	MPSysUserService userService;
