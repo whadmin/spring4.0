@@ -12,7 +12,7 @@ import com.springdb.mybatisplus.common.SuperController;
  * </p>
  *
  * @author niyue
- * @since 2018-06-02
+ * @since 2018-06-03
  */
 @Controller
 @RequestMapping("/mybatisplus/sysUser")

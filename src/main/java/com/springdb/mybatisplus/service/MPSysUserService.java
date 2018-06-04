@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author niyue
- * @since 2018-06-02
+ * @since 2018-06-03
  */
 public interface MPSysUserService extends IService<SysUser> {
 

@@ -1,26 +1,29 @@
 package com.springdb.mybatis;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.springdb.mybatis.entity.SysUser;
-import com.springdb.mybatis.mapper.SysUserMapper;
 
+import com.springdb.mybatis.entity.SysUser;
+import com.springdb.mybatis.enums.TypeEnum;
+import com.springdb.mybatis.mapper.SysUserMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:mybatis/spring-mybatis.xml" })
-//@ContextConfiguration(class = {  })
+// @ContextConfiguration(class = { })
 public class MyBatisMain {
 
 	@Autowired
 	SysUserMapper sysUserMapper;
 
-
 	@Test
 	public void selectById() {
-		System.out.println(sysUserMapper.selectByPrimaryKey(1002779174048440321L));
+		System.out.println(sysUserMapper
+				.selectByPrimaryKey(1002779174048440321L));
 	}
 
 	@Test
@@ -28,7 +31,10 @@ public class MyBatisMain {
 		SysUser user = new SysUser();
 		user.setAge(1);
 		user.setName("wuhao.w");
-		user.setType(1);
+		user.setType(TypeEnum.DISABLED);
+		user.setId(12L);
+		user.setCtime(new Date());
+		user.setUtime(new Date());
 
 		sysUserMapper.insertSelective(user);
 		System.out.println(user);
@@ -49,10 +55,5 @@ public class MyBatisMain {
 	public void delete() {
 		sysUserMapper.deleteByPrimaryKey(1002779174048440321L);
 	}
-	
-	
-	
-
-	
 
 }

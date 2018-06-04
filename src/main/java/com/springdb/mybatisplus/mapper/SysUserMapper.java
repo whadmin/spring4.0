@@ -9,7 +9,7 @@ import com.springdb.mybatisplus.common.SuperMapper;
  * </p>
  *
  * @author niyue
- * @since 2018-06-02
+ * @since 2018-06-03
  */
 public interface SysUserMapper extends SuperMapper<SysUser> {
 
