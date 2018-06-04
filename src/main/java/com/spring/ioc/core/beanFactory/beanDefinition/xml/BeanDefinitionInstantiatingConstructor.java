@@ -1,5 +1,6 @@
 package com.spring.ioc.core.beanFactory.beanDefinition.xml;
 
+import java.util.Arrays;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -20,6 +21,9 @@ import org.springframework.core.io.Resource;
 
 import com.spring.ioc.model.HelloApi;
 
+/**
+ *  xml构造方法创建bean,API实现
+ */
 public class BeanDefinitionInstantiatingConstructor {
 
 	@Test
@@ -39,16 +43,25 @@ public class BeanDefinitionInstantiatingConstructor {
 		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
+		
+		
+		System.out.println(Arrays.toString(beanFactory.getBeanDefinitionNames()));
+		for (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) {
+			BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanDefinitionName);
+			System.out.println(ReflectionToStringBuilder.toString(beanDefinition, ToStringStyle.MULTI_LINE_STYLE));
+		}
 
+		//获取<bean name="bean1"... 的bean,打印beanDefinition结构并执行
+		/**
+		  	<!--使用默认构造参数 -->
+	        <bean name="bean1" class="com.spring.ioc.model.HelloImpl" destroy-method="destroy" init-method="init" />
+		 */
 		BeanDefinition bean1 = beanFactory.getBeanDefinition("bean1");
 		System.out.println(ReflectionToStringBuilder.toString(bean1, ToStringStyle.MULTI_LINE_STYLE));
 		HelloApi bean = beanFactory.getBean("bean1", HelloApi.class);
 		bean.sayHello();
-		/**
-		 * 构造如下配置的描述
-		 * <bean name="bean1" class="com.spring.ioc.model.HelloImpl" destroy-method=
-		 * "destroy" init-method="init" />
-		 **/
+		
+		//手动创建一个bean1的克隆注入并执行
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null, "com.spring.ioc.model.HelloImpl",
 						null);
@@ -88,27 +101,27 @@ public class BeanDefinitionInstantiatingConstructor {
 				beanFactory);
 		reader.loadBeanDefinitions(resource);
 
-		BeanDefinition bean2_byIndex = beanFactory
-				.getBeanDefinition("bean2_byIndex");
-		for (Entry<Integer, ValueHolder> entry : bean2_byIndex
-				.getConstructorArgumentValues().getIndexedArgumentValues()
-				.entrySet()) {
+		//获取<bean name="bean2_byIndex"... 的bean,打印beanDefinition结构并执行
+		/**
+		    <!-- constructorDependencyInject star -->
+			<!-- 通过构造器参数索引方式依赖注入 -->
+			<bean id="bean2_byIndex" class="com.spring.ioc.model.HelloImpl3">
+				<constructor-arg index="0" value="Hello World!" />
+				<constructor-arg index="1" value="1" />
+			</bean>
+		 */
+		BeanDefinition bean2_byIndex = beanFactory.getBeanDefinition("bean2_byIndex");
+		for (Entry<Integer, ValueHolder> entry : bean2_byIndex.getConstructorArgumentValues().getIndexedArgumentValues().entrySet()) {
 			System.out.println(ReflectionToStringBuilder.toString(
 					entry.getKey(), ToStringStyle.MULTI_LINE_STYLE));
 			System.out.println(ReflectionToStringBuilder.toString(
 					entry.getValue(), ToStringStyle.MULTI_LINE_STYLE));
 		}
-
 		HelloApi byIndex = beanFactory.getBean("bean2_byIndex", HelloApi.class);
 		byIndex.sayHello();
 
-		/**
-		 * 构造如下配置的描述 <!-- 通过构造器参数索引方式依赖注入 --> <bean id="bean2_byIndex"
-		 * class="com.spring.ioc.model.HelloImpl3"> <constructor-arg index="0"
-		 * value="Hello World!" /> <constructor-arg index="1" value="1" />
-		 * </bean>
-		 ***/
 
+		//手动创建一个bean2_byIndex的克隆注入并执行
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils
 				.createBeanDefinition(null, "com.spring.ioc.model.HelloImpl3",

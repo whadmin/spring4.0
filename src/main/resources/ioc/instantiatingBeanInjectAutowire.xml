@@ -7,32 +7,28 @@
 		   http://www.springframework.org/schema/context
 		   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<bean id="helloApi" class="com.spring.ioc.model.HelloImpl"
-		primary="true" />
 
-	<!-- 从自动装配候选者中去除 -->
-	<bean class="com.spring.ioc.model.HelloImpl" autowire-candidate="false" />
-
-	<bean id="message" class="java.lang.String">
-		<constructor-arg index="0" value="Hello World!" />
-	</bean>
 
 	<!-- 通过属性名称自动注入 -->
 	<bean id="bean_byName" class="com.spring.ioc.model.HelloApiDecorator"
 		autowire="byName" />
 
+     <!-- 通过属性类型自动注入 -->
 	<bean id="bean_byType" class="com.spring.ioc.model.HelloApiDecorator"
 		autowire="byType" />
 
-
+    <!-- 构造函数自动注入 -->
 	<bean id="bean_constructor" class="com.spring.ioc.model.HelloApiDecorator"
 		autowire="constructor" />
 
+    <!-- 注入List -->
 	<bean id="listBean" class="com.spring.ioc.model.ListBean"
 		autowire="byType" />
-
+		
+     <!-- 通过注解 -->
 	<bean id="bean_Autowired" class="com.spring.ioc.model.HelloApiDecorator2"/>
 	
+
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
 	
 	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"></bean>
@@ -64,5 +60,15 @@
 				<value>com.spring.ioc.model.qualifier.CustomQualifier</value>
 			</set>
 		</property>
+	</bean>
+	
+	<bean id="helloApi" class="com.spring.ioc.model.HelloImpl"
+		primary="true" />
+
+	<!-- 从自动装配候选者中去除 -->
+	<bean class="com.spring.ioc.model.HelloImpl" autowire-candidate="false" />
+
+	<bean id="message" class="java.lang.String">
+		<constructor-arg index="0" value="Hello World!" />
 	</bean>
 </beans>

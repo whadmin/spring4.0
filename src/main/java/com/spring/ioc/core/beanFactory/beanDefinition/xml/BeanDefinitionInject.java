@@ -18,6 +18,9 @@ import org.springframework.core.io.Resource;
 
 import com.spring.ioc.model.HelloApi;
 
+/**
+ *  xml property 主动注入bean,API实现
+ */
 public class BeanDefinitionInject {
 	
 	@Test
