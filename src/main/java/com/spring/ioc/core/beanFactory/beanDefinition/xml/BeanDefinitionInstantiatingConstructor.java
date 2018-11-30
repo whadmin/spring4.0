@@ -52,7 +52,7 @@ public class BeanDefinitionInstantiatingConstructor {
 		}
 
 		//获取<bean name="bean1"... 的bean,打印beanDefinition结构并执行
-		/**
+		/*
 		  	<!--使用默认构造参数 -->
 	        <bean name="bean1" class="com.spring.ioc.model.HelloImpl" destroy-method="destroy" init-method="init" />
 		 */
@@ -62,7 +62,7 @@ public class BeanDefinitionInstantiatingConstructor {
 		bean.sayHello();
 		
 		//手动创建一个bean1的克隆注入并执行
-		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
+		/* 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null, "com.spring.ioc.model.HelloImpl",
 						null);
 		// 设置bean的初始化方法
@@ -76,7 +76,7 @@ public class BeanDefinitionInstantiatingConstructor {
 		// 设置beanDefinition1 构造来源
 		beanDefinition1.setResource(null);
 
-		/** 注入bean的描述 name名称为bean1_at 别名为null **/
+        /* 注入bean的描述 name名称为bean1_at 别名为null **/
 		BeanDefinitionReaderUtils.registerBeanDefinition(
 				new BeanDefinitionHolder(beanDefinition1, "bean1_at", null),
 				beanFactory);
