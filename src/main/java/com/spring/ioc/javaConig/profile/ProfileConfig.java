@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
-import com.spring.ioc.appliction.profile.model.HelloService2;
-import com.spring.ioc.appliction.profile.model.HelloServiceImpl2;
+import com.spring.ioc.appliction.profile.model.CommonService;
+import com.spring.ioc.appliction.profile.model.CommonServiceImpl;
 
 @Configuration
 @Import({ DevProFileConfig.class, ProduceProFileConfig.class })
@@ -25,7 +25,7 @@ public class ProfileConfig {
 //	}
 
 	@Bean
-	public HelloService2 helloService() {
-		return new HelloServiceImpl2();
+	public CommonService helloService() {
+		return new CommonServiceImpl();
 	}
 }

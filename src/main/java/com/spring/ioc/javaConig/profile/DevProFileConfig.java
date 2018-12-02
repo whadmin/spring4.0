@@ -16,15 +16,14 @@ import com.spring.ioc.appliction.profile.model.HelloService;
 public class DevProFileConfig {
 	
 
-	@Value("${book.name}") 
+	@Value("${name}")
 	public String name;
 	
 	@Bean
 	public HelloService devHelloService() {
 		DevHelloService devHelloService=new DevHelloService();
 		devHelloService.setName(name);
-		 
-		 return devHelloService;
+		return devHelloService;
 	}
 
 }

@@ -20,44 +20,48 @@ import org.springframework.core.OrderComparator;
 import org.springframework.core.PriorityOrdered;
 
 import com.spring.ioc.appliction.profile.model.HelloService;
-import com.spring.ioc.appliction.profile.model.HelloService2;
+import com.spring.ioc.appliction.profile.model.CommonService;
 import com.spring.ioc.javaConig.profile.ProfileConfig;
 import com.spring.ioc.javaConig.profile.annotation.ProfileConfigAnnotation;
 
 public class ProfileForJavaConfig {
 
 	@Test
-	public void testProfileConfig() {
+	public void testProfileConfig1() {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 
 		context.register(ProfileConfig.class);
 		context.refresh();
-		System.out.println(Arrays.toString(context.getBeanDefinitionNames()));
-		System.out.println(context.getEnvironment());
 
-		HelloService2 helloService2 = context.getBean(HelloService2.class);
-		System.out.println(helloService2.sayHello());
+		CommonService commonService = context.getBean(CommonService.class);
+		System.out.println(commonService.sayHello());
+		context.close();
+	}
 
-		context = new AnnotationConfigApplicationContext();
+	@Test
+	public void testProfileConfig2() {
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 		context.getEnvironment().setActiveProfiles("dev");
 		context.register(ProfileConfig.class);
 		context.refresh();
 
-		System.out.println(Arrays.toString(context.getBeanDefinitionNames()));
 		HelloService helloService = context.getBean(HelloService.class);
 		System.out.println(helloService.sayHello());
+		context.close();
+	}
 
-		context = new AnnotationConfigApplicationContext();
+
+	@Test
+	public void testProfileConfig3() {
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 		context.getEnvironment().setActiveProfiles("produce");
 		context.register(ProfileConfig.class);
 		context.refresh();
 
-		System.out.println(Arrays.toString(context.getBeanDefinitionNames()));
-		helloService = context.getBean(HelloService.class);
+		HelloService helloService = context.getBean(HelloService.class);
 		System.out.println(helloService.sayHello());
 
 		context.close();
-
 	}
 
 	@Test
@@ -86,7 +90,7 @@ public class ProfileForJavaConfig {
 		System.out.println(Arrays.toString(context.getBeanDefinitionNames()));
 		System.out.println(context.getEnvironment());
 
-		HelloService2 helloService2 = context.getBean(HelloService2.class);
+		CommonService helloService2 = context.getBean(CommonService.class);
 		System.out.println(helloService2.sayHello());
 
 		context = new AnnotationConfigApplicationContext();

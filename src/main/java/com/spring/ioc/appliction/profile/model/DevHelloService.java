@@ -4,21 +4,35 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class DevHelloService implements HelloService {
 
-	// 这个值是读取开发环境下的配置文件注入
-	public String name;
 
-	@Value("${book.name}")
-	public String name1;
+	public String getName() {
+		return name;
+	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setName1(String name1) {
-		this.name1 = name1;
+	public String getDynamicName() {
+		return dynamicName;
 	}
 
+	public void setDynamicName(String dynamicName) {
+		this.dynamicName = dynamicName;
+	}
+
+	/**
+	 * DevProFileConfig,ProduceProFileConfig外部动态设置.
+	 */
+	public String name;
+
+	@Value("${name}")
+	public String dynamicName;
+
+
+
+	@Override
 	public String sayHello() {
-		return String.format("hello,I'm %s,this is a development environment!", name);
+		return String.format("hello,I'm %s,I'm %s,this is a development environment!", name,dynamicName);
 	}
 }

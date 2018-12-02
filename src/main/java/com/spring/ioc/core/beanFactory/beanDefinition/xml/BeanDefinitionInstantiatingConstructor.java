@@ -317,7 +317,7 @@ public class BeanDefinitionInstantiatingConstructor {
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
-		
+
 		BeanDefinition bean2_byRef = beanFactory.getBeanDefinition("bean2_byRef");
 		for (ConstructorArgumentValues.ValueHolder valueHolder : bean2_byRef.getConstructorArgumentValues()
 				.getGenericArgumentValues()) {
@@ -332,7 +332,7 @@ public class BeanDefinitionInstantiatingConstructor {
 		 * <constructor-arg index="0" value="Hello World!" /> </bean>
 		 * <bean id="index" class="java.lang.String">
 		 * <constructor-arg index="0" value="4" /> </bean>
-		 * 
+		 *
 		 * <bean id="bean2_byRef" class="com.spring.ioc.model.HelloImpl3">
 		 * <constructor-arg name="message" ref="message" />
 		 * <constructor-arg name="index" ref="index" /> </bean>

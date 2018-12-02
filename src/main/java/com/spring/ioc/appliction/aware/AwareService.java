@@ -28,7 +28,7 @@ public class AwareService implements BeanNameAware,ResourceLoaderAware{//①
 	public void outputResult(){
 		System.out.println("Bean的名称为：" + beanName);
 		
-		Resource resource = loader.getResource("classpath:org/light4j/sping4/senior/aware/test.txt");
+		Resource resource = loader.getResource("classpath:com/spring/ioc/appliction/aware/test.txt");
 		try{
 			
 			System.out.println("ResourceLoader加载的文件内容为: " + IOUtils.toString(resource.getInputStream()));

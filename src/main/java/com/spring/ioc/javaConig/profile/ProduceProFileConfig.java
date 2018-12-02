@@ -13,7 +13,7 @@ import com.spring.ioc.appliction.profile.model.ProduceHelloService;
 @PropertySource("classpath:profile/produce.properties")
 public class ProduceProFileConfig {
 
-	@Value("${book.name}")
+	@Value("${name}")
 	public String name;
 
 	@Bean
