@@ -10,7 +10,6 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @Import({ EnvironmentGetConfig.class, ValueGetConfig.class,ValueOtherConfig.class })
 @PropertySource("classpath:propertySource/application.properties")
-@ComponentScan("com.spring.ioc.appliction.propertySource")
 @EnableConfigurationProperties
 public class PropertySourceConfig {
 
