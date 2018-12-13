@@ -1,1 +1,12 @@
 /target/
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/libraries/Maven__org_springframework_boot_spring_boot_1_5_18_RELEASE.xml
+/.idea/libraries/Maven__org_springframework_spring_web_4_3_21_RELEASE.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
+/SpringNew.iml
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/compiler.xml
+/SpringNew.ipr
+/SpringNew.iws
