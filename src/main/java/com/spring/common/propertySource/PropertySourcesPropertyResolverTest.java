@@ -2,12 +2,12 @@ package com.spring.common.propertySource;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.env.ConfigurablePropertyResolver;
-import org.springframework.core.env.MutablePropertySources;
-import org.springframework.core.env.PropertiesPropertySource;
-import org.springframework.core.env.PropertySourcesPropertyResolver;
+import org.springframework.core.env.*;
+import org.springframework.core.env.MapPropertySource;
 import org.springframework.mock.env.MockPropertySource;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -15,7 +15,7 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-public class PropertySourcesPropertyResolverTests {
+public class PropertySourcesPropertyResolverTest {
 
     private Properties testProperties;
 
@@ -65,5 +65,33 @@ public class PropertySourcesPropertyResolverTests {
         catch (IllegalArgumentException ex) {
             assertTrue(ex.getMessage().toLowerCase().contains("circular"));
         }
+    }
+
+    @Test
+    public void PropertyResolver() throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", "value1");
+        map.put("SPRING_APPLICATION_JSON", "value2");
+        map.put("spring.application.json", "value3");
+        PropertySource propertySource1 = new MapPropertySource("resource1", map);
+
+        Properties props = new Properties();
+        props.put("key", "value2");
+        PropertiesPropertySource propertySource2 = new PropertiesPropertySource(
+                "resource2", props);
+
+        MutablePropertySources propertySources = new MutablePropertySources();
+        propertySources.addFirst(propertySource1);
+        propertySources.addLast(propertySource2);
+        System.out.println(propertySources.get("resource1").getProperty("key"));
+
+        PropertyResolver  propertyResolver = new PropertySourcesPropertyResolver(propertySources);
+
+        System.out.println(propertyResolver.getProperty("key"));
+        System.out.println(propertyResolver.getProperty("no", "default"));
+        System.out.println(propertyResolver.resolvePlaceholders("must be encoding ${key}"));  //输出must be encoding gbk
+        System.out.println(propertyResolver.resolvePlaceholders("must be encoding ${spring.application.json:${SPRING_APPLICATION_JSON:}}"));
+
+
     }
 }
