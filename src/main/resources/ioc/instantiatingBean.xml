@@ -12,7 +12,7 @@
 	<bean name="bean1" class="com.spring.ioc.model.HelloImpl"
 		destroy-method="destroy" init-method="init" />
 
-	<!-- constructorDependencyInject star -->
+	<!-- 使用构造函数实例化bean star -->
 	<!-- 通过构造器参数索引方式依赖注入 -->
 	<bean id="bean2_byIndex" class="com.spring.ioc.model.HelloImpl3">
 		<constructor-arg index="0" value="Hello World!" />
@@ -34,9 +34,21 @@
 		<constructor-arg name="message" ref="message" />
 		<constructor-arg name="index" ref="index" />
 	</bean>
-	<!-- constructorDependencyInject end -->
+	<!-- 使用构造函数实例化bean end -->
 
-	<!-- staticFactoryDependencyInject star -->
+
+	<bean id="bean5" class="com.spring.ioc.model.HelloImpl4">
+		<property name="message" value="Hello World!" />
+		<property name="index">
+			<value>4</value>
+		</property>
+	</bean>
+
+
+
+
+
+	<!-- 通过静态工厂实例化bean star -->
 	<!-- 通过静态工厂参数索引方式依赖注入 -->
 	<bean id="bean3_byIndex"
 		class="com.spring.ioc.model.DependencyInjectByStaticFactory"
@@ -59,9 +71,10 @@
 		<constructor-arg name="message" value="Hello World!" />
 		<constructor-arg name="index" value="3" />
 	</bean>
-	<!-- staticFactoryDependencyInject end -->
+	<!-- 通过静态工厂实例化bean end -->
 
 
+	<!-- 通过实例工厂实例化bean star -->
 	<!-- instanceFactoryDependencyInject star -->
 	<bean id="instanceFactory"
 		class="com.spring.ioc.model.DependencyInjectByInstanceFactory" />
@@ -81,11 +94,11 @@
 	</bean>
 	<!-- 通过实例工厂参数名称方式依赖注入 -->
 	<bean id="bean4_byName" factory-bean="instanceFactory"
-		factory-method="newInstance">
+		factory-method="newInstance" >
 		<constructor-arg name="message" value="Hello World!" />
 		<constructor-arg name="index" value="3" />
 	</bean>
-	<!-- instanceFactoryDependencyInject end -->
+	<!-- 通过实例工厂实例化bean end -->
 
 	<bean id="message" class="java.lang.String">
 		<constructor-arg index="0" value="Hello World!" />

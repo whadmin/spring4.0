@@ -5,11 +5,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.List;
 
 import com.j2se.annotation.model.MyClass;
-import com.j2se.reflect.model.Person;
-import com.j2se.type.model.GenericParamType;
+
 
 public class ReflectDemo {
 	public static void main(String[] args) {

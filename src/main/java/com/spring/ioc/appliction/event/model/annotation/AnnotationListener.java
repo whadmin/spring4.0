@@ -16,4 +16,7 @@ public class AnnotationListener {
 	public void BlogModifiedResponseEventExcute(BlogModifiedResponseEvent blogModifiedResponseEvent) {
 		System.out.println("BlogModifiedResponseEvent");
 	}
+
+
+
 }

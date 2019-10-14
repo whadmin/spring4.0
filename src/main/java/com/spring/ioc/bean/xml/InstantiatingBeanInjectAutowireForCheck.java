@@ -28,6 +28,7 @@ public class InstantiatingBeanInjectAutowireForCheck {
         new ClassPathXmlApplicationContext("ioc/dependency-check-all.xml");
     }
 
+    @Test
     public void testDependencyCheckByNone() throws IOException {
         //将抛出异常
         new ClassPathXmlApplicationContext("ioc/dependency-check-none.xml");

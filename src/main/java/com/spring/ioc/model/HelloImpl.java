@@ -2,6 +2,14 @@ package com.spring.ioc.model;
 
 public class HelloImpl implements HelloApi{
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     private String message;
 
     public HelloImpl(){

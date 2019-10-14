@@ -111,12 +111,14 @@ public class BeanDefinitionInstantiatingConstructor {
 			</bean>
 		 */
 		BeanDefinition bean2_byIndex = beanFactory.getBeanDefinition("bean2_byIndex");
-		for (Entry<Integer, ValueHolder> entry : bean2_byIndex.getConstructorArgumentValues().getIndexedArgumentValues().entrySet()) {
-			System.out.println(ReflectionToStringBuilder.toString(
-					entry.getKey(), ToStringStyle.MULTI_LINE_STYLE));
-			System.out.println(ReflectionToStringBuilder.toString(
-					entry.getValue(), ToStringStyle.MULTI_LINE_STYLE));
-		}
+
+		System.out.println(ReflectionToStringBuilder.toString(bean2_byIndex, ToStringStyle.MULTI_LINE_STYLE));
+//		for (Entry<Integer, ValueHolder> entry : bean2_byIndex.getConstructorArgumentValues().getIndexedArgumentValues().entrySet()) {
+//			System.out.println(ReflectionToStringBuilder.toString(
+//					entry.getKey(), ToStringStyle.MULTI_LINE_STYLE));
+//			System.out.println(ReflectionToStringBuilder.toString(
+//					entry.getValue(), ToStringStyle.MULTI_LINE_STYLE));
+//		}
 		HelloApi byIndex = beanFactory.getBean("bean2_byIndex", HelloApi.class);
 		byIndex.sayHello();
 

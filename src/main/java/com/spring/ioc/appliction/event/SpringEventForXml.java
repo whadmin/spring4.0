@@ -37,7 +37,6 @@ public class SpringEventForXml {
 			BeanDefinition beanDefinition = context.getBeanFactory().getBeanDefinition(beanDefinitionName);
 			System.out.println(beanDefinition);
 		}
-
 		context.publishEvent(new BlogModifiedEvent(new Blog(), true));
 	}
 }

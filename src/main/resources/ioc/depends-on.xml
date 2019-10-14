@@ -12,7 +12,6 @@
     <bean id="resourceBean" 
           class="com.spring.ioc.model.ResourceBean" 
           init-method="init" destroy-method="destroy" lazy-init="true">
-        <property name="file" value="D:/test.txt"/>      
     </bean>
 
     <bean id="dependentBean" 
@@ -20,7 +19,4 @@
           init-method="init" destroy-method="destroy" depends-on="resourceBean">
         <property name="resourceBean" ref="resourceBean"/>
     </bean>
-    
-    
-        
 </beans>

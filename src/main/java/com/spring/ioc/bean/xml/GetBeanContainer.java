@@ -15,7 +15,7 @@ public class GetBeanContainer {
     @Test
     public void test1() {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/GetBeanContainer.xml");
+                "ioc/getBeanMethod.xml");
         // 根据类型获取bean
         HelloApi2 helloApi = beanFactory.getBean(HelloApi2.class);
         helloApi.sayHello();
@@ -24,7 +24,7 @@ public class GetBeanContainer {
     @Test
     public void test2() {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/GetBeanContainer.xml");
+                "ioc/getBeanMethod.xml");
         // 根据id获取bean
         HelloApi bean = beanFactory.getBean("bean1", HelloApi.class);
         bean.sayHello();
@@ -33,7 +33,7 @@ public class GetBeanContainer {
     @Test
     public void test3() {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/GetBeanContainer.xml");
+                "ioc/getBeanMethod.xml");
         // 根据name获取bean
         HelloApi bean = beanFactory.getBean("bean2", HelloApi.class);
         bean.sayHello();
@@ -42,7 +42,7 @@ public class GetBeanContainer {
     @Test
     public void test4() {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/GetBeanContainer.xml");
+                "ioc/getBeanMethod.xml");
         // 根据id获取bean
         HelloApi bean3 = beanFactory.getBean("bean3", HelloApi.class);
         bean3.sayHello();
@@ -62,7 +62,7 @@ public class GetBeanContainer {
     @Test
     public void test5() {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/GetBeanContainer.xml");
+                "ioc/getBeanMethod.xml");
         // 根据id获取bean
         HelloApi bean1 = beanFactory.getBean("bean5", HelloApi.class);
         bean1.sayHello();
@@ -98,7 +98,7 @@ public class GetBeanContainer {
     @Test
     public void test6() {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/GetBeanContainer.xml");
+                "ioc/getBeanMethod.xml");
         // 根据id获取bean
         HelloApi bean = beanFactory.getBean("bean7", HelloApi.class);
         bean.sayHello();

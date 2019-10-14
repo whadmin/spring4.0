@@ -18,8 +18,21 @@ import com.spring.ioc.model.SetTestBean;
 import junit.framework.Assert;
 
 
+/**
+ * 实例化bean的方式有三种
+ *
+ * 1 使用构造函数实例化bean
+ *
+ * 2 使用静态工厂
+ *
+ * 3 实例工厂
+ *
+ */
 public class InstantiationBean {
 
+	/**
+	 * 使用构造函数实例化bean
+	 */
 	@Test
 	public void testInstantiatingBeanByConstructor() {
 		// 使用构造器
@@ -45,6 +58,9 @@ public class InstantiationBean {
 		bean2_byRef.sayHello();
 	}
 
+	/**
+	 * 使用静态工厂实例化bean
+	 */
 	@Test
 	public void testInstantiatingBeanByStaticFactory() {
 		// 使用静态工厂方法
@@ -63,6 +79,9 @@ public class InstantiationBean {
 		byName.sayHello();
 	}
 
+	/**
+	 * 使用实例工厂实例化bean
+	 */
 	@Test
 	public void testInstantiatingBeanByInstanceFactory() {
 		// 使用实例工厂方法
@@ -81,5 +100,4 @@ public class InstantiationBean {
 		byName.sayHello();
 
 	}
-
 }

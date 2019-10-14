@@ -14,7 +14,8 @@ import java.net.*;
 import java.nio.charset.Charset;
 import static org.junit.Assert.assertTrue;
 
-public class UrlResourceTest {
+public class
+UrlResourceTest {
     /**
      * 读取URL访问资源
      */
