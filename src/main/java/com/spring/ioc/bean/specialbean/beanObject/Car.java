@@ -1,4 +1,4 @@
-package com.spring.ioc.model;
+package com.spring.ioc.bean.specialbean.beanObject;
 
 public class Car {
 
