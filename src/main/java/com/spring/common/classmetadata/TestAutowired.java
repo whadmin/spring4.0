@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 public @interface TestAutowired {
 
 	/**
-	 * Declares whether the annotated dependency is required.
+	 * Declares whether the configuration dependency is required.
 	 * <p>Defaults to {@code true}.
 	 */
 	boolean required() default true;

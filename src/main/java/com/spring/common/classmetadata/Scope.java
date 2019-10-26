@@ -24,7 +24,7 @@ import java.lang.annotation.*;
 public @interface Scope {
 
 	/**
-	 * Specifies the scope to use for instances of the annotated class.
+	 * Specifies the scope to use for instances of the configuration class.
 	 * @return the desired scope
 	 */
 	String value() default "singleton";

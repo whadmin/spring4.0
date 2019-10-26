@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean name="bean" class="com.spring.ioc.model.HelloImpl"
+          destroy-method="destroy" init-method="init" />
+
+    <bean class="com.spring.ioc.core.beanFactory.beanFactoryPostProcessor.MyBeanFactoryPostProcessor1"/>
+    <bean class="com.spring.ioc.core.beanFactory.beanFactoryPostProcessor.MyBeanFactoryPostProcessor2"/>
+</beans>
