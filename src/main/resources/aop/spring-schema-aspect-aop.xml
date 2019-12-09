@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 定义目标对象bean -->
+    <bean id="targetService" class="com.spring.aop.targetObject.TargetServiceImpl"/>
+
+    <!-- 用来定义切面，该切面可以包含多个切入点和通知 -->
+    <bean id="aspect" class="com.spring.aop.xmlSchema.aspect.TargetAspect"/>
+
+    <aop:config>
+        <!--定义切面 -->
+        <aop:pointcut id="executeExistParamPointcut"
+                      expression="execution(* com.spring.aop.targetObject..*.executeExistParam(..))"/>
+
+        <aop:pointcut id="executeErrorPointcut"
+                      expression="execution(* com.spring.aop.targetObject..*.executeError(..))"/>
+
+        <aop:aspect ref="aspect">
+            <aop:before pointcut="execution(* com.spring.aop.targetObject..*.executeExistParam(..)) and args(param)"
+                        method="beforeAdvice(java.lang.String)"
+                        arg-names="param"/>
+            <aop:after-returning pointcut-ref="executeExistParamPointcut"
+                                 method="afterReturningAdvice"
+                                 arg-names="retVal"
+                                 returning="retVal"/>
+            <aop:after-throwing pointcut-ref="executeExistParamPointcut"
+                                method="afterThrowingAdvice"
+                                arg-names="exception"
+                                throwing="exception"/>
+
+            <aop:after pointcut-ref="executeExistParamPointcut"
+                       method="afterFinallyAdvice"/>
+
+            <aop:around pointcut-ref="executeExistParamPointcut"
+                        method="aroundAdvice"/>
+        </aop:aspect>
+
+        <aop:aspect ref="aspect">
+            <aop:before pointcut="execution(* com.spring.aop.targetObject..*.executeError(..)) and args(param)"
+                        method="beforeAdvice(java.lang.String)"
+                        arg-names="param"/>
+            <aop:after-returning pointcut-ref="executeErrorPointcut"
+                                 method="afterReturningAdvice"
+                                 arg-names="retVal"
+                                 returning="retVal"/>
+            <aop:after-throwing pointcut-ref="executeErrorPointcut"
+                                method="afterThrowingAdvice"
+                                arg-names="exception"
+                                throwing="exception"/>
+
+            <aop:after pointcut-ref="executeErrorPointcut"
+                       method="afterFinallyAdvice"/>
+
+            <aop:around pointcut-ref="executeErrorPointcut"
+                        method="aroundAdvice"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 定义目标对象bean -->
+    <bean id="targetService" class="com.spring.aop.targetObject.TargetServiceImpl"/>
+
+    <!-- 定义通知 beforeAdvice 通知实现bean,实现MethodBeforeAdvice接口 -->
+    <bean id="beforeAdvice" class="com.spring.aop.xmlSchema.advice.BeforeAdviceImpl"/>
+    <!-- 定义通知 AfterReturningAdvice 通知实现bean,实现AfterReturningAdvice接口 -->
+    <bean id="afterReturninAdvice" class="com.spring.aop.xmlSchema.advice.AfterReturningAdviceImpl"/>
+    <!-- 定义通知 AfterReturningAdvice 通知实现bean,实现AfterReturningAdvice接口 -->
+    <bean id="throwsAdviceImpl" class="com.spring.aop.xmlSchema.advice.ThrowsAdviceImpl"/>
+
+    <aop:config>
+        <!--定义切面 -->
+        <aop:pointcut id="executeExistParamPointcut"
+                      expression="execution(* com.spring.aop.targetObject..*.executeExistParam(..))"/>
+
+        <aop:pointcut id="executeErrorPointcut"
+                      expression="execution(* com.spring.aop.targetObject..*.executeError(..))"/>
+
+        <!-- 定义通知  pointcut-ref指定切面，advice-ref指定通知实现bean，不同通知bean需要实现不同的接口-->
+        <aop:advisor pointcut-ref="executeExistParamPointcut"
+                     advice-ref="beforeAdvice"/>
+        <aop:advisor pointcut-ref="executeExistParamPointcut"
+                     advice-ref="afterReturninAdvice"/>
+
+        <aop:advisor pointcut-ref="executeErrorPointcut"
+                     advice-ref="beforeAdvice"/>
+        <aop:advisor pointcut-ref="executeErrorPointcut"
+                     advice-ref="throwsAdviceImpl"/>
+    </aop:config>
+
+</beans>
