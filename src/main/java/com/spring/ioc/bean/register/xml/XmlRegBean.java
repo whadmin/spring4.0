@@ -31,7 +31,7 @@ public class XmlRegBean {
     public void registerXmlBean() {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         GenericBeanDefinition bd = new GenericBeanDefinition();
-        bd.setBeanClassName("com.spring.ioc.bean.register.beanObject.BeanObject");
+        bd.setBeanClassName("com.spring.ioc.bean.register.beanObject.1");
         // 设置bean的初始化方法
         bd.setInitMethodName("init");
         // 设置bean的初始化方法开启
@@ -44,6 +44,8 @@ public class XmlRegBean {
                 new BeanDefinitionHolder(bd, "bean", null),
                 beanFactory);
         assertTrue(beanFactory.containsBeanDefinition("bean"));
+        Object bean = beanFactory.getBean("bean");
+        System.out.println(bean);
     }
 
     @Test

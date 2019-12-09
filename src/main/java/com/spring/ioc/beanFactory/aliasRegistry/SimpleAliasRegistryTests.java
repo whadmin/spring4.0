@@ -1,4 +1,4 @@
-package com.spring.ioc.BeanFactory;
+package com.spring.ioc.beanFactory.aliasRegistry;
 
 import org.junit.Test;
 import org.springframework.core.SimpleAliasRegistry;

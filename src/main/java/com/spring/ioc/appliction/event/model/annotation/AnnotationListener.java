@@ -8,7 +8,6 @@ public class AnnotationListener {
 
 	@EventListener(condition = "#blogModifiedEvent.importantChange")
 	public BlogModifiedResponseEvent blogModifiedEventExcute(BlogModifiedEvent blogModifiedEvent) {
-
 		return new BlogModifiedResponseEvent();
 	}
 
@@ -16,7 +15,4 @@ public class AnnotationListener {
 	public void BlogModifiedResponseEventExcute(BlogModifiedResponseEvent blogModifiedResponseEvent) {
 		System.out.println("BlogModifiedResponseEvent");
 	}
-
-
-
 }
