@@ -1,9 +1,6 @@
 package com.spring.ioc.bean.getBean.propertyInjection.application.beanFactory;
 
-import com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IdRefTestBean;
 import com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IntegerTestBean;
-import com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.StringTestBean;
-import com.spring.ioc.model.HelloApi;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
@@ -70,34 +67,34 @@ public class XmlNoAutowireBeanInjectCore {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 定义Ref 类型注册值
-        RuntimeBeanReference runtimeBeanReference = new RuntimeBeanReference("beanIdref1");
+        RuntimeBeanReference runtimeBeanReference = new RuntimeBeanReference("index");
         runtimeBeanReference.setSource(null);
 
         // 3 定义PropertyValue 设置 RuntimeBeanReference
-        PropertyValue pv = new PropertyValue("id", runtimeBeanReference);
+        PropertyValue pv = new PropertyValue("index", runtimeBeanReference);
         pv.setSource(null);
 
         // 4 定义beanDefinition 设置 PropertyValue
         AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null,
-                "com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IdRefTestBean", null);
+                "com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IntegerTestBean", null);
         beanDefinition.getPropertyValues().addPropertyValue(pv);
 
         // 5 注册到 BeanFactory
-        BeanDefinitionReaderUtils.registerBeanDefinition(new BeanDefinitionHolder(beanDefinition, "idrefBean1_at", null),
+        BeanDefinitionReaderUtils.registerBeanDefinition(new BeanDefinitionHolder(beanDefinition, "bean4_2_at", null),
                 beanFactory);
 
-        BeanDefinition idrefBean1_at = beanFactory.getBeanDefinition("idrefBean1_at");
+        BeanDefinition idrefBean1_at = beanFactory.getBeanDefinition("bean4_2_at");
         System.err.println(ReflectionToStringBuilder.toString(idrefBean1_at, ToStringStyle.MULTI_LINE_STYLE));
 
         Resource resource = new ClassPathResource("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
-        BeanDefinition idrefBean1 = beanFactory.getBeanDefinition("idrefBean1");
+        BeanDefinition idrefBean1 = beanFactory.getBeanDefinition("bean4_2");
         System.err.println(ReflectionToStringBuilder.toString(idrefBean1, ToStringStyle.MULTI_LINE_STYLE));
 
-        IdRefTestBean idRefTestBean1 = beanFactory.getBean("idrefBean1_at", IdRefTestBean.class);
+        IntegerTestBean idRefTestBean1 = beanFactory.getBean("bean4_2_at", IntegerTestBean.class);
         System.err.println(idRefTestBean1);
-        IdRefTestBean idRefTestBean2 = beanFactory.getBean("idrefBean1", IdRefTestBean.class);
+        IntegerTestBean idRefTestBean2 = beanFactory.getBean("bean4_2", IntegerTestBean.class);
         System.err.println(idRefTestBean2);
     }
 }
