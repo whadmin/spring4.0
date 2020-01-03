@@ -13,6 +13,6 @@ public class IntegerTestBean {
     }
 
     public void sayHello() {
-        System.out.println(index);
+        System.err.println(index);
     }
 }

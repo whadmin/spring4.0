@@ -20,8 +20,11 @@ public class XmlNoAutowireBeanInject {
 	@Test
 	public void testStringInject() {
 		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
-		IntegerTestBean bean5 = beanFactory.getBean("bean4_1", IntegerTestBean.class);
-		bean5.sayHello();
+		IntegerTestBean bean4_1 = beanFactory.getBean("bean4_1", IntegerTestBean.class);
+		bean4_1.sayHello();
+
+		IntegerTestBean bean4_2 = beanFactory.getBean("bean4_2", IntegerTestBean.class);
+		bean4_2.sayHello();
 	}
 
 	/**
@@ -30,9 +33,11 @@ public class XmlNoAutowireBeanInject {
 	@Test
 	public void testIntegerInject() {
 		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
-		StringTestBean bean5 = beanFactory.getBean("bean5_1", StringTestBean.class);
-		bean5.sayHello();
+		StringTestBean bean5_1 = beanFactory.getBean("bean5_1", StringTestBean.class);
+		bean5_1.sayHello();
 
+		StringTestBean bean5_2 = beanFactory.getBean("bean5_2", StringTestBean.class);
+		bean5_2.sayHello();
 	}
 
 	/**
@@ -160,12 +165,4 @@ public class XmlNoAutowireBeanInject {
 		IdRefTestBean bean = context.getBean("bean17", IdRefTestBean.class);
 		Assert.assertEquals("beanIdref1", context.getBean("idrefBean1", IdRefTestBean.class).getId());
 	}
-
-	@Test
-	public void testPNamespaceBeanInject() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
-		Assert.assertEquals("beanIdref1", context.getBean("idrefBean1", IdRefTestBean.class).getId());
-
-	}
-
 }

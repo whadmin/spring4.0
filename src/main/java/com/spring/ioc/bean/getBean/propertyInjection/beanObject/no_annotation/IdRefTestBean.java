@@ -1,5 +1,8 @@
 package com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation;
 
+import lombok.ToString;
+
+@ToString
 public class IdRefTestBean {
     
     private String id;
@@ -11,6 +14,5 @@ public class IdRefTestBean {
     public void setId(String id) {
         this.id = id;
     }
-    
     
 }

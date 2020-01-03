@@ -13,6 +13,6 @@ public class StringTestBean {
     }
 
     public void sayHello() {
-        System.out.println( message);
+        System.err.println( message);
     }
 }

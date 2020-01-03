@@ -6,13 +6,22 @@
 
 
     <bean id="bean4_1" class="com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IntegerTestBean">
-        <property name="index">
+        <property name="index" >
             <value>4</value>
+        </property>
+    </bean>
+
+    <bean id="bean4_2" class="com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IntegerTestBean">
+        <property name="index" ref="index">
         </property>
     </bean>
 
     <bean id="bean5_1" class="com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.StringTestBean">
         <property name="message" value="Hello World!"/>
+    </bean>
+
+    <bean id="bean5_2" class="com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.StringTestBean">
+        <property name="message" ref="message"/>
     </bean>
 
     <!-- booleanInject star -->
@@ -175,22 +184,10 @@
         <constructor-arg index="0" value="test"/>
     </bean>
 
-    <bean id="idrefBean1" class="com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IdRefTestBean">
-        <property name="id">
-            <idref bean="beanIdref1"/>
-        </property>
-    </bean>
-
-    <bean id="idrefBean2" class="com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IdRefTestBean">
-        <property name="id" ref="beanIdref1">
-        </property>
-    </bean>
-
-
     <bean id="message" class="java.lang.String">
         <constructor-arg index="0" value="Hello World!"/>
     </bean>
-    <bean id="index" class="java.lang.String">
+    <bean id="index" class="java.lang.Integer">
         <constructor-arg index="0" value="4"/>
     </bean>
 </beans>
