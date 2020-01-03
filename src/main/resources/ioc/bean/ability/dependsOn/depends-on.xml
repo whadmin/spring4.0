@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           ">
+           
+               
+    <bean id="resourceBean" 
+          class="com.spring.ioc.bean.ability.dependsOn.beanObject.no_annotation.ResourceBean"
+          init-method="init" destroy-method="destroy" lazy-init="true">
+    </bean>
+
+    <bean id="dependentBean" 
+          class="com.spring.ioc.bean.ability.dependsOn.beanObject.no_annotation.DependentBean"
+          init-method="init" destroy-method="destroy" depends-on="resourceBean">
+        <property name="resourceBean" ref="resourceBean"/>
+    </bean>
+</beans>

@@ -8,9 +8,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="com.spring.ioc.bean.register.beanObject.scanner" use-default-filters="true">
-		<context:include-filter type="annotation" expression="com.spring.ioc.bean.register.beanObject.scanner.IncludeFilter"/>
-		<context:exclude-filter type="annotation" expression="com.spring.ioc.bean.register.beanObject.scanner.ExcludeFilter"/>
+	<context:component-scan base-package="com.spring.ioc.bean.assemblyBean.beanObject.annotation.scanner" use-default-filters="true">
+		<context:include-filter type="annotation" expression="com.spring.ioc.bean.assemblyBean.beanObject.annotation.scanner.IncludeFilter"/>
+		<context:exclude-filter type="annotation" expression="com.spring.ioc.bean.assemblyBean.beanObject.annotation.scanner.ExcludeFilter"/>
 	</context:component-scan>
 
 </beans>

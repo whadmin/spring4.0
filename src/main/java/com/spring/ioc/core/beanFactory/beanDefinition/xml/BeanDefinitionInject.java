@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
-import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -28,7 +27,7 @@ public class BeanDefinitionInject {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInject.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
@@ -78,7 +77,7 @@ public class BeanDefinitionInject {
 	public void testInstantiatingBeanByInject2() throws ClassNotFoundException {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInject.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		

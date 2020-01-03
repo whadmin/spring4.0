@@ -12,8 +12,7 @@ import com.spring.ioc.model.HelloApiDataSource;
 import com.spring.ioc.model.HelloApiDecorator;
 import com.spring.ioc.model.HelloApiDecorator2;
 import com.spring.ioc.model.HelloImpl;
-import com.spring.ioc.model.ListBean;
-import com.spring.ioc.model.qualifier.Mysql;
+import com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.ListBean;
 
 @Configuration
 public class InstantiatingBeanInjectAutowire {

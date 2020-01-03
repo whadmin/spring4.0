@@ -12,7 +12,7 @@ public class InstantiationBeanAnnotation {
 	@Test
 	public void testAutowireByName() throws IOException {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-				"ioc/instantiatingBeanInjectAutowire.xml");
+				"ioc/bean/getBean/injection/beanAutowireByAnnotationQualifier.xml");
 		HelloApiDataSource helloApi = context.getBean("bean_byName", HelloApiDataSource.class);
 		System.out.println(helloApi.getMessage());
 		helloApi.getHelloApi().sayHello();

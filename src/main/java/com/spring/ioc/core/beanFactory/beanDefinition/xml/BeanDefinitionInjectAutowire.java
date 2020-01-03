@@ -2,36 +2,18 @@ package com.spring.ioc.core.beanFactory.beanDefinition.xml;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
-import org.springframework.beans.PropertyValue;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.QualifierAnnotationAutowireCandidateResolver;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.support.MergedBeanDefinitionPostProcessor;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.core.OrderComparator;
-import org.springframework.core.Ordered;
-import org.springframework.core.PriorityOrdered;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -46,7 +28,7 @@ public class BeanDefinitionInjectAutowire{
 
 	@Test
 	public void readSouceCode() {
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInjectAutowire.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/injection/beanAutowireByAnnotationQualifier.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
@@ -62,7 +44,7 @@ public class BeanDefinitionInjectAutowire{
 	public void testInstantiatingBeanByName() throws ClassNotFoundException {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInjectAutowire.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/injection/beanAutowireByAnnotationQualifier.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
@@ -103,7 +85,7 @@ public class BeanDefinitionInjectAutowire{
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInjectAutowire.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/injection/beanAutowireByAnnotationQualifier.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
@@ -155,7 +137,7 @@ public class BeanDefinitionInjectAutowire{
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInjectAutowire.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/injection/beanAutowireByAnnotationQualifier.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
@@ -192,7 +174,7 @@ public class BeanDefinitionInjectAutowire{
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		
-		Resource resource = new ClassPathResource("ioc/instantiatingBeanInjectAutowire.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/injection/beanAutowireByAnnotationQualifier.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 
