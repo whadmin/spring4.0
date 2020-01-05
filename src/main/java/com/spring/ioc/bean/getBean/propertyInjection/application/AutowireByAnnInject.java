@@ -46,7 +46,7 @@ public class AutowireByAnnInject {
     @Test
     public void testAutowireByAnnotationFalse() throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/injection/beanAutowireByAnnotationFalse.xml");
+                "ioc/bean/getBean/methodInjection/beanAutowireByAnnotationFalse.xml");
         AutowireByAnnBean bean = context.getBean("bean_annotation",
                 AutowireByAnnBean.class);
         assertThat(bean.getMysqlDataSource1()).isNull();
@@ -57,7 +57,7 @@ public class AutowireByAnnInject {
     @Test
     public void testAutowireByAnnotationTrue() throws IOException {
         ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/injection/beanAutowireByAnnotationTrue.xml");
+                "ioc/bean/getBean/methodInjection/beanAutowireByAnnotationTrue.xml");
         AutowireByAnnBean bean1 = context1.getBean("bean_annotation",
                 AutowireByAnnBean.class);
         assertThat(bean1.getMysqlDataSource1()).isNotNull();
@@ -76,7 +76,7 @@ public class AutowireByAnnInject {
     @Test(expected = Exception.class)
     public void testAutowireByAnnotationError() throws IOException {
         ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/injection/beanAutowireByAnnotationError.xml");
+                "ioc/bean/getBean/methodInjection/beanAutowireByAnnotationError.xml");
         AutowireByAnnBean bean1 = context1.getBean("bean_annotation",
                 AutowireByAnnBean.class);
         assertThat(bean1.getMysqlDataSource1()).isNotNull();
@@ -95,7 +95,7 @@ public class AutowireByAnnInject {
     @Test
     public void testAutowireByQualifier() throws IOException {
         ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/injection/beanAutowireByAnnotationQualifier.xml");
+                "ioc/bean/getBean/methodInjection/beanAutowireByAnnotationQualifier.xml");
         AutowireByAnnQualifierBean bean1 = context1.getBean("bean_byType_qualifier",
                 AutowireByAnnQualifierBean.class);
         assertThat(bean1.getMysqlDataSource1()).isNotNull();

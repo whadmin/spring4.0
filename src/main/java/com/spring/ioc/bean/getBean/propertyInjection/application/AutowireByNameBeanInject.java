@@ -16,7 +16,7 @@ public class AutowireByNameBeanInject {
     @Test
     public void testAutowireByName() throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/injection/beanAutowireByName.xml");
+                "ioc/bean/getBean/methodInjection/beanAutowireByName.xml");
         AutowireByNameBean bean1 = context.getBean("bean_byName",
                 AutowireByNameBean.class);
         assertThat(bean1.getMysqlDataSource()).isNotNull();

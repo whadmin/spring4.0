@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.xml;
+package com.spring.ioc.bean;
 
 import org.junit.Test;
 import org.springframework.beans.factory.BeanCurrentlyInCreationException;

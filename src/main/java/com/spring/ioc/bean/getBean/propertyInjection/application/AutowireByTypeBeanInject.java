@@ -16,7 +16,7 @@ public class AutowireByTypeBeanInject {
     @Test
     public void testAutowireByType() throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/injection/beanAutowireByType.xml");
+                "ioc/bean/getBean/methodInjection/beanAutowireByType.xml");
         AutowirebyTypeBean bean1 = context.getBean("bean_byType",
                 AutowirebyTypeBean.class);
         assertThat(bean1.getDataSource()).isNotNull();
@@ -30,7 +30,7 @@ public class AutowireByTypeBeanInject {
     @Test(expected = Exception.class)
     public void testAutowireByTypeError() throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/injection/beanAutowireByTypeError.xml");
+                "ioc/bean/getBean/methodInjection/beanAutowireByTypeError.xml");
         AutowirebyTypeBean bean1 = context.getBean("bean_byType_error",
                 AutowirebyTypeBean.class);
 
@@ -42,7 +42,7 @@ public class AutowireByTypeBeanInject {
     @Test
     public void testAutowireByTypePrimary() throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/injection/beanAutowireByTypePrimary.xml");
+                "ioc/bean/getBean/methodInjection/beanAutowireByTypePrimary.xml");
         AutowireByTypePrimaryBean bean1 = context.getBean("bean_byType_primary",
                 AutowireByTypePrimaryBean.class);
         assertThat(bean1.getDataSource()).isNotNull();

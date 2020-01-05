@@ -1,4 +1,4 @@
-package com.spring.ioc.core.beanFactory.beanDefinition.javaConfig;
+package com.spring.ioc.bean.getBean.constructor;
 
 import java.util.Arrays;
 

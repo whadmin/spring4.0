@@ -19,7 +19,7 @@ public class XmlNoAutowireBeanInject {
 	 */
 	@Test
 	public void testStringInject() {
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 		IntegerTestBean bean4_1 = beanFactory.getBean("bean4_1", IntegerTestBean.class);
 		bean4_1.sayHello();
 
@@ -32,7 +32,7 @@ public class XmlNoAutowireBeanInject {
 	 */
 	@Test
 	public void testIntegerInject() {
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 		StringTestBean bean5_1 = beanFactory.getBean("bean5_1", StringTestBean.class);
 		bean5_1.sayHello();
 
@@ -46,7 +46,7 @@ public class XmlNoAutowireBeanInject {
 	@Test
 	public void testBooleanInject() {
 
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 
 		BooleanTestBean bean1 = beanFactory.getBean("bean6_1", BooleanTestBean.class);
 		System.out.println(bean1.isSuccess());
@@ -68,7 +68,7 @@ public class XmlNoAutowireBeanInject {
 	@Test
 	public void testListInject() {
 
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 		ListTestBean listBean = beanFactory.getBean("bean8", ListTestBean.class);
 		System.out.println(listBean.getValues().size());
 		Assert.assertEquals(3, listBean.getValues().size());
@@ -81,7 +81,7 @@ public class XmlNoAutowireBeanInject {
 	@Test
 	public void testSetInject() {
 
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 		SetTestBean setBean = beanFactory.getBean("bean9", SetTestBean.class);
 		System.out.println(setBean.getValues().size());
 		Assert.assertEquals(3, setBean.getValues().size());
@@ -94,7 +94,7 @@ public class XmlNoAutowireBeanInject {
 	@Test
 	public void testCollectionInject() {
 
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 
 		// 本质是List类型
 		CollectionTestBean collectionBean1 = beanFactory.getBean("bean10_1", CollectionTestBean.class);
@@ -116,7 +116,7 @@ public class XmlNoAutowireBeanInject {
 	@Test
 	public void testArrayInject() {
 
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 		ArrayTestBean arrayBean = beanFactory.getBean("bean11", ArrayTestBean.class);
 		System.out.println(arrayBean.getArray().length);
 		System.out.println(arrayBean.getArray2().length);
@@ -130,7 +130,7 @@ public class XmlNoAutowireBeanInject {
 	 */
 	@Test
 	public void testMapInject() {
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 		MapTestBean mapBean = beanFactory.getBean("bean12", MapTestBean.class);
 		System.out.println(mapBean.getValues().size());
 	}
@@ -140,7 +140,7 @@ public class XmlNoAutowireBeanInject {
 	 */
 	@Test
 	public void testPropertiesInject() {
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 		PropertiesTestBean propertiesBean = beanFactory.getBean("bean13_1", PropertiesTestBean.class);
 		System.out.println(propertiesBean.getValues().size());
 		System.out.println(propertiesBean.getValues().containsValue("22"));
@@ -161,7 +161,7 @@ public class XmlNoAutowireBeanInject {
 	 */
 	@Test
 	public void testInnerBeanInject() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("ioc/bean/getBean/injection/beanNoAutowireBean.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
 		IdRefTestBean bean = context.getBean("bean17", IdRefTestBean.class);
 		Assert.assertEquals("beanIdref1", context.getBean("idrefBean1", IdRefTestBean.class).getId());
 	}
