@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.propertyInjection.application.beanFactory;
+package com.spring.ioc.bean.getBean.propertyInjection.application.core;
 
 import com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.IntegerTestBean;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;

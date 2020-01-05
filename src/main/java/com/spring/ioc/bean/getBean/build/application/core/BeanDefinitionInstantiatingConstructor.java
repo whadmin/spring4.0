@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.constructor;
+package com.spring.ioc.bean.getBean.build.application.core;
 
 import java.util.Arrays;
 import java.util.Map.Entry;
@@ -28,7 +28,7 @@ public class BeanDefinitionInstantiatingConstructor {
 
 	@Test
 	public void readSouceCode() {
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
@@ -40,7 +40,7 @@ public class BeanDefinitionInstantiatingConstructor {
 	public void testInstantiatingBeanByConstructor() throws ClassNotFoundException {		
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
@@ -96,7 +96,7 @@ public class BeanDefinitionInstantiatingConstructor {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(
 				beanFactory);
 		reader.loadBeanDefinitions(resource);
@@ -106,8 +106,8 @@ public class BeanDefinitionInstantiatingConstructor {
 		    <!-- constructorDependencyInject star -->
 			<!-- 通过构造器参数索引方式依赖注入 -->
 			<bean id="bean2_byIndex" class="com.spring.ioc.model.HelloImpl3">
-				<constructor-arg index="0" value="Hello World!" />
-				<constructor-arg index="1" value="1" />
+				<build-arg index="0" value="Hello World!" />
+				<build-arg index="1" value="1" />
 			</bean>
 		 */
 		BeanDefinition bean2_byIndex = beanFactory.getBeanDefinition("bean2_byIndex");
@@ -171,7 +171,7 @@ public class BeanDefinitionInstantiatingConstructor {
 	public void testInstantiatingBeanByConstructor2()
 			throws ClassNotFoundException {
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(
@@ -193,8 +193,8 @@ public class BeanDefinitionInstantiatingConstructor {
 		 * 构造如下配置的描述 <!-- 通过构造器参数索引方式依赖注入 -->
 		 * 
 		 * <!-- 通过构造器参数类型方式依赖注入 --> <bean id="bean2_byType"
-		 * class="com.spring.ioc.model.HelloImpl3"> <constructor-arg
-		 * type="java.lang.String" value="Hello World!" /> <constructor-arg
+		 * class="com.spring.ioc.model.HelloImpl3"> <build-arg
+		 * type="java.lang.String" value="Hello World!" /> <build-arg
 		 * type="int" value="2" /> </bean>
 		 ***/
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
@@ -243,7 +243,7 @@ public class BeanDefinitionInstantiatingConstructor {
 	@Test
 	public void testInstantiatingBeanByConstructor3() throws ClassNotFoundException {
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
@@ -264,8 +264,8 @@ public class BeanDefinitionInstantiatingConstructor {
 		 * 
 		 * <!-- 通过构造器参数名称方式依赖注入 -->
 			  <bean id="bean2_byName" class="com.spring.ioc.model.HelloImpl3">
-			    <constructor-arg name="message" value="Hello World!" />
-		        <constructor-arg name="index" value="3" />
+			    <build-arg name="message" value="Hello World!" />
+		        <build-arg name="index" value="3" />
 			  </bean>
 		 ***/
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
@@ -314,7 +314,7 @@ public class BeanDefinitionInstantiatingConstructor {
 
 	@Test
 	public void testInstantiatingBeanByConstructor4() throws ClassNotFoundException {
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
@@ -331,13 +331,13 @@ public class BeanDefinitionInstantiatingConstructor {
 
 		/**
 		 * <!-- 通过构造器参数名称方式依赖注入 --> <bean id="message" class="java.lang.String">
-		 * <constructor-arg index="0" value="Hello World!" /> </bean>
+		 * <build-arg index="0" value="Hello World!" /> </bean>
 		 * <bean id="index" class="java.lang.String">
-		 * <constructor-arg index="0" value="4" /> </bean>
+		 * <build-arg index="0" value="4" /> </bean>
 		 *
 		 * <bean id="bean2_byRef" class="com.spring.ioc.model.HelloImpl3">
-		 * <constructor-arg name="message" ref="message" />
-		 * <constructor-arg name="index" ref="index" /> </bean>
+		 * <build-arg name="message" ref="message" />
+		 * <build-arg name="index" ref="index" /> </bean>
 		 ***/
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils

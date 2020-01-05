@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.constructor;
+package com.spring.ioc.bean.getBean.build.application.core;
 
 import java.util.Map.Entry;
 
@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.config.ConstructorArgumentValues.ValueHolder;
 import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -30,7 +29,7 @@ public class BeanDefinitionInstantiatingInstanceFactory {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 
@@ -46,13 +45,13 @@ public class BeanDefinitionInstantiatingInstanceFactory {
 
 		/**
 		 * <bean id="bean4_byIndex" factory-bean="instanceFactory" factory-method=
-		 * "newInstance"> <constructor-arg index="0" value="Hello World!" />
-		 * <constructor-arg index="1" value="1" /> </bean>
+		 * "newInstance"> <build-arg index="0" value="Hello World!" />
+		 * <build-arg index="1" value="1" /> </bean>
 		 ***/
 
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.DependencyInjectByInstanceFactory", null);
+				"com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByInstanceFactory", null);
 
 		BeanDefinitionReaderUtils.registerBeanDefinition(
 				new BeanDefinitionHolder(beanDefinition1, "instanceFactory", null), beanFactory);
@@ -96,7 +95,7 @@ public class BeanDefinitionInstantiatingInstanceFactory {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 
@@ -111,18 +110,18 @@ public class BeanDefinitionInstantiatingInstanceFactory {
 		 * 
 		 * <bean id="bean4_byType" factory-bean="instanceFactory" factory-method=
 		 * "newInstance">
-		 * <constructor-arg type="java.lang.String" value="Hello World!" />
-		 * <constructor-arg type="int" value="2" /> </bean> </bean>
+		 * <build-arg type="java.lang.String" value="Hello World!" />
+		 * <build-arg type="int" value="2" /> </bean> </bean>
 		 ***/
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.DependencyInjectByInstanceFactory", null);
+				"com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByInstanceFactory", null);
 
 		BeanDefinitionReaderUtils.registerBeanDefinition(
 				new BeanDefinitionHolder(beanDefinition1, "instanceFactory", null), beanFactory);
 
 		AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.DependencyInjectByStaticFactory", null);
+				"com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByStaticFactory", null);
 
 		/** 定义普通属性,并设置属性类型 **/
 		TypedStringValue object1 = new TypedStringValue("Hello World!");
@@ -162,7 +161,7 @@ public class BeanDefinitionInstantiatingInstanceFactory {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 
@@ -177,18 +176,18 @@ public class BeanDefinitionInstantiatingInstanceFactory {
 		/**
 		 * 
 		 * <bean id="bean4_byName" factory-bean="instanceFactory" factory-method=
-		 * "newInstance"> <constructor-arg name="message" value="Hello World!" />
-		 * <constructor-arg name="index" value="3" /> </bean>
+		 * "newInstance"> <build-arg name="message" value="Hello World!" />
+		 * <build-arg name="index" value="3" /> </bean>
 		 ***/
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.DependencyInjectByInstanceFactory", null);
+				"com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByInstanceFactory", null);
 
 		BeanDefinitionReaderUtils.registerBeanDefinition(
 				new BeanDefinitionHolder(beanDefinition1, "instanceFactory", null), beanFactory);
 
 		AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.DependencyInjectByStaticFactory", null);
+				"com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByStaticFactory", null);
 
 		/** 定义普通属性,并设置属性类型 **/
 		TypedStringValue object1 = new TypedStringValue("Hello World!");

@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.constructor;
+package com.spring.ioc.bean.getBean.build.application.core;
 
 import java.util.Map.Entry;
 
@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.config.ConstructorArgumentValues.ValueHolder;
 import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -30,7 +29,7 @@ public class BeanDefinitionInstantiatingStaticFactory {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
@@ -46,16 +45,16 @@ public class BeanDefinitionInstantiatingStaticFactory {
 		/**
 		 * 	<!-- 通过静态工厂参数索引方式依赖注入 -->
 			<bean id="bean3_byIndex"
-				class="com.spring.ioc.model.DependencyInjectByStaticFactory"
+				class="com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByStaticFactory"
 				factory-method="newInstance">
-				<constructor-arg index="0" value="Hello World!" />
-				<constructor-arg index="1" value="1" />
+				<build-arg index="0" value="Hello World!" />
+				<build-arg index="1" value="1" />
 			</bean>
          ***/
 
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.DependencyInjectByStaticFactory", null);
+				"com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByStaticFactory", null);
 		
 		/** 定义普通属性**/
 		TypedStringValue object1 = new TypedStringValue("Hello World!");
@@ -90,7 +89,7 @@ public class BeanDefinitionInstantiatingStaticFactory {
 	public void testInstantiatingBeanByStaticFactory2() throws ClassNotFoundException {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
@@ -106,16 +105,16 @@ public class BeanDefinitionInstantiatingStaticFactory {
 		 * 
 		<!-- 通过静态工厂参数类型方式依赖注入 -->
 		<bean id="bean3_byType"
-			class="com.spring.ioc.model.DependencyInjectByStaticFactory"
+			class="com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByStaticFactory"
 			factory-method="newInstance">
-			<constructor-arg type="java.lang.String"
+			<build-arg type="java.lang.String"
 				value="Hello World!" />
-			<constructor-arg type="int" value="2" />
+			<build-arg type="int" value="2" />
 		</bean>
         ***/
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.DependencyInjectByStaticFactory", null);
+				"com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByStaticFactory", null);
 		
 		/** 定义普通属性,并设置属性类型**/
 		TypedStringValue object1 = new TypedStringValue("Hello World!");
@@ -154,7 +153,7 @@ public class BeanDefinitionInstantiatingStaticFactory {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-		Resource resource = new ClassPathResource("ioc/instantiatingBean.xml");
+		Resource resource = new ClassPathResource("ioc/bean/getBean/build/constructorBuildBean.xml");
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 		reader.loadBeanDefinitions(resource);
 		
@@ -169,15 +168,15 @@ public class BeanDefinitionInstantiatingStaticFactory {
 		 * 
 			<!-- 通过静态工厂参数名称方式依赖注入 -->
 			<bean id="bean3_byName"
-				class="com.spring.ioc.model.DependencyInjectByStaticFactory"
+				class="com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByStaticFactory"
 				factory-method="newInstance">
-				<constructor-arg name="message" value="Hello World!" />
-				<constructor-arg name="index" value="3" />
+				<build-arg name="message" value="Hello World!" />
+				<build-arg name="index" value="3" />
 			</bean>
         ***/
 		/** 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
 		AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null,
-				"com.spring.ioc.model.DependencyInjectByStaticFactory", null);
+				"com.spring.ioc.bean.getBean.build.beanObject.factory.DependencyInjectByStaticFactory", null);
 		
 		/** 定义普通属性,并设置属性类型**/
 		TypedStringValue object1 = new TypedStringValue("Hello World!");

@@ -8,7 +8,7 @@ import com.spring.ioc.model.Printer;
 public class InstantiatingBeanScope {
 	
 	@Bean
-	@Scope()
+	@Scope
 	public Printer prototypePrinter() {
 		return new Printer();
 	}

@@ -231,7 +231,7 @@ public class PostProcessorRegistrationDelegate {
 
 		// Re-assemblyBean post-processor for detecting inner beans as ApplicationListeners,
 		// moving it to the end of the processor chain (for picking up proxies etc).
-		//beanFactory.addBeanPostProcessor(new ApplicationListenerDetector(applicationContext));
+		//core.addBeanPostProcessor(new ApplicationListenerDetector(applicationContext));
 	}
 
 	private static void sortPostProcessors(ConfigurableListableBeanFactory beanFactory, List<?> postProcessors) {

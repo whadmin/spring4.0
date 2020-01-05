@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.constructor;
+package com.spring.ioc.bean.getBean.build.application.core;
 
 import java.util.Arrays;
 
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;
 import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 
-import com.spring.ioc.javaConig.InstantiatingBean;
+import com.spring.ioc.bean.getBean.build.javaConfig.ConfigurationBean;
 import com.spring.ioc.model.HelloApi;
 
 /**
@@ -27,7 +27,7 @@ public class BeanDefinitionJavaConfig {
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
 		AnnotatedBeanDefinitionReader reader = new AnnotatedBeanDefinitionReader(beanFactory);
-		reader.register(InstantiatingBean.class);
+		reader.register(ConfigurationBean.class);
 
 		ConfigurationClassPostProcessor configurationClassPostProcessor = new ConfigurationClassPostProcessor();
 		configurationClassPostProcessor.postProcessBeanDefinitionRegistry(beanFactory);
@@ -41,7 +41,7 @@ public class BeanDefinitionJavaConfig {
 		// 2.初始化容器
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 		AnnotatedBeanDefinitionReader reader = new AnnotatedBeanDefinitionReader(beanFactory);
-		reader.register(InstantiatingBean.class);
+		reader.register(ConfigurationBean.class);
 		
 		//打印bean1beanFactory所有beanDefinition名称和详细，
 		/**
