@@ -1,7 +1,7 @@
 package com.spring.ioc.bean.assemblyBean.beanDefinitionReader.configurationAnnotationProcessor;
 
-import com.spring.ioc.bean.assemblyBean.beanObject.annotation.configuration.ConfigurationConfig;
-import com.spring.ioc.bean.assemblyBean.beanObject.annotation.configuration.EnableConfigurationConfig;
+import com.spring.ioc.bean.assemblyBean.javaConfig.ConfigurationConfig;
+import com.spring.ioc.bean.assemblyBean.javaConfig.EnableConfigurationConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;

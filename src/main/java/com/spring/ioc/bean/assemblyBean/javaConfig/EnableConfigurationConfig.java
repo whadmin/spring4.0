@@ -1,4 +1,5 @@
-package com.spring.ioc.bean.assemblyBean.beanObject.annotation.configuration;
+package com.spring.ioc.bean.assemblyBean.javaConfig;
+
 
 import com.spring.ioc.bean.assemblyBean.beanObject.enable.EnableHelloWorld;
 

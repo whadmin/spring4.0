@@ -1,6 +1,6 @@
 package com.spring.ioc.bean.assemblyBean.application;
 
-import com.spring.ioc.bean.assemblyBean.beanObject.annotation.configuration.ConfigurationConfig;
+import com.spring.ioc.bean.assemblyBean.javaConfig.ConfigurationConfig;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigUtils;
