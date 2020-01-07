@@ -6,11 +6,8 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         ">
 
-    <context:annotation-config/>
-
-
-    <bean id="bean_annotation_qualifier"
-          class="com.spring.ioc.bean.getBean.createBeanInstance.beanObject.annotation.AutowireByAnnQualifierBean" autowire="constructor"/>
+    <bean id="autowire_Byconstructor_qualifier"
+          class="com.spring.ioc.bean.getBean.createBeanInstance.beanObject.annotation.AutowireByConstructorQualifierBean" autowire="constructor"/>
 
     <bean id="mysqlDataSourceBean"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -31,5 +28,4 @@
             <attribute key="database" value="ORACLE"/>
         </qualifier>
     </bean>
-
 </beans>

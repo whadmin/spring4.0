@@ -94,7 +94,7 @@ public class AutowireByAnnBeanTest {
     @Test
     public void testAutowireByQualifier() throws IOException {
         ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/createBeanInstance/autowireByAnnotationQualifier.xml");
+                "ioc/bean/getBean/createBeanInstance/autowireByConstructorQualifierFalse.xml");
         AutowireByAnnQualifierBean bean1 = context1.getBean("bean_byType_qualifier",
                 AutowireByAnnQualifierBean.class);
         assertThat(bean1.getMysqlDataSource1()).isNotNull();

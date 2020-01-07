@@ -1,6 +1,7 @@
 package com.spring.ioc.bean.getBean.createBeanInstance.application.core;
 
 
+import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.annotation.AutowireByConstructorQualifierBean;
 import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.AutowireByConstructorMultipleMatches;
 import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.ConstructorHaveParamBean;
 import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.ConstructorNoParamBean;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,11 +34,11 @@ public class ConstructorBuildBeanCoreTest {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
 
-//		System.out.println(Arrays.toString(beanFactory.getBeanDefinitionNames()));
-//		for (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) {
-//			BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanDefinitionName);
-//			System.out.println(ReflectionToStringBuilder.toString(beanDefinition, ToStringStyle.MULTI_LINE_STYLE));
-//		}
+		System.out.println(Arrays.toString(beanFactory.getBeanDefinitionNames()));
+		for (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) {
+			BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanDefinitionName);
+			System.out.println(ReflectionToStringBuilder.toString(beanDefinition, ToStringStyle.MULTI_LINE_STYLE));
+		}
     }
 
     @Test
@@ -234,18 +237,30 @@ public class ConstructorBuildBeanCoreTest {
         beanDefinition.getConstructorArgumentValues().addGenericArgumentValue(
                 valueHolder1);
 
+        AbstractBeanDefinition beanDefinition1 = BeanDefinitionReaderUtils.createBeanDefinition(null, "java.lang.String",
+                null);
+        // 定义普通属性
+        TypedStringValue object2 = new TypedStringValue("Hello World!");
+        object1.setSource(null);
+        ConstructorArgumentValues.ValueHolder valueHolder2 = new ConstructorArgumentValues.ValueHolder(
+                object2);
+
+        // 设置构造bean的参数按构造函数索引
+        beanDefinition1.getConstructorArgumentValues().addIndexedArgumentValue(
+                0, valueHolder2);
+
         // 3 注册到 BeanFactory
         BeanDefinitionReaderUtils.registerBeanDefinition(
                 new BeanDefinitionHolder(beanDefinition, "constructorParamBean_byRef_at", null),
                 beanFactory);
+
+        BeanDefinitionReaderUtils.registerBeanDefinition(
+                new BeanDefinitionHolder(beanDefinition1, "message", null),
+                beanFactory);
+
         // 4 获取注册BeanDefinition
         System.err.println(ReflectionToStringBuilder.toString(beanFactory.getBeanDefinition("constructorParamBean_byRef_at"),
                 ToStringStyle.MULTI_LINE_STYLE));
-
-
-        Resource resource = new ClassPathResource("ioc/bean/getBean/createBeanInstance/constructorBuildBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
 
         ConstructorHaveParamBean bean2 = beanFactory.getBean("constructorParamBean_byRef_at", ConstructorHaveParamBean.class);
         assertThat(bean2.getMessage()).isNotNull();
@@ -264,9 +279,9 @@ public class ConstructorBuildBeanCoreTest {
 
         // 3 注册到 BeanFactory
         BeanDefinitionReaderUtils
-                .registerBeanDefinition(new BeanDefinitionHolder(beanDefinition, "autowireByConstructorMultiple_at", null), beanFactory);
+                .registerBeanDefinition(new BeanDefinitionHolder(beanDefinition, "autowire_Byconstructor_primary_at", null), beanFactory);
 
-        BeanDefinition bean_byName_at = beanFactory.getBeanDefinition("autowireByConstructorMultiple_at");
+        BeanDefinition bean_byName_at = beanFactory.getBeanDefinition("autowire_Byconstructor_primary_at");
         System.err.println(ReflectionToStringBuilder.toString(bean_byName_at, ToStringStyle.MULTI_LINE_STYLE));
 
 
@@ -274,14 +289,51 @@ public class ConstructorBuildBeanCoreTest {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
 
-        BeanDefinition bean_byName = beanFactory.getBeanDefinition("autowireByConstructorMultiple");
+        BeanDefinition bean_byName = beanFactory.getBeanDefinition("autowire_Byconstructor_primary");
         System.err.println(ReflectionToStringBuilder.toString(bean_byName, ToStringStyle.MULTI_LINE_STYLE));
 
-        AutowireByConstructorMultipleMatches bean1 = beanFactory.getBean("autowireByConstructorMultiple", AutowireByConstructorMultipleMatches.class);
+        AutowireByConstructorMultipleMatches bean1 = beanFactory.getBean("autowire_Byconstructor_primary", AutowireByConstructorMultipleMatches.class);
         assertThat(bean1.getDataSource()).isNotNull();
 
-        AutowireByConstructorMultipleMatches bean2 = beanFactory.getBean("autowireByConstructorMultiple_at", AutowireByConstructorMultipleMatches.class);
+        AutowireByConstructorMultipleMatches bean2 = beanFactory.getBean("autowire_Byconstructor_primary_at", AutowireByConstructorMultipleMatches.class);
         assertThat(bean2.getDataSource()).isNotNull();
+
+    }
+
+
+    @Test
+    public void testAutowireByConstructorQualifier() throws ClassNotFoundException {
+        // 1 定义BeanFactory
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 定义beanDefinition
+        /* 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
+        AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null, "com.spring.ioc.bean.getBean.createBeanInstance.beanObject.annotation.AutowireByConstructorQualifierBean",
+                null);
+        beanDefinition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
+
+        // 3 注册到 BeanFactory
+        BeanDefinitionReaderUtils
+                .registerBeanDefinition(new BeanDefinitionHolder(beanDefinition, "autowire_Byconstructor_qualifier_at", null), beanFactory);
+
+        BeanDefinition bean_byName_at = beanFactory.getBeanDefinition("autowire_Byconstructor_qualifier_at");
+        System.err.println(ReflectionToStringBuilder.toString(bean_byName_at, ToStringStyle.MULTI_LINE_STYLE));
+
+
+        Resource resource = new ClassPathResource("ioc/bean/getBean/createBeanInstance/autowireByConstructorQualifierTrue.xml");
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(resource);
+
+        BeanDefinition bean_byName = beanFactory.getBeanDefinition("autowire_Byconstructor_qualifier");
+        System.err.println(ReflectionToStringBuilder.toString(bean_byName, ToStringStyle.MULTI_LINE_STYLE));
+
+        AutowireByConstructorQualifierBean bean1 = beanFactory.getBean("autowire_Byconstructor_qualifier", AutowireByConstructorQualifierBean.class);
+        assertThat(bean1.getMysqlDataSource()).isNotNull();
+        assertThat(bean1.getOracleDataSource()).isNotNull();
+
+        AutowireByConstructorQualifierBean bean2 = beanFactory.getBean("autowire_Byconstructor_qualifier_at", AutowireByConstructorQualifierBean.class);
+        assertThat(bean2.getMysqlDataSource()).isNotNull();
+        assertThat(bean2.getOracleDataSource()).isNotNull();
 
     }
 }
