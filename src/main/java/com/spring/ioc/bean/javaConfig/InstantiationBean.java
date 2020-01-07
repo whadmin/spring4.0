@@ -3,7 +3,7 @@ package com.spring.ioc.bean.javaConfig;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.spring.ioc.bean.getBean.build.javaConfig.ConfigurationBean;
+import com.spring.ioc.bean.getBean.createBeanInstance.javaConfig.ConfigurationBean;
 import com.spring.ioc.model.HelloApi;
 
 

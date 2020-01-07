@@ -6,10 +6,9 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.spring.ioc.bean.getBean.propertyInjection.beanObject.qualifier.DataBase;
-import com.spring.ioc.bean.getBean.propertyInjection.beanObject.qualifier.DataSourceType;
-import com.spring.ioc.bean.getBean.propertyInjection.beanObject.qualifier.Mysql;
-import com.spring.ioc.bean.getBean.propertyInjection.beanObject.qualifier.Oracle;
+import com.spring.ioc.bean.getBean.populateBean.beanObject.qualifier.DataBase;
+import com.spring.ioc.bean.getBean.populateBean.beanObject.qualifier.DataSourceType;
+import com.spring.ioc.bean.getBean.populateBean.beanObject.qualifier.Mysql;
 
 public class HelloApiDecorator2 implements HelloApiDataSource {
 

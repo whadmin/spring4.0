@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="bean4_1" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.IntegerTestBean">
+        <property name="index" >
+            <value>4</value>
+        </property>
+    </bean>
+
+    <bean id="bean4_2" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.IntegerTestBean">
+        <property name="index" ref="index">
+        </property>
+    </bean>
+
+    <bean id="bean5_1" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.StringTestBean">
+        <property name="message" value="Hello World!"/>
+    </bean>
+
+    <bean id="bean5_2" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.StringTestBean">
+        <property name="message" ref="message"/>
+    </bean>
+
+    <!-- booleanInject star -->
+    <!-- boolean参数值可以用true/false -->
+    <bean id="bean6_1" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.BooleanTestBean">
+        <property name="success" value="true"/>
+    </bean>
+    <!-- boolean参数值可以用on/off -->
+    <bean id="bean6_2" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.BooleanTestBean">
+        <property name="success" value="on"/>
+    </bean>
+    <!-- boolean参数值可以用yes/no -->
+    <bean id="bean6_3" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.BooleanTestBean">
+        <property name="success" value="yes"/>
+    </bean>
+    <!-- boolean参数值可以用1/0 -->
+    <bean id="bean6_4" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.BooleanTestBean">
+        <property name="success" value="1"/>
+    </bean>
+    <!-- booleanInject end -->
+
+    <!-- idRefInject star -->
+    <bean id="string1" class="java.lang.String">
+        <constructor-arg index="0" value="test"/>
+    </bean>
+    <bean id="string2" class="java.lang.String">
+        <constructor-arg index="0" value="test"/>
+    </bean>
+
+    <bean id="bean7_1" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.IdRefTestBean">
+        <property name="id">
+            <idref bean="string1"/>
+        </property>
+    </bean>
+
+    <!-- idRefInject end -->
+
+    <!-- listInject star -->
+    <bean id="bean8" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.ListTestBean">
+        <property name="values">
+            <list value-type="java.lang.String" merge="default">
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </property>
+    </bean>
+    <!-- listInject end -->
+
+
+    <!-- setInject star -->
+    <bean id="bean9" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.SetTestBean">
+        <property name="values">
+            <set>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </set>
+        </property>
+    </bean>
+    <!-- setInject end -->
+
+    <!-- collectionInject star -->
+    <bean id="bean10_1" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.CollectionTestBean">
+        <property name="values">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="bean10_2" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.CollectionTestBean">
+        <property name="values">
+            <set>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </set>
+        </property>
+    </bean>
+    <!-- collectionInject end -->
+
+    <!-- arrayInject star -->
+    <bean id="bean11" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.ArrayTestBean">
+        <property name="array">
+            <array value-type="java.lang.String" merge="default">
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </array>
+        </property>
+
+        <property name="array2">
+            <array>
+                <array>
+                    <value>1</value>
+                    <value>2</value>
+                    <value>3</value>
+                </array>
+                <array>
+                    <value>4</value>
+                    <value>5</value>
+                    <value>6</value>
+                </array>
+            </array>
+        </property>
+    </bean>
+    <!-- arrayInject end -->
+
+    <!-- mapInject star -->
+    <bean id="bean12" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.MapTestBean">
+        <property name="values">
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry>
+                    <key>
+                        <value>1</value>
+                    </key>
+                    <value>11</value>
+                </entry>
+                <entry key="2" value="22"/>
+            </map>
+        </property>
+    </bean>
+    <!-- mapInject end -->
+
+    <!-- propertiesInject star -->
+    <bean id="bean13_1" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.PropertiesTestBean">
+        <property name="values">
+            <props value-type="int" merge="default">
+                <prop key="1">12sw</prop>
+                <prop key="2">2</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="bean13_2" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.PropertiesTestBean">
+        <property name="values">
+            <value>
+                1=11
+                2=22,
+                3=33;
+                4=44
+            </value>
+        </property>
+    </bean>
+    <!-- propertiesInject end -->
+
+
+    <bean id="bean17" class="com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.IdRefTestBean">
+        <property name="id">
+            <bean id="string" class="java.lang.String">
+                <constructor-arg index="0" value="Hello World!"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="beanIdref1" class="java.lang.String">
+        <constructor-arg index="0" value="test"/>
+    </bean>
+
+    <bean id="message" class="java.lang.String">
+        <constructor-arg index="0" value="Hello World!"/>
+    </bean>
+    <bean id="index" class="java.lang.Integer">
+        <constructor-arg index="0" value="4"/>
+    </bean>
+</beans>

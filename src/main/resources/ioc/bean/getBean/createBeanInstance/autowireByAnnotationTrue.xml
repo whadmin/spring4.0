@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        ">
+    <!-- 注解注入需要添加此标签，BeanFactory回通过此标签添加注解标签的处理器 .beanProcessor -->
+    <context:annotation-config/>
+
+    <!-- 通过注解 -->
+    <bean id="bean_annotation"
+          class="com.spring.ioc.bean.getBean.createBeanInstance.beanObject.annotation.AutowireByAnnBean" autowire="constructor"/>
+
+    <bean id="mysqlDataSourceBean"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    </bean>
+</beans>
