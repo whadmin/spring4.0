@@ -1,6 +1,5 @@
 package com.spring.ioc.bean.getBean.propertyInjection.application;
 
-import com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean;
 import com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnQualifierBean;
 import com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnQualifierBean2;
 import com.spring.ioc.bean.getBean.propertyInjection.javaConfig.BeanAutowireByAnnotationError;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @Author: wuhao.w
  * @Date: 2020/1/3 20:29
  */
-public class AutowireByAnnInject {
+public class AutowireByAnnBeanTest {
 
     public void registerAnnotationConfigProcessors(ApplicationContext context){
         assertThat(context.containsBeanDefinition(AnnotationConfigUtils.CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME)).isTrue();
@@ -46,29 +45,29 @@ public class AutowireByAnnInject {
     @Test
     public void testAutowireByAnnotationFalse() throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/methodInjection/beanAutowireByAnnotationFalse.xml");
-        AutowireByAnnBean bean = context.getBean("bean_annotation",
-                AutowireByAnnBean.class);
-        assertThat(bean.getMysqlDataSource1()).isNull();
-        assertThat(bean.getMysqlDataSource2()).isNull();
+                "ioc/bean/getBean/methodInjection/autowireByAnnotationFalse.xml");
+        com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean bean = context.getBean("bean_annotation",
+                com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean.class);
+        assertThat(bean.getDataSource1()).isNull();
+        assertThat(bean.getDataSource2()).isNull();
         unregisterAnnotationConfigProcessors(context);
     }
 
     @Test
     public void testAutowireByAnnotationTrue() throws IOException {
         ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/methodInjection/beanAutowireByAnnotationTrue.xml");
-        AutowireByAnnBean bean1 = context1.getBean("bean_annotation",
-                AutowireByAnnBean.class);
-        assertThat(bean1.getMysqlDataSource1()).isNotNull();
-        assertThat(bean1.getMysqlDataSource2()).isNotNull();
+                "ioc/bean/getBean/build/autowireByAnnotationTrue.xml");
+        com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean bean1 = context1.getBean("bean_annotation",
+                com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean.class);
+        assertThat(bean1.getDataSource1()).isNotNull();
+        assertThat(bean1.getDataSource2()).isNotNull();
         registerAnnotationConfigProcessors(context1);
 
         AnnotationConfigApplicationContext context2 = new AnnotationConfigApplicationContext(BeanAutowireByAnnotationTrue.class);
-        AutowireByAnnBean bean2 = context2.getBean("bean_annotation",
-                AutowireByAnnBean.class);
-        assertThat(bean2.getMysqlDataSource1()).isNotNull();
-        assertThat(bean2.getMysqlDataSource2()).isNotNull();
+        com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean bean2 = context2.getBean("bean_annotation",
+                com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean.class);
+        assertThat(bean2.getDataSource1()).isNotNull();
+        assertThat(bean2.getDataSource2()).isNotNull();
         registerAnnotationConfigProcessors(context2);
     }
 
@@ -76,26 +75,26 @@ public class AutowireByAnnInject {
     @Test(expected = Exception.class)
     public void testAutowireByAnnotationError() throws IOException {
         ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/methodInjection/beanAutowireByAnnotationError.xml");
-        AutowireByAnnBean bean1 = context1.getBean("bean_annotation",
-                AutowireByAnnBean.class);
-        assertThat(bean1.getMysqlDataSource1()).isNotNull();
-        assertThat(bean1.getMysqlDataSource2()).isNotNull();
+                "ioc/bean/getBean/build/autowireByAnnotationError.xml");
+        com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean bean1 = context1.getBean("bean_annotation",
+                com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean.class);
+        assertThat(bean1.getDataSource1()).isNotNull();
+        assertThat(bean1.getDataSource2()).isNotNull();
         registerAnnotationConfigProcessors(context1);
 
 
         AnnotationConfigApplicationContext context2 = new AnnotationConfigApplicationContext(BeanAutowireByAnnotationError.class);
-        AutowireByAnnBean bean2 = context2.getBean("bean_annotation",
-                AutowireByAnnBean.class);
-        assertThat(bean2.getMysqlDataSource1()).isNotNull();
-        assertThat(bean2.getMysqlDataSource2()).isNotNull();
+        com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean bean2 = context2.getBean("bean_annotation",
+                com.spring.ioc.bean.getBean.propertyInjection.beanObject.annotation.AutowireByAnnBean.class);
+        assertThat(bean2.getDataSource1()).isNotNull();
+        assertThat(bean2.getDataSource2()).isNotNull();
         registerAnnotationConfigProcessors(context2);
     }
 
     @Test
     public void testAutowireByQualifier() throws IOException {
         ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/methodInjection/beanAutowireByAnnotationQualifier.xml");
+                "ioc/bean/getBean/build/autowireByAnnotationQualifier.xml");
         AutowireByAnnQualifierBean bean1 = context1.getBean("bean_byType_qualifier",
                 AutowireByAnnQualifierBean.class);
         assertThat(bean1.getMysqlDataSource1()).isNotNull();

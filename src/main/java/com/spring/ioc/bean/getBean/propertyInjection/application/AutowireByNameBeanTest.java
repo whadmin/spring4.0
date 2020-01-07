@@ -11,20 +11,20 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AutowireByNameBeanInject {
+public class AutowireByNameBeanTest {
 
     @Test
     public void testAutowireByName() throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/methodInjection/beanAutowireByName.xml");
-        AutowireByNameBean bean1 = context.getBean("bean_byName",
-                AutowireByNameBean.class);
+                "ioc/bean/getBean/methodInjection/autowireByName.xml");
+        com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.AutowireByNameBean bean1 = context.getBean("bean_byName",
+                com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.AutowireByNameBean.class);
         assertThat(bean1.getMysqlDataSource()).isNotNull();
         assertThat(bean1.getOracleDataSource()).isNotNull();
 
         AnnotationConfigApplicationContext context1 = new AnnotationConfigApplicationContext(BeanAutowireByName.class);
-        AutowireByNameBean bean2 = context1.getBean("bean_byName",
-                AutowireByNameBean.class);
+        com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.AutowireByNameBean bean2 = context1.getBean("bean_byName",
+                com.spring.ioc.bean.getBean.propertyInjection.beanObject.no_annotation.AutowireByNameBean.class);
         assertThat(bean2.getMysqlDataSource()).isNotNull();
         assertThat(bean2.getOracleDataSource()).isNotNull();
     }

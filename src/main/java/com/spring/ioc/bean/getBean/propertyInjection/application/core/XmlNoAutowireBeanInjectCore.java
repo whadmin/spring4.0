@@ -47,7 +47,7 @@ public class XmlNoAutowireBeanInjectCore {
         BeanDefinition bean4_1_at = beanFactory.getBeanDefinition("bean4_1_at");
         System.err.println(ReflectionToStringBuilder.toString(bean4_1_at, ToStringStyle.MULTI_LINE_STYLE));
 
-        Resource resource = new ClassPathResource("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
+        Resource resource = new ClassPathResource("ioc/bean/getBean/methodInjection/noAutowireBean.xml");
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
         BeanDefinition bean4_1 = beanFactory.getBeanDefinition("bean4_1");
@@ -86,7 +86,7 @@ public class XmlNoAutowireBeanInjectCore {
         BeanDefinition idrefBean1_at = beanFactory.getBeanDefinition("bean4_2_at");
         System.err.println(ReflectionToStringBuilder.toString(idrefBean1_at, ToStringStyle.MULTI_LINE_STYLE));
 
-        Resource resource = new ClassPathResource("ioc/bean/getBean/methodInjection/beanNoAutowireBean.xml");
+        Resource resource = new ClassPathResource("ioc/bean/getBean/methodInjection/noAutowireBean.xml");
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
         BeanDefinition idrefBean1 = beanFactory.getBeanDefinition("bean4_2");

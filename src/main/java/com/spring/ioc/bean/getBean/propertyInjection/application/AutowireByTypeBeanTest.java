@@ -11,12 +11,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AutowireByTypeBeanInject {
+public class AutowireByTypeBeanTest {
 
     @Test
     public void testAutowireByType() throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/methodInjection/beanAutowireByType.xml");
+                "ioc/bean/getBean/methodInjection/autowireByType.xml");
         AutowirebyTypeBean bean1 = context.getBean("bean_byType",
                 AutowirebyTypeBean.class);
         assertThat(bean1.getDataSource()).isNotNull();
@@ -30,7 +30,7 @@ public class AutowireByTypeBeanInject {
     @Test(expected = Exception.class)
     public void testAutowireByTypeError() throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/methodInjection/beanAutowireByTypeError.xml");
+                "ioc/bean/getBean/methodInjection/autowireByTypeError.xml");
         AutowirebyTypeBean bean1 = context.getBean("bean_byType_error",
                 AutowirebyTypeBean.class);
 
@@ -42,7 +42,7 @@ public class AutowireByTypeBeanInject {
     @Test
     public void testAutowireByTypePrimary() throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/bean/getBean/methodInjection/beanAutowireByTypePrimary.xml");
+                "ioc/bean/getBean/methodInjection/autowireByTypePrimary.xml");
         AutowireByTypePrimaryBean bean1 = context.getBean("bean_byType_primary",
                 AutowireByTypePrimaryBean.class);
         assertThat(bean1.getDataSource()).isNotNull();

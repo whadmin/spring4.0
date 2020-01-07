@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigurationBean {
 
-
     @Bean(initMethod = "init", destroyMethod = "destroy")
     public ConstructorHaveParamBean buildBeanHaveParam(String message) {
         return new ConstructorHaveParamBean(message);
