@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+	       http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		   ">
+
+    <!-- 通过静态工厂参数索引方式依赖注入 -->
+    <bean id="staticFactoryBuildBean_byIndex"
+          class="com.spring.ioc.bean.getBean.createBeanInstance.beanObject.factory.DependencyInjectByStaticFactory"
+          factory-method="newInstance">
+        <constructor-arg index="0" value="Hello World!"/>
+    </bean>
+
+    <!-- 通过静态工厂参数类型方式依赖注入 -->
+    <bean id="staticFactoryBuildBean_byType"
+          class="com.spring.ioc.bean.getBean.createBeanInstance.beanObject.factory.DependencyInjectByStaticFactory"
+          factory-method="newInstance">
+        <constructor-arg type="java.lang.String"
+                         value="Hello World!"/>
+    </bean>
+
+    <!-- 通过静态工厂参数名称方式依赖注入 -->
+    <bean id="staticFactoryBuildBean_byName"
+          class="com.spring.ioc.bean.getBean.createBeanInstance.beanObject.factory.DependencyInjectByStaticFactory"
+          factory-method="newInstance">
+        <constructor-arg name="message" value="Hello World!"/>
+    </bean>
+
+    <bean id="message" class="java.lang.String">
+        <constructor-arg index="0" value="Hello World!"/>
+    </bean>
+</beans>
