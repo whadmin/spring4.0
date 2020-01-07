@@ -24,9 +24,7 @@ import static org.junit.Assert.*;
 public class XmlBeanDefinitionReaderTest {
 
     /**
-     * 摘抄
-     *   BeanDefinitionParserDelegate.parseBeanDefinitionElement
-     *        BeanDefinitionReaderUtils.createBeanDefinition
+     * 手动创建 XmlBeanDefinitionReader读取XML生成 BeanDefinition，注册到BeanFactory
      */
     @Test
     public void registerXmlBean() {
@@ -49,6 +47,9 @@ public class XmlBeanDefinitionReaderTest {
         System.out.println(bean);
     }
 
+    /**
+     * XmlBeanDefinitionReader读取XML生成 BeanDefinition，注册到BeanFactory
+     */
     @Test
     public void useXmlBeanDefinitionReaderRegisterBean() {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
@@ -59,6 +60,9 @@ public class XmlBeanDefinitionReaderTest {
         assertTrue(beanFactory.containsBeanDefinition("bean"));
     }
 
+    /**
+     * 配置 <context:annotation-config/> 会自动添加 注解处理 BeanProcessor
+     */
     @Test
     public void registerAnnotationBeanProcessor() {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
@@ -75,6 +79,13 @@ public class XmlBeanDefinitionReaderTest {
     }
 
 
+    /**
+     * 配置 <context:component-scan/>
+     *   1 会自动添加 注解处理 BeanProcessor
+     *   2 会创建ClassPathBeanDefinitionScanner 扫描配置的包路径下定义的Bean
+     *   3 适用@AUTOWIRED 注解生效需要将 AnnotationConfigUtils.AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME
+     *     创建并添加 beanFactory.addBeanPostProcessor(autowiredAnnotationBeanPostProcessor)
+     */
     @Test
     public void useClassPathBeanDefinitionScannerRegisterBean() {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
@@ -107,27 +118,5 @@ public class XmlBeanDefinitionReaderTest {
 
 
 
-    @Test
-    public void testClassPathXmlApplicationContext() {
-        ClassPathXmlApplicationContext beanFactory = new ClassPathXmlApplicationContext("ioc/bean/register/registerScannerAnnBean.xml");
 
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition(AnnotationConfigUtils.CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition(AnnotationConfigUtils.AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition(AnnotationConfigUtils.REQUIRED_ANNOTATION_PROCESSOR_BEAN_NAME));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition(AnnotationConfigUtils.COMMON_ANNOTATION_PROCESSOR_BEAN_NAME));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition(AnnotationConfigUtils.EVENT_LISTENER_PROCESSOR_BEAN_NAME));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition(AnnotationConfigUtils.EVENT_LISTENER_FACTORY_BEAN_NAME));
-
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition("testService"));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition("testDao"));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition("testCompoment"));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition("testCache"));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition("testAction"));
-        assertTrue(beanFactory.getBeanFactory().containsBeanDefinition("includeFilterBean"));
-        assertFalse(beanFactory.containsBeanDefinition("excludeFilterBean"));
-        System.out.println(ReflectionToStringBuilder.toString(beanFactory.getBeanFactory().getBeanDefinition("testService")));
-
-        TestServiceImpl service = beanFactory.getBean("testService", TestServiceImpl.class);
-        Assert.assertNotNull(service.getDao());
-    }
 }
