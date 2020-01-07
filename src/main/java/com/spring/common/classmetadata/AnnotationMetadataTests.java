@@ -152,7 +152,7 @@ public class AnnotationMetadataTests {
 
     /**
      * In order to preserve backward-compatibility, {@link StandardAnnotationMetadata}
-     * defaults to return nested annotations and annotation arrays as actual
+     * defaults to return nested annotations and enable arrays as actual
      * Annotation instances. It is recommended for compatibility with ASM-based
      * AnnotationMetadata implementations to set the 'nestedAnnotationsAsMap' flag to
      * 'true' as is done in the main test above.

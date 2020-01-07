@@ -44,7 +44,7 @@ public class ClassPathBeanDefinitionScannerTest {
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(beanFactory);
         scanner.addExcludeFilter(new AnnotationTypeFilter(ExcludeFilter.class));
         scanner.addIncludeFilter(new AnnotationTypeFilter(IncludeFilter.class));
-        scanner.scan("com.spring.ioc.bean.assemblyBean.beanObject.annotation.scanner");
+        scanner.scan("com.spring.ioc.bean.assemblyBean.beanObject.enable.scanner");
 
         assertTrue(beanFactory.containsBeanDefinition(AnnotationConfigUtils.CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME));
         assertTrue(beanFactory.containsBeanDefinition(AnnotationConfigUtils.AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME));
@@ -83,7 +83,7 @@ public class ClassPathBeanDefinitionScannerTest {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
 
         String testServiceImplPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
-                ClassUtils.convertClassNameToResourcePath("com.spring.ioc.bean.assemblyBean.beanObject.annotation.scanner") + '/' + "TestCompoment.class";
+                ClassUtils.convertClassNameToResourcePath("com.spring.ioc.bean.assemblyBean.beanObject.enable.scanner") + '/' + "TestCompoment.class";
         Resource[] resources1 = resourcePatternResolver.getResources(testServiceImplPath);
         MetadataReader metadataReader = new CachingMetadataReaderFactory().getMetadataReader(resources1[0]);
 

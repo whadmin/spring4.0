@@ -61,7 +61,7 @@ public class XmlBeanDefinitionReaderTest {
     }
 
     /**
-     * 配置 <context:annotation-config/> 会自动添加 注解处理 BeanProcessor
+     * 配置 <context:enable-config/> 会自动添加 注解处理 BeanProcessor
      */
     @Test
     public void registerAnnotationBeanProcessor() {

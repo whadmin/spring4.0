@@ -15,7 +15,7 @@
 
 	<!-- 
 	 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效
-	 <cache:annotation-driven/> 表示
+	 <cache:enable-driven/> 表示
 	 这个配置项缺省使用了一个名字叫 cacheManager 的缓存管理器，这个缓存管理器有一个 spring 的缺省实现，即 org.springframework.cache.support.SimpleCacheManager，
 	 这个缓存管理器实现了我们刚刚自定义的缓存管理器的逻辑，它需要配置一个属性 caches，即此缓存管理器管理的缓存集合caches 且它也会有一个缺省的名字叫 default 的缓存
 	 （使用了缺省的内存存储方案 ConcurrentMapCacheFactoryBean，它是基于 java.util.concurrent.ConcurrentHashMap 的一个内存缓存实现方案）

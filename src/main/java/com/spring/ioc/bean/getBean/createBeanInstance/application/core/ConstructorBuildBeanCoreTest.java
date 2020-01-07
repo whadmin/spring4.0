@@ -308,7 +308,7 @@ public class ConstructorBuildBeanCoreTest {
 
         // 2 定义beanDefinition
         /* 摘抄BeanDefinitionParserDelegate.parseBeanDefinitionElement **/
-        AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null, "com.spring.ioc.bean.getBean.createBeanInstance.beanObject.annotation.AutowireByConstructorQualifierBean",
+        AbstractBeanDefinition beanDefinition = BeanDefinitionReaderUtils.createBeanDefinition(null, "com.spring.ioc.bean.getBean.createBeanInstance.beanObject.enable.AutowireByConstructorQualifierBean",
                 null);
         beanDefinition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
 

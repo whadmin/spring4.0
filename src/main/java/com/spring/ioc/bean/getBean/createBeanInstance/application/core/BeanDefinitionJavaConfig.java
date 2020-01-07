@@ -47,12 +47,12 @@ public class BeanDefinitionJavaConfig {
 		/**
 		 * AnnotatedBeanDefinitionReader为我们加载了许多Spring自带的bean对象
 		 * 1 解析@Configuration注解bean，识别@ComponentScan,@Bean加载进入容器
-		 * org.springframework.context.annotation.internalConfigurationAnnotationProcessor ConfigurationClassPostProcessor
+		 * org.springframework.context.enable.internalConfigurationAnnotationProcessor ConfigurationClassPostProcessor
 		 * 2 识别解析@Autowired
-		 * org.springframework.context.annotation.internalAutowiredAnnotationProcessor
-		 * org.springframework.context.annotation.internalRequiredAnnotationProcessor
+		 * org.springframework.context.enable.internalAutowiredAnnotationProcessor
+		 * org.springframework.context.enable.internalRequiredAnnotationProcessor
 		 * 3 识别解析@Resource
-		 * org.springframework.context.annotation.internalCommonAnnotationProcessor
+		 * org.springframework.context.enable.internalCommonAnnotationProcessor
 		 * instantiatingBean
          *
 		 */

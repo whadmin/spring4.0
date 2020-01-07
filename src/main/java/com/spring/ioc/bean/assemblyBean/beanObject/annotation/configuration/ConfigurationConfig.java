@@ -1,5 +1,6 @@
 package com.spring.ioc.bean.assemblyBean.beanObject.annotation.configuration;
 
+import com.spring.ioc.bean.assemblyBean.beanObject.annotation.Import.ImportSelector;
 import com.spring.ioc.bean.assemblyBean.beanObject.annotation.scanner.ExcludeFilter;
 import com.spring.ioc.bean.assemblyBean.beanObject.annotation.scanner.IncludeFilter;
 import com.spring.ioc.bean.assemblyBean.beanObject.no_annotation.BeanObject;
@@ -11,7 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration(value ="configurationConfig")
-@Import(ImportConfiguration.class)
+//@Import(ImportConfiguration.class)
+@Import(ImportSelector.class)
 @ComponentScan(
         basePackages = "com.spring.ioc.bean.assemblyBean.beanObject.annotation.scanner",
         includeFilters = { @ComponentScan.Filter(IncludeFilter.class)} ,
