@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -25,7 +24,7 @@ public class ConfigurationAnnotationProcessorTest {
      * @Bean 注解
      * @ComponentScan 注解
      * @Import 注解
-     *
+     * <p>
      * 其内部使用了
      * ConfigurationClassBeanDefinitionReader
      */

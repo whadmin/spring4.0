@@ -17,7 +17,6 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
 public class MpGenerator {
@@ -146,7 +145,5 @@ public class MpGenerator {
 		mpg.setPackageInfo(getPackageConfig());
 		// 执行生成
 		mpg.execute();
-
 	}
-
 }
