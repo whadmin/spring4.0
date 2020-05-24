@@ -1,4 +1,4 @@
-package com.spring.common.annotation;
+package com.spring.common.annotation.model;
 
 import java.lang.annotation.*;
 

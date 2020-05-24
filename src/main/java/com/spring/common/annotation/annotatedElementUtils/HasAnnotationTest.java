@@ -1,6 +1,6 @@
 package com.spring.common.annotation.annotatedElementUtils;
 
-import com.spring.common.annotation.AnnotatedModel;
+import com.spring.common.annotation.model.AnnotatedModel;
 import org.junit.Test;
 import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.spring.common.annotation.annotatedElementUtils;
 
-import com.spring.common.annotation.AnnotatedModel2;
+import com.spring.common.annotation.model.AnnotatedModel2;
 import org.junit.Test;
 import org.springframework.util.MultiValueMap;
 

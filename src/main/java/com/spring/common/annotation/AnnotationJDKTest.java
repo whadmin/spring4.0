@@ -1,5 +1,6 @@
 package com.spring.common.annotation;
 
+import com.spring.common.annotation.model.AnnotatedModel;
 import org.junit.Test;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Indexed;
@@ -25,7 +26,7 @@ public class AnnotationJDKTest {
 
     @Test
     public void isAnnotationPresentOnNonAnnotatedClass() {
-        assertThat(((AnnotatedElement)AnnotatedModel.NonAnnotatedClass.class).isAnnotationPresent(Transactional.class)).isFalse();
+        assertThat(((AnnotatedElement) AnnotatedModel.NonAnnotatedClass.class).isAnnotationPresent(Transactional.class)).isFalse();
     }
 
 
