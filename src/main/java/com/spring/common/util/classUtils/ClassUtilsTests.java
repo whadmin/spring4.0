@@ -1,12 +1,17 @@
 package com.spring.common.util.classUtils;
 
+import com.spring.common.proxy.Service.impl.Base;
 import com.spring.common.proxy.Service.impl.HelloService;
 import com.spring.common.proxy.Service.impl.HelloServiceImpl;
+import com.spring.common.proxy.Service.impl.IHelloService;
 import com.spring.common.proxy.Service.proxy.HelloServiceCgLib;
 import com.spring.common.proxy.Service.proxy.HelloServiceProxy;
+import org.junit.Test;
 import org.springframework.util.ClassUtils;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
@@ -36,10 +41,35 @@ public class ClassUtilsTests {
     }
 
     /**
-     * inspect
+     *
      */
     public static void getAllInterfacesForClass(){
         Class<?>[] allInterfacesForClass = ClassUtils.getAllInterfacesForClass(HelloServiceImpl.class);
         Arrays.asList(allInterfacesForClass).forEach(p->System.out.println(p));
+    }
+
+
+    @Test
+    public void getMostSpecificMethod(){
+        Method method = ReflectionUtils.findMethod(IHelloService.class, "sayHello1",String.class);
+        Method specificMethod = ClassUtils.getMostSpecificMethod(method, HelloServiceImpl.class);
+        Method specificMethod2 = ClassUtils.getMostSpecificMethod(method, HelloServiceImpl.class);
+        System.out.println(method);
+        System.out.println(specificMethod);
+        System.out.println(specificMethod2);
+        System.out.println(specificMethod==specificMethod2);
+        System.out.println(specificMethod.equals(specificMethod2));
+    }
+
+    @Test
+    public void getMostSpecificMethod2(){
+        Method method = ReflectionUtils.findMethod(Base.class, "init");
+        Method specificMethod = ClassUtils.getMostSpecificMethod(method, HelloServiceImpl.class);
+        Method specificMethod2 = ClassUtils.getMostSpecificMethod(method, HelloServiceImpl.class);
+        System.out.println(method);
+        System.out.println(specificMethod);
+        System.out.println(specificMethod2);
+        System.out.println(specificMethod==specificMethod2);
+        System.out.println(specificMethod.equals(specificMethod2));
     }
 }

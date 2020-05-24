@@ -1,16 +1,20 @@
 package com.spring.common.util.methodIntrospector;
 
 import com.spring.common.proxy.Service.impl.HelloService;
+import com.spring.common.proxy.Service.impl.HelloServiceBase;
 import com.spring.common.proxy.Service.impl.HelloServiceImpl;
+import com.spring.common.proxy.Service.impl.IHelloService;
 import com.spring.common.proxy.Service.proxy.HelloServiceCgLib;
 import com.spring.common.proxy.Service.proxy.HelloServiceProxy;
+import com.spring.common.util.model.TestServiceImpl2;
 import org.junit.Test;
 import org.springframework.core.MethodIntrospector;
 import org.springframework.util.ClassUtils;
+import org.springframework.util.ReflectionUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: wuhao.w
@@ -23,6 +27,7 @@ public class MethodIntrospectorTest {
 //        selectMethods();
 //        selectMethods2();
         selectMethods3();
+//        linkedHashMap();
     }
 
 
@@ -87,5 +92,28 @@ public class MethodIntrospectorTest {
             }
         });
         methodObjectMap.keySet().forEach(method -> {System.out.println(method);});
+    }
+
+    public static void linkedHashMap() throws IOException {
+        final Map<Method, String> methodMap = new LinkedHashMap<>();
+        List<Method> methods1 = Arrays.asList(ReflectionUtils.getDeclaredMethods(HelloServiceImpl.class));
+        methods1.forEach(method -> methodMap.put(method,"1"));
+        List<Method> methods2 = Arrays.asList(ReflectionUtils.getDeclaredMethods(HelloServiceBase.class));
+        methods2.forEach(method -> methodMap.put(method,"1"));
+
+        Method sayHello1 = ReflectionUtils.findMethod(IHelloService.class, "sayHello1",String.class);
+        Method specificMethod = ClassUtils.getMostSpecificMethod(sayHello1, HelloServiceImpl.class);
+        Method specificMethod2 = ClassUtils.getMostSpecificMethod(sayHello1, HelloServiceImpl.class);
+        System.out.println(methodMap.put(specificMethod,"2"));
+
+        Map<String, String> map = new HashMap<>();
+        map.put("key1","value1");
+        map.put("key2","value2");
+        map.put("key3","value3");
+        map.put("key4","value4");
+        map.put("key5","value5");
+
+        map.put("key1","value5");
+        System.out.println(map);
     }
 }
