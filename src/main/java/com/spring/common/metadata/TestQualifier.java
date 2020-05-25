@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.spring.common.classmetadata;
+package com.spring.common.metadata;
 
 import java.lang.annotation.*;
 

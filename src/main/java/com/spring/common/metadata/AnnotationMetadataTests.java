@@ -1,4 +1,4 @@
-package com.spring.common.classmetadata;
+package com.spring.common.metadata;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;

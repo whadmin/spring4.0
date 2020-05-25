@@ -1,12 +1,13 @@
 package com.j2se.reflect.test;
 
+import com.j2se.reflect.model.MyClass;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
-import com.j2se.annotation.model.MyClass;
 
 
 public class ReflectDemo {
@@ -52,7 +53,7 @@ public class ReflectDemo {
             
             System.out.println("----------------");
             Annotation[] annotations = (Annotation[]) c.getAnnotations();//获取class对象的所有注解 
-            Annotation annotation = (Annotation) c.getAnnotation(MyClass.class);//获取class对象指定注解 
+            Annotation annotation = (Annotation) c.getAnnotation(MyClass.class);//获取class对象指定注解
             Type genericSuperclass = c.getGenericSuperclass();//获取class对象的直接超类的 
             Type[] interfaceTypes = c.getGenericInterfaces();//获取class对象的所有接口的type集合
             

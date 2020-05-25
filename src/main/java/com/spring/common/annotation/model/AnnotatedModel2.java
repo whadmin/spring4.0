@@ -1,5 +1,7 @@
 package com.spring.common.annotation.model;
 
+import org.springframework.stereotype.Component;
+
 import java.lang.annotation.*;
 
 /**
@@ -11,59 +13,118 @@ public class AnnotatedModel2 {
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.TYPE, ElementType.METHOD})
     @Inherited
-    public @interface Transactional2 {
+    public @interface Transactional {
 
-        String value() default "transactional";
-
-        String qualifier() default "transactionManager";
-
-        boolean readOnly() default false;
+        String value() default "default";
     }
 
 
-    @Transactional2(qualifier ="TxConfig")
+    @Transactional("composedTransactional1")
+    @Component("composedTransactional1")
     @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    public @interface Composed {
+    @Inherited
+    public @interface ComposedTransactional1 {
     }
 
-    @Transactional2(qualifier ="DerivedTxConfig")
+    @Transactional("composedTransactional2")
+    @Component("composedTransactional2")
     @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    public @interface Composed2 {
+    @Inherited
+    public @interface ComposedTransactional2 {
     }
 
-    @Transactional2(qualifier ="TxConfig")
-    public static class MultipleAnnotationAttrRewrite {
+    @Transactional("composedTransactional1")
+    @Component("composedTransactional1")
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface ComposedTransactionalInherited1 {
     }
 
-    @Transactional2(qualifier ="DerivedTxConfig")
-    public static class SubMultipleAnnotationAttrRewrite extends MultipleAnnotationAttrRewrite {
+    @Transactional("composedTransactional1")
+    @Component("composedTransactional1")
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface ComposedTransactionalInherited2 {
+    }
+
+    /*****************************注解装饰类*****************************/
+
+    public static class NonAnnotatedClass {
+    }
+
+    @Transactional
+    public static class TransactionalClass {
+    }
+
+    @ComposedTransactional1
+    public static class ComposedTransactionalClass1 {
+    }
+
+    @ComposedTransactional2
+    public static class ComposedTransactionalClass2 {
+    }
+
+    @ComposedTransactional1
+    @ComposedTransactional2
+    public static class MultipleAnnotationClass1 {
+    }
+
+    @ComposedTransactional1
+    @Transactional
+    public static class MultipleAnnotationClass2 {
+    }
+
+    @ComposedTransactional2
+    @Transactional
+    public static class MultipleAnnotationClass3 {
+    }
+
+    /** 子类的直接注解和父类元注解相同属性合并 **/
+    @Transactional("sub")
+    public static class SubComposedTransactionalClass1 extends ComposedTransactionalClass1{
+    }
+
+    @Transactional("sub")
+    public static class SubComposedTransactionalClass2 extends ComposedTransactionalClass2{
+    }
+    /** 子类的元注解和父类元注解相同属性合并 **/
+    @ComposedTransactional2
+    public static class SubComposedTransactionalClass3 extends ComposedTransactionalClass1{
+    }
+
+    @ComposedTransactional1
+    public static class SubComposedTransactionalClass4 extends ComposedTransactionalClass2{
+    }
+
+    /** 子类的元注解和父类注解相同属性合并 **/
+    @ComposedTransactional1
+    public static class SubTransactionalClass1 extends TransactionalClass{
+    }
+
+    @ComposedTransactional2
+    public static class SubTransactionalClass2 extends TransactionalClass{
+    }
+
+    /** 子类的注解和父类注解相同属性覆盖 **/
+    @Transactional("sub")
+    public static class SubTransactionalClass3 extends TransactionalClass{
+    }
+
+    /** 不能从非@Inherited注解继承 **/
+
+    @ComposedTransactionalInherited1
+    public static class ComposedTransactionalInheritedClass1 {
+    }
+
+    @ComposedTransactionalInherited2
+    public static class ComposedTransactionalInheritedClass2 {
+    }
+
+    public static class SubComposedTransactionalInheritedClass1 extends ComposedTransactionalInheritedClass1 {
+    }
+
+    public static class SubComposedTransactionalInheritedClass2 extends ComposedTransactionalInheritedClass2 {
     }
 
 
-    @Composed
-    public static class MultipleAnnotationAttrRewrite2 {
-    }
-
-    @Transactional2(qualifier ="DerivedTxConfig")
-    public static class SubMultipleAnnotationAttrRewrite2 extends MultipleAnnotationAttrRewrite2 {
-    }
-
-    @Composed2
-    public static class SubMultipleAnnotationAttrRewrite3 extends MultipleAnnotationAttrRewrite2 {
-    }
-
-    @Composed
-    @Composed2
-    public static class MultipleAnnotationAttrComposed1 {
-    }
 
 
-    @Transactional2(qualifier ="TxConfig")
-    public static class ClassWithInheritedAnnotation {
-    }
-    @Composed2
-    public static class MultipleAnnotationAttrComposed2 extends ClassWithInheritedAnnotation{
-    }
 }

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.j2se.annotation.model.MyClass;
 
 
 @MyClass

@@ -1,4 +1,4 @@
-package com.spring.common.classmetadata;
+package com.spring.common.metadata;
 
 import org.junit.Test;
 import org.springframework.context.annotation.Scope;

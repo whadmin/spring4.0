@@ -22,28 +22,17 @@ public class AnnotatedModel {
         boolean readOnly() default false;
     }
 
-    @Transactional(qualifier = "composed1")
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    @Inherited
-    public @interface InheritedComposed {
-    }
-
-    @Transactional(qualifier = "composed2", readOnly = true)
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    public @interface Composed {
-    }
-
     @Transactional
     @Component
     @Retention(RetentionPolicy.RUNTIME)
     public @interface ComposedTransactional {
     }
 
+
     @ComposedTransactional
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface ComposedComposedTransactional {
+    @Inherited
+    public @interface ComposedComposedTransactionalInherited {
     }
 
 
@@ -51,22 +40,35 @@ public class AnnotatedModel {
     }
 
     @ComposedTransactional
-    public interface ComposedTransactionalInterface{
-    }
-
-    @ComposedTransactional
     public static class ComposedTransactionalClass {
     }
 
-    public static class implementComposedTransactionalInterfaceClass implements ComposedTransactionalInterface{
-
+    public static class SubComposedTransactionalClass extends ComposedTransactionalClass {
     }
 
-    public static class SubTransactionalComponentClass extends ComposedTransactionalClass {
-    }
-
-    @ComposedComposedTransactional
+    @ComposedComposedTransactionalInherited
     public static class ComposedComposedTransactionalClass {
     }
+
+    public static class SubComposedComposedTransactionalClass extends ComposedComposedTransactionalClass {
+    }
+
+    public static class SubSubComposedComposedTransactionalClass extends SubComposedComposedTransactionalClass {
+    }
+
+    @ComposedTransactional
+    @ComposedComposedTransactionalInherited
+    public interface ComposedTransactionalInterface{
+    }
+
+    public static class implementComposedTransactionalInterfaceClass implements ComposedTransactionalInterface{
+    }
+
+
+
+
+
+
+
 
 }

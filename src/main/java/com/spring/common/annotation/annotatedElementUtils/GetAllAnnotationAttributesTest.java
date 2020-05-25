@@ -1,9 +1,12 @@
 package com.spring.common.annotation.annotatedElementUtils;
 
+import com.spring.common.annotation.model.AnnotatedModel;
 import com.spring.common.annotation.model.AnnotatedModel2;
 import org.junit.Test;
+import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
+import java.lang.reflect.AnnotatedElement;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
@@ -11,70 +14,97 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.core.annotation.AnnotatedElementUtils.getAllAnnotationAttributes;
+import static org.springframework.core.annotation.AnnotatedElementUtils.getMetaAnnotationTypes;
 
 /**
- * @Author: wuhao.w
- * @Date: 2020/5/24 15:36
+ * getAllAnnotationAttributes：用来获取装饰{@link AnnotatedElement}指定注解的所有属性
+
  */
 public class GetAllAnnotationAttributesTest {
 
-    private static final String TX_NAME = AnnotatedModel2.Transactional2.class.getName();
+    private static final String TX_NAME = AnnotatedModel2.Transactional.class.getName();
 
     private Set<String> names(Class<?>... classes) {
         return stream(classes).map(Class::getName).collect(toSet());
     }
 
 
-    /**
-     * 获取注解属性Map集合，指定{@link AnnotatedElement}，以及修饰注解
-     *
-     * 如果{@link AnnotatedElement}类型为Class
-     *
-     * 1 getAllAnnotationAttributes 方法指定会获取{@link AnnotatedElement}被修饰的注解
-
-     *     1  Class上的修饰的注解(及其元注解)
-     *     2  Class祖先类Class上的修饰的注解(及其元注解)【这里修饰祖先类的注解必须@Inherited】
-     *
-     * 2 判断指定指定{@link AnnotatedElement}是否被指定注解多次修饰
-     *
-     *     1 如果指定注解在当前类或父类上同时修饰,且注解类型相同（同样是注解修饰注解或同样是元注解），对注解进行合并，属性值取交集，子类优先级大于父类。
-     *
-     *     2 如果指定注解作为当前类元注解进行多次修饰，对注解进行合并，属性值取并集。
-     */
     @Test
-    public void getAllAnnotationAttributesTest(){
-        //如果指定注解在当前类或父类上同时修饰,且注解类型相同（同样是注解修饰注解或同样是元注解），对注解进行合并，属性值取交集，子类优先级大于父类。
-        getAllAnnotationAttributesMultipleAnnotationRewrite();
-        //如果指定注解作为当前类元注解进行多次修饰，对注解进行合并，属性值取并集。
-        getAllAnnotationAttributesMultipleAnnotationComposed();
+    public void getAllAnnotationAttributesOnNonAnnotatedClass() {
+        assertThat(getMetaAnnotationTypes(AnnotatedModel.NonAnnotatedClass.class, AnnotatedModel2.Transactional.class).isEmpty()).isTrue();
     }
 
-
     @Test
-    public void getAllAnnotationAttributesMultipleAnnotationRewrite() {
-        MultiValueMap<String, Object> attributes = getAllAnnotationAttributes(AnnotatedModel2.SubMultipleAnnotationAttrRewrite.class,TX_NAME);
+    public void getAllAnnotationAttributesOnAnnotatedClass() {
+        MultiValueMap<String, Object> attributes = getAllAnnotationAttributes(AnnotatedModel2.TransactionalClass.class,TX_NAME);
         assertThat(attributes).isNotNull();
-        assertThat(attributes.get("qualifier")).isEqualTo(asList("DerivedTxConfig"));
+        assertThat(attributes.get("value")).isEqualTo(asList("default"));
 
-        MultiValueMap<String, Object> attributes2 = getAllAnnotationAttributes(AnnotatedModel2.SubMultipleAnnotationAttrRewrite2.class,TX_NAME);
+        MultiValueMap<String, Object> attributes2 = getAllAnnotationAttributes(AnnotatedModel2.ComposedTransactionalClass1.class,TX_NAME);
         assertThat(attributes2).isNotNull();
-        assertThat(attributes2.get("qualifier")).isEqualTo(asList("DerivedTxConfig"));
+        assertThat(attributes2.get("value")).isEqualTo(asList("composedTransactional1"));
 
-        MultiValueMap<String, Object> attributes3 = getAllAnnotationAttributes(AnnotatedModel2.SubMultipleAnnotationAttrRewrite3.class,TX_NAME);
+        MultiValueMap<String, Object> attributes3 = getAllAnnotationAttributes(AnnotatedModel2.ComposedTransactionalClass2.class,TX_NAME);
         assertThat(attributes3).isNotNull();
-        assertThat(attributes3.get("qualifier")).isEqualTo(asList("DerivedTxConfig"));
+        assertThat(attributes3.get("value")).isEqualTo(asList("composedTransactional2"));
+    }
+
+    @Test
+    public void getAllAnnotationAttributesOnMultipleAnnotatedClass() {
+        MultiValueMap<String, Object> attributes = getAllAnnotationAttributes(AnnotatedModel2.MultipleAnnotationClass1.class,TX_NAME);
+        assertThat(attributes).isNotNull();
+        assertThat(attributes.get("value")).isEqualTo(asList("composedTransactional1","composedTransactional2"));
+
+        MultiValueMap<String, Object> attributes2 = getAllAnnotationAttributes(AnnotatedModel2.MultipleAnnotationClass2.class,TX_NAME);
+        assertThat(attributes2).isNotNull();
+        assertThat(attributes2.get("value")).isEqualTo(asList("default","composedTransactional1"));
+
+        MultiValueMap<String, Object> attributes3 = getAllAnnotationAttributes(AnnotatedModel2.MultipleAnnotationClass3.class,TX_NAME);
+        assertThat(attributes3).isNotNull();
+        assertThat(attributes3.get("value")).isEqualTo(asList("default","composedTransactional2"));
+    }
+
+    @Test
+    public void getAllAnnotationAttributesOnMultipleAnnotatedIncludeClassAndSuperClass() {
+        MultiValueMap<String, Object> attributes = getAllAnnotationAttributes(AnnotatedModel2.SubTransactionalClass1.class,TX_NAME);
+        assertThat(attributes).isNotNull();
+        assertThat(attributes.get("value")).isEqualTo(asList("composedTransactional1","default"));
+
+        MultiValueMap<String, Object> attributes2 = getAllAnnotationAttributes(AnnotatedModel2.SubTransactionalClass2.class,TX_NAME);
+        assertThat(attributes2).isNotNull();
+        assertThat(attributes2.get("value")).isEqualTo(asList("composedTransactional2","default"));
+
+        MultiValueMap<String, Object> attributes3 = getAllAnnotationAttributes(AnnotatedModel2.SubComposedTransactionalClass1.class,TX_NAME);
+        assertThat(attributes3).isNotNull();
+        assertThat(attributes3.get("value")).isEqualTo(asList("sub","composedTransactional1"));
+
+        MultiValueMap<String, Object> attributes4 = getAllAnnotationAttributes(AnnotatedModel2.SubComposedTransactionalClass2.class,TX_NAME);
+        assertThat(attributes4).isNotNull();
+        assertThat(attributes4.get("value")).isEqualTo(asList("sub","composedTransactional2"));
+
+        MultiValueMap<String, Object> attributes5 = getAllAnnotationAttributes(AnnotatedModel2.SubComposedTransactionalClass3.class,TX_NAME);
+        assertThat(attributes5).isNotNull();
+        assertThat(attributes5.get("value")).isEqualTo(asList("composedTransactional2","composedTransactional1"));
+
+        MultiValueMap<String, Object> attributes6 = getAllAnnotationAttributes(AnnotatedModel2.SubComposedTransactionalClass4.class,TX_NAME);
+        assertThat(attributes6).isNotNull();
+        assertThat(attributes6.get("value")).isEqualTo(asList("composedTransactional1","composedTransactional2"));
+    }
+
+    @Test
+    public void getAllAnnotationAttributesOnMultipleAnnotatedIncludeClassAndSuperClass2() {
+        MultiValueMap<String, Object> attributes = getAllAnnotationAttributes(AnnotatedModel2.SubTransactionalClass3.class,TX_NAME);
+        assertThat(attributes).isNotNull();
+        assertThat(attributes.get("value")).isEqualTo(asList("sub"));
     }
 
 
     @Test
-    public void getAllAnnotationAttributesMultipleAnnotationComposed() {
-        MultiValueMap<String, Object> attributes = getAllAnnotationAttributes(AnnotatedModel2.MultipleAnnotationAttrComposed1.class, TX_NAME);
-        assertThat(attributes).isNotNull();
-        assertThat(attributes.get("qualifier")).isEqualTo(asList("TxConfig", "DerivedTxConfig"));
+    public void getAllAnnotationAttributesOnMultipleAnnotatedIncludeClassAndSuperClass3() {
+        MultiValueMap<String, Object> attributes = getAllAnnotationAttributes(AnnotatedModel2.SubComposedTransactionalInheritedClass1.class,TX_NAME);
+        assertThat(attributes).isNull();
 
-        MultiValueMap<String, Object> attributes2 = getAllAnnotationAttributes(AnnotatedModel2.MultipleAnnotationAttrComposed2.class, TX_NAME);
-        assertThat(attributes2).isNotNull();
-        assertThat(attributes2.get("qualifier")).isEqualTo(asList("DerivedTxConfig", "TxConfig"));
+        MultiValueMap<String, Object> attributes2 = getAllAnnotationAttributes(AnnotatedModel2.SubComposedTransactionalInheritedClass2.class,TX_NAME);
+        assertThat(attributes2).isNull();
     }
-
 }

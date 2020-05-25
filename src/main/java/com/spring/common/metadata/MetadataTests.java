@@ -1,4 +1,4 @@
-package com.spring.common.classmetadata;
+package com.spring.common.metadata;
 
 import java.io.Serializable;
 import java.lang.annotation.ElementType;
@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
-import org.springframework.context.annotation.Scope;
 import org.springframework.core.annotation.AliasFor;
-import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.*;
 import org.springframework.stereotype.Component;
 
