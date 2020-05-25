@@ -3,7 +3,7 @@ package com.spring.common.annotation.annotatedElementUtils;
 import com.spring.common.annotation.model.AnnotatedModel;
 import com.spring.common.annotation.model.AnnotatedModel2;
 import org.junit.Test;
-import org.springframework.stereotype.Component;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.MultiValueMap;
 
 import java.lang.reflect.AnnotatedElement;
@@ -17,8 +17,30 @@ import static org.springframework.core.annotation.AnnotatedElementUtils.getAllAn
 import static org.springframework.core.annotation.AnnotatedElementUtils.getMetaAnnotationTypes;
 
 /**
- * getAllAnnotationAttributes：用来获取装饰{@link AnnotatedElement}指定注解的所有属性
-
+ * getAllAnnotationAttributes：用来获取{@link AnnotatedElement}装饰注解的属性
+ *
+ * 要知道装饰注解的属性，首先需要知道hasAnnotation能够获取该{@link AnnotatedElement}注解的范围
+ *
+ * 当{@link AnnotatedElement}用来表示Class类时，获取该{@link AnnotatedElement}注解的范围和{@link AnnotatedElementUtils#isAnnotated}一致包括：
+ *
+ *   1  该Class类上的修饰的注解
+ *   2  该Class类上的修饰的注解同时也包括元注解
+ *   3  该Class父类上标注了@Inherited元注解的注解
+ *   4  该Class父类上标注了@Inherited元注解的注解的元注解
+ *
+ *  同时被指定注解可能存在多次装饰该注解类，这时一个属性可能存在多个值的情况：
+ *
+ *  在指定类中直接注解和元注解属性，元注解和元注解合并
+ *
+ *  如果存在父类继承的情况
+     *   如下情况合并：
+     *     指定类的直接注解和父类元注解相同属性合并
+     *     指定类的元注解和父类元注解相同属性合并
+     *     指定类的元注解和父类注解相同属性合并
+     *   如下情况覆盖：
+     *     指定类的注解和父类注解相同属性覆盖
+ *
+ *
  */
 public class GetAllAnnotationAttributesTest {
 
@@ -49,6 +71,9 @@ public class GetAllAnnotationAttributesTest {
         assertThat(attributes3.get("value")).isEqualTo(asList("composedTransactional2"));
     }
 
+    /**
+     * 同时被指定注解可能存在多次装饰该注解类，这时一个属性可能存在多个值的情况,合并情况
+     */
     @Test
     public void getAllAnnotationAttributesOnMultipleAnnotatedClass() {
         MultiValueMap<String, Object> attributes = getAllAnnotationAttributes(AnnotatedModel2.MultipleAnnotationClass1.class,TX_NAME);
