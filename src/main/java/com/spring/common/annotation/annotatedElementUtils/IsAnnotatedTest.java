@@ -22,6 +22,11 @@ import static org.springframework.core.annotation.AnnotatedElementUtils.isAnnota
  *   2  该Class类上的修饰的注解同时也包括元注解（相对于JDKisAnnotationPresent改进）
  *   3  该Class父类上标注了@Inherited元注解的注解
  *   4  该Class父类上标注了@Inherited元注解的注解的元注解（相对于JDKisAnnotationPresent改进）
+ * 当{@link AnnotatedElement}用来表示接口时，isAnnotationPresent获取其修饰注解包括：
+ * <p>
+ *   1 该interface上的修饰的注解
+ *   2 该interface类上的修饰的注解同时也包括元注解（相对于JDKisAnnotationPresent改进）
+ *   2 也不包含父接口上的注解（无论是否标注@Inherited元注解）
  */
 public class IsAnnotatedTest {
 
@@ -65,5 +70,43 @@ public class IsAnnotatedTest {
         assertThat(isAnnotated(AnnotatedModel.SubComposedComposedTransactionalClass.class, AnnotatedModel.Transactional.class)).isTrue();
         assertThat(isAnnotated(AnnotatedModel.SubComposedComposedTransactionalClass.class, Component.class)).isTrue();
         assertThat(isAnnotated(AnnotatedModel.SubComposedComposedTransactionalClass.class, Indexed.class)).isTrue();
+    }
+
+
+    /**
+     * isAnnotated {@link AnnotatedElement}用来表示Class类时，不包含了实现接口的注解
+     */
+    @Test
+    public void isAnnotatedOnClassNOIncludeInterfaceAnnotated() {
+        assertThat(isAnnotated(AnnotatedModel.implementComposedTransactionalInterfaceClass.class, AnnotatedModel.ComposedTransactional.class)).isFalse();
+        assertThat(isAnnotated(AnnotatedModel.implementComposedTransactionalInterfaceClass.class, AnnotatedModel.ComposedComposedTransactionalInherited.class)).isFalse();
+    }
+
+    /**
+     * isAnnotated {@link AnnotatedElement}用来表示接口时，包含了接口的注解
+     */
+    @Test
+    public void isAnnotatedOnInterfaceDirectAnnotated() {
+        assertThat(isAnnotated(AnnotatedModel.ComposedTransactionalInterface.class, AnnotatedModel.ComposedComposedTransactionalInherited.class)).isTrue();
+        assertThat(isAnnotated(AnnotatedModel.ComposedTransactionalInterface.class, AnnotatedModel.ComposedTransactional.class)).isTrue();
+    }
+
+    /**
+     * isAnnotated {@link AnnotatedElement}用来表示接口时，包含了标注在接口上的注解的元注解
+     */
+    @Test
+    public void isAnnotatedOnInterfaceNotIncludedMetaAnnotation() {
+        assertThat(isAnnotated(AnnotatedModel.ComposedTransactionalInterface.class, AnnotatedModel.Transactional.class)).isTrue();
+        assertThat(isAnnotated(AnnotatedModel.ComposedTransactionalInterface.class, Component.class)).isTrue();
+        assertThat(isAnnotated(AnnotatedModel.ComposedTransactionalInterface.class, Indexed.class)).isTrue();
+    }
+
+    /**
+     * isAnnotated {@link AnnotatedElement}用来表示接口时，不包含了父接口上的注解
+     */
+    @Test
+    public void isAnnotatedOnInterfaceNotIncludeSuperInterfaceAnnotated() {
+        assertThat(isAnnotated(AnnotatedModel.SubComposedTransactionalInterface.class, AnnotatedModel.ComposedComposedTransactionalInherited.class)).isFalse();
+        assertThat(isAnnotated(AnnotatedModel.SubComposedTransactionalInterface.class, AnnotatedModel.ComposedTransactional.class)).isFalse();
     }
 }

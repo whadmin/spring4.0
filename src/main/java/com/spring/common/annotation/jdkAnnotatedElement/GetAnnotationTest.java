@@ -1,11 +1,14 @@
 package com.spring.common.annotation.jdkAnnotatedElement;
 
 import com.spring.common.annotation.model.AnnotatedModel;
+import com.spring.common.annotation.model.AnnotatedModel3;
+import org.assertj.core.api.ObjectAssert;
 import org.junit.Test;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Indexed;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -100,5 +103,14 @@ public class GetAnnotationTest {
     public void getAnnotationPresentOnInterfaceNotIncludeSuperInterfaceAnnotated() {
         assertThat(((AnnotatedElement) AnnotatedModel.SubComposedTransactionalInterface.class).getAnnotation(AnnotatedModel.ComposedComposedTransactionalInherited.class)).isNull();
         assertThat(((AnnotatedElement) AnnotatedModel.SubComposedTransactionalInterface.class).getAnnotation(AnnotatedModel.ComposedTransactional.class)).isNull();
+    }
+
+
+    @Test
+    public void test() {
+        AnnotatedModel3.ConventionBasedComposedContextConfig conventionBasedComposedContextConfig = ((AnnotatedElement) AnnotatedModel3.ConventionBasedComposedContextConfigClass.class).getAnnotation(AnnotatedModel3.ConventionBasedComposedContextConfig.class);
+        assertThat(conventionBasedComposedContextConfig).isNotNull();
+        Annotation contextConfig = ((AnnotatedElement) conventionBasedComposedContextConfig.annotationType()).getAnnotation(AnnotatedModel3.ContextConfig.class);
+        assertThat(contextConfig).isNotNull();
     }
 }

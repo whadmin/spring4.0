@@ -26,6 +26,8 @@ public class AnnotatedModel {
     @Component
     @Retention(RetentionPolicy.RUNTIME)
     public @interface ComposedTransactional {
+
+
     }
 
 
@@ -33,6 +35,8 @@ public class AnnotatedModel {
     @Retention(RetentionPolicy.RUNTIME)
     @Inherited
     public @interface ComposedComposedTransactionalInherited {
+
+        String value() default "";
     }
 
 

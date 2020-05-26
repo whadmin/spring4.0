@@ -2,9 +2,10 @@ package com.spring.common.annotation.annotatedElementUtils;
 
 import com.spring.common.annotation.model.AnnotatedModel;
 import com.spring.common.annotation.model.AnnotatedModel2;
+import com.spring.common.annotation.model.AnnotatedModel3;
+import org.apache.catalina.startup.ContextConfig;
 import org.junit.Test;
 import org.springframework.core.annotation.AnnotationAttributes;
-
 import java.util.Set;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
@@ -100,6 +101,19 @@ public class GetMergedAnnotationAttributesTest {
         AnnotationAttributes attributes = getMergedAnnotationAttributes(AnnotatedModel2.SubComposedTransactionalInheritedClass1.class,TX_NAME);
         assertThat(attributes).isNull();
         AnnotationAttributes attributes2 = getMergedAnnotationAttributes(AnnotatedModel2.SubComposedTransactionalInheritedClass2.class,TX_NAME);
-        assertThat(attributes2).isNull();
+        assertThat(attributes2).isNotNull();
+        assertThat(attributes2.get("value")).isEqualTo("composedTransactionalInherited");
+    }
+
+
+    @Test
+    public void getMergedAnnotationAttributesWithConventionBasedComposedAnnotation() {
+        AnnotationAttributes attributes = getMergedAnnotationAttributes(AnnotatedModel3.ConventionBasedComposedContextConfigClass.class, AnnotatedModel3.ContextConfig.class.getName());
+        assertThat(attributes.getStringArray("locations")).isEqualTo(asArray("explicitDeclaration"));
+        assertThat(attributes.getStringArray("value")).isEqualTo(asArray("explicitDeclaration"));
+    }
+
+    static <T> T[] asArray(T... arr) {
+        return arr;
     }
 }
