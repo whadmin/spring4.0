@@ -61,14 +61,9 @@ public class AnnotatedModel {
     public interface ComposedTransactionalInterface{
     }
 
-    public static class implementComposedTransactionalInterfaceClass implements ComposedTransactionalInterface{
+    public interface SubComposedTransactionalInterface extends ComposedTransactionalInterface{
     }
 
-
-
-
-
-
-
-
+    public static class implementComposedTransactionalInterfaceClass implements ComposedTransactionalInterface{
+    }
 }

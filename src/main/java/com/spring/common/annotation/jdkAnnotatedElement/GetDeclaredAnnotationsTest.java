@@ -21,8 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 2 不包含标注在类上的注解的元注解
  * 3 不包含从父类继承父类上修饰的注解（标注@Inherited元注解）
  *
- * @Author: wuhao.w
- * @Date: 2020/5/25 12:59
  */
 public class GetDeclaredAnnotationsTest {
 

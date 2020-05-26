@@ -24,9 +24,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 1 该Class类上的修饰的注解
  * 2 不包含标注在类上的注解的元注解
  * 3 包含从父类继承父类上修饰的注解（标注@Inherited元注解）
- *
- * @Author: wuhao.w
- * @Date: 2020/5/25 12:59
+ * 当{@link AnnotatedElement}用来表示接口时，isAnnotationPresent获取其修饰注解包括：
+ * <p>
+ * 1 该interface上的修饰的注解(不包含元注解）
+ * 2 也不包含父接口上的注解（无论是否标注@Inherited元注解）
+
  */
 public class GetAnnotationsTest {
 
@@ -36,7 +38,7 @@ public class GetAnnotationsTest {
 
 
     /**
-     * getAnnotation 包含了标注在类上的直接注解,不包含其上元注解
+     * getAnnotations {@link AnnotatedElement}用来表示Class类时 包含了标注在类上的直接注解,不包含其上元注解
      */
     @Test
     public void getAnnotationsOnClassdirectAnnotated() {
@@ -49,8 +51,11 @@ public class GetAnnotationsTest {
         assertThat(classname1).isEqualTo(Sets.newHashSet(AnnotatedModel.ComposedComposedTransactionalInherited.class));
     }
 
+    /**
+     * getAnnotations {@link AnnotatedElement}用来表示Class类时 包含了父类标注@Inherited的注解
+     */
     @Test
-    public void getAnnotationOnClassIncludeSuperClassAnnotated() {
+    public void getAnnotationOnClassIncludeSuperClassInheritedAnnotated() {
         Set<Class> classname = Arrays.asList(((AnnotatedElement) AnnotatedModel.SubComposedTransactionalClass.class).getAnnotations()).stream().map(annotatedElement -> annotatedElement.annotationType()).collect(Collectors.toCollection(HashSet::new));
         assertThat(classname).isEmpty();
 
