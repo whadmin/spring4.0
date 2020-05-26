@@ -3,11 +3,6 @@ package com.spring.common.annotation.jdkAnnotatedElement;
 import com.google.common.collect.Sets;
 import com.spring.common.annotation.model.AnnotatedModel;
 import org.junit.Test;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Indexed;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,7 +31,6 @@ public class GetAnnotationsTest {
         return stream(classes).map(Class::getName).collect(toSet());
     }
 
-
     /**
      * getAnnotations {@link AnnotatedElement}用来表示Class类时 包含了标注在类上的直接注解,不包含其上元注解
      */
@@ -55,7 +49,7 @@ public class GetAnnotationsTest {
      * getAnnotations {@link AnnotatedElement}用来表示Class类时 包含了父类标注@Inherited的注解
      */
     @Test
-    public void getAnnotationOnClassIncludeSuperClassInheritedAnnotated() {
+    public void getAnnotationsOnClassIncludeSuperClassInheritedAnnotated() {
         Set<Class> classname = Arrays.asList(((AnnotatedElement) AnnotatedModel.SubComposedTransactionalClass.class).getAnnotations()).stream().map(annotatedElement -> annotatedElement.annotationType()).collect(Collectors.toCollection(HashSet::new));
         assertThat(classname).isEmpty();
 
@@ -64,6 +58,24 @@ public class GetAnnotationsTest {
 
         Set<Class> classname2 = Arrays.asList(((AnnotatedElement) AnnotatedModel.SubSubComposedComposedTransactionalClass.class).getAnnotations()).stream().map(annotatedElement -> annotatedElement.annotationType()).collect(Collectors.toCollection(HashSet::new));
         assertThat(classname2).isEqualTo(Sets.newHashSet(AnnotatedModel.ComposedComposedTransactionalInherited.class));
+    }
+
+    /**
+     * getAnnotations {@link AnnotatedElement}用来表示接口时，包含了接口的注解,不包含其上元注解
+     */
+    @Test
+    public void getAnnotationsOnInterfaceAnnotated() {
+        Set<Class> classname1 = Arrays.asList(((AnnotatedElement) AnnotatedModel.ComposedTransactionalInterface.class).getAnnotations()).stream().map(annotatedElement -> annotatedElement.annotationType()).collect(Collectors.toCollection(HashSet::new));
+        assertThat(classname1).isEqualTo(Sets.newHashSet(AnnotatedModel.ComposedComposedTransactionalInherited.class,AnnotatedModel.ComposedTransactional.class));
+    }
+
+    /**
+     * getAnnotations {@link AnnotatedElement}用来表示接口时，不包含了父接口上的注解
+     */
+    @Test
+    public void getAnnotationsOnInterfaceNotIncludeSuperInterfaceAnnotated() {
+        Set<Class> classname = Arrays.asList(((AnnotatedElement) AnnotatedModel.SubComposedTransactionalInterface.class).getAnnotations()).stream().map(annotatedElement -> annotatedElement.annotationType()).collect(Collectors.toCollection(HashSet::new));
+        assertThat(classname).isEmpty();
     }
 
 }

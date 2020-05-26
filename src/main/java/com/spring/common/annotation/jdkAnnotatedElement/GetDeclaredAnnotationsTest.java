@@ -20,7 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 1 该Class类上的修饰的注解
  * 2 不包含标注在类上的注解的元注解
  * 3 不包含从父类继承父类上修饰的注解（标注@Inherited元注解）
- *
+ * 当{@link AnnotatedElement}用来表示接口时，isAnnotationPresent获取其修饰注解包括：
+ * <p>
+ * 1 该interface上的修饰的注解(不包含元注解）
  */
 public class GetDeclaredAnnotationsTest {
 
@@ -51,5 +53,23 @@ public class GetDeclaredAnnotationsTest {
 
         Set<Class> classname2 = Arrays.asList(((AnnotatedElement) AnnotatedModel.SubSubComposedComposedTransactionalClass.class).getDeclaredAnnotations()).stream().map(annotatedElement -> annotatedElement.annotationType()).collect(Collectors.toCollection(HashSet::new));
         assertThat(classname2).isEmpty();
+    }
+
+    /**
+     * getDeclaredAnnotations {@link AnnotatedElement}用来表示接口时，包含了接口的注解,不包含其上元注解
+     */
+    @Test
+    public void getDeclaredAnnotationsOnInterfaceAnnotated() {
+        Set<Class> classname1 = Arrays.asList(((AnnotatedElement) AnnotatedModel.ComposedTransactionalInterface.class).getDeclaredAnnotations()).stream().map(annotatedElement -> annotatedElement.annotationType()).collect(Collectors.toCollection(HashSet::new));
+        assertThat(classname1).isEqualTo(Sets.newHashSet(AnnotatedModel.ComposedComposedTransactionalInherited.class,AnnotatedModel.ComposedTransactional.class));
+    }
+
+    /**
+     * getDeclaredAnnotations {@link AnnotatedElement}用来表示接口时，不包含了父接口上的注解
+     */
+    @Test
+    public void getDeclaredAnnotationsOnInterfaceNotIncludeSuperInterfaceAnnotated() {
+        Set<Class> classname = Arrays.asList(((AnnotatedElement) AnnotatedModel.SubComposedTransactionalInterface.class).getDeclaredAnnotations()).stream().map(annotatedElement -> annotatedElement.annotationType()).collect(Collectors.toCollection(HashSet::new));
+        assertThat(classname).isEmpty();
     }
 }
