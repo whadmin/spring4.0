@@ -3,7 +3,6 @@ package com.spring.common.annotation.annotatedElementUtils;
 import com.spring.common.annotation.model.AnnotatedModel;
 import com.spring.common.annotation.model.AnnotatedModel2;
 import com.spring.common.annotation.model.AnnotatedModel3;
-import org.apache.catalina.startup.ContextConfig;
 import org.junit.Test;
 import org.springframework.core.annotation.AnnotationAttributes;
 import java.util.Set;
@@ -106,14 +105,6 @@ public class GetMergedAnnotationAttributesTest {
     }
 
 
-    @Test
-    public void getMergedAnnotationAttributesWithConventionBasedComposedAnnotation() {
-        AnnotationAttributes attributes = getMergedAnnotationAttributes(AnnotatedModel3.ConventionBasedComposedContextConfigClass.class, AnnotatedModel3.ContextConfig.class.getName());
-        assertThat(attributes.getStringArray("locations")).isEqualTo(asArray("explicitDeclaration"));
-        assertThat(attributes.getStringArray("value")).isEqualTo(asArray("explicitDeclaration"));
-    }
 
-    static <T> T[] asArray(T... arr) {
-        return arr;
-    }
+
 }

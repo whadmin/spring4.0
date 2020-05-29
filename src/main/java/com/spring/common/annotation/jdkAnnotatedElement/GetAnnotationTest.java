@@ -108,7 +108,7 @@ public class GetAnnotationTest {
 
     @Test
     public void test() {
-        AnnotatedModel3.ConventionBasedComposedContextConfig conventionBasedComposedContextConfig = ((AnnotatedElement) AnnotatedModel3.ConventionBasedComposedContextConfigClass.class).getAnnotation(AnnotatedModel3.ConventionBasedComposedContextConfig.class);
+        AnnotatedModel3.ComposedContextConfig conventionBasedComposedContextConfig = ((AnnotatedElement) AnnotatedModel3.ComposedContextConfigClass.class).getAnnotation(AnnotatedModel3.ComposedContextConfig.class);
         assertThat(conventionBasedComposedContextConfig).isNotNull();
         Annotation contextConfig = ((AnnotatedElement) conventionBasedComposedContextConfig.annotationType()).getAnnotation(AnnotatedModel3.ContextConfig.class);
         assertThat(contextConfig).isNotNull();
