@@ -11,8 +11,7 @@
 	<!-- 定义开发的profile -->
 	<beans profile="dev">
 		<!-- 只扫描开发环境下使用的类 -->
-		<context:component-scan
-			base-package="com.spring.ioc.appliction.profile.model.annotation.dev" />
+		<bean name="devHelloService" class="com.spring.ioc.bean.assemblyBean.beanObject.profile.DevHelloServiceImpl2"/>
 		<!-- 加载开发使用的配置文件 -->
 		<util:properties id="config"
 			location="classpath:profile/dev.properties" />

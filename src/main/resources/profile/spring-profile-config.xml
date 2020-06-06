@@ -7,14 +7,18 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
+    <!-- 加载通用配置文件 -->
+    <util:properties id="config"
+                     location="classpath:profile/common.properties"/>
 
-<!-- 只扫描生产环境下使用的类 -->
-<context:component-scan
-        base-package="com.spring.ioc.appliction.profile.model.annotation.common"/>
-<!-- 加载生产使用的配置文件 -->
-<util:properties id="default"
-                 location="classpath:profile/common.properties"/>
 
-<import resource="spring-dev-config.xml"></import>
-<import resource="spring-produce-config.xml"></import>
+    <bean name="commonService" class="com.spring.ioc.bean.assemblyBean.beanObject.profile.CommonServiceImpl2">
+    </bean>
+
+    <context:annotation-config/>
+
+    <import resource="spring-dev-config.xml"></import>
+
+    <import resource="spring-produce-config.xml"></import>
+
 </beans>

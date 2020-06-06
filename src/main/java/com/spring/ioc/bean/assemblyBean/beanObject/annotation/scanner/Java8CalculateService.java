@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 /**
  * Java 8 Lambda 实现 {@link CalculateService}
  *
- * @author 小马哥
  * @since 2018/5/15
  */
 @Profile("Java8")
