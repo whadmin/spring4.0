@@ -6,7 +6,7 @@
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <bean id="replacer" class="com.spring.ioc.model.PrinterReplacer"/>
-    <bean id="printer" class="com.spring.ioc.model.Printer">
+    <bean id="singletonBean" class="com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean">
         <replaced-method name="print" replacer="replacer">
             <arg-type>java.lang.String</arg-type>
         </replaced-method>

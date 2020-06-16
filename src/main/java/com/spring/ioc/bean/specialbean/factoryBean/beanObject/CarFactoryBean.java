@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.specialbean.beanObject;
+package com.spring.ioc.bean.specialbean.factoryBean.beanObject;
 
 import org.springframework.beans.factory.FactoryBean;
 

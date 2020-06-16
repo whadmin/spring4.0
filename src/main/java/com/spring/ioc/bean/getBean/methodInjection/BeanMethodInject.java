@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.spring.ioc.model.HelloApi;
-import com.spring.ioc.model.Printer;
+import com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean;
 
 
 
@@ -28,8 +28,8 @@ public class BeanMethodInject {
     @Test
     public void testMethodReplacer() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ioc/methodReplacerInject.xml");
-        Printer printer = context.getBean("printer", Printer.class);
-        printer.print("我将被替换");
+//        SingletonBean singletonBean = context.getBean("printer", SingletonBean.class);
+//        singletonBean.print("我将被替换");
     }
 }
 

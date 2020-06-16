@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.specialbean.aware;
+package com.spring.ioc.bean.specialbean.awareBean;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

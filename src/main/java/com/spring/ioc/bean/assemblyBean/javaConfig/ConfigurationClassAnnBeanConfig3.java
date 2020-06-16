@@ -5,12 +5,14 @@ import com.spring.ioc.bean.assemblyBean.beanObject.no_annotation.BeanObject2;
 import com.spring.ioc.bean.assemblyBean.beanObject.no_annotation.BeanObject3;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 /**
  * @Author: wuhao.w
  * @Date: 2020/6/5 16:12
  */
 @Configuration(value ="configurationClassAnnBeanConfig3")
+@Order(3)
 public class ConfigurationClassAnnBeanConfig3 {
 
     @Bean(name = "bean3")

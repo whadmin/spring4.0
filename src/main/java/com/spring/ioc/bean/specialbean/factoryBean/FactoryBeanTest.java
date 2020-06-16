@@ -1,13 +1,13 @@
-package com.spring.ioc.bean.specialbean;
+package com.spring.ioc.bean.specialbean.factoryBean;
 
-import com.spring.ioc.bean.specialbean.beanObject.Car;
-import com.spring.ioc.bean.specialbean.beanObject.CarFactoryBean;
+import com.spring.ioc.bean.specialbean.factoryBean.beanObject.Car;
+import com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class FactoryBean {
+public class FactoryBeanTest {
 
     @Test
     public void testFactoryBean() {

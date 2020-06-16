@@ -1,21 +1,20 @@
 package com.spring.ioc.javaConig;
 
+import com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
-
-import com.spring.ioc.model.Printer;
 
 public class InstantiatingBeanScope {
 	
 	@Bean
 	@Scope
-	public Printer prototypePrinter() {
-		return new Printer();
+	public SingletonBean prototypePrinter() {
+		return new SingletonBean();
 	}
 
 	@Bean
-	public Printer singletonPrinter() {
-		return new Printer();
+	public SingletonBean singletonPrinter() {
+		return new SingletonBean();
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Indexed;
 import javax.annotation.Nonnull;
 import java.lang.annotation.Documented;
 import java.lang.reflect.AnnotatedElement;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.core.annotation.AnnotatedElementUtils.hasAnnotation;
 
@@ -27,10 +28,10 @@ import static org.springframework.core.annotation.AnnotatedElementUtils.hasAnnot
  * 5  该Class实现接口的注解的元注解（相对于isAnnotated扩展）
  * 当{@link AnnotatedElement}用来表示接口时，isAnnotationPresent获取其修饰注解包括：
  * <p>
- *   1 该interface上的修饰的注解
- *   2 该interface类上的修饰的注解同时也包括元注解（相对于JDKisAnnotationPresent改进）
- *   3 包含父接口上的注解（无论是否标注@Inherited元注解）
- *   4 包含父接口上的注解的元注解（无论是否标注@Inherited元注解）
+ * 1 该interface上的修饰的注解
+ * 2 该interface类上的修饰的注解同时也包括元注解（相对于JDKisAnnotationPresent改进）
+ * 3 包含父接口上的注解（无论是否标注@Inherited元注解）
+ * 4 包含父接口上的注解的元注解（无论是否标注@Inherited元注解）
  */
 public class HasAnnotationTest {
 

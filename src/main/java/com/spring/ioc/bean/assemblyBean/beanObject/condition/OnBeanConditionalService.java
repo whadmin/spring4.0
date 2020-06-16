@@ -1,6 +1,4 @@
-package com.spring.ioc.appliction.conditional.model;
-
-import org.springframework.stereotype.Component;
+package com.spring.ioc.bean.assemblyBean.beanObject.condition;
 
 
 public class OnBeanConditionalService implements ConditionalService{

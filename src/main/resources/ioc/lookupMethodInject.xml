@@ -4,19 +4,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     
     <!-- prototype -->
-    <bean id="prototypePrinter" class="com.spring.ioc.model.Printer" scope="prototype"/>
+    <bean id="prototypePrinter" class="com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean" scope="prototype"/>
     <!-- singleton -->
-    <bean id="singletonPrinter" class="com.spring.ioc.model.Printer" scope="singleton"/>
+    <bean id="singletonPrinter" class="com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean" scope="singleton"/>
 
 
     <bean id="helloApi1" class="com.spring.ioc.model.HelloImpl5" scope="singleton">
-        <property name="printer" ref="prototypePrinter"/>
+        <property name="singletonBean" ref="prototypePrinter"/>
         <lookup-method name="createPrototypePrinter" bean="prototypePrinter"/>
         <lookup-method name="createSingletonPrinter" bean="singletonPrinter"/>
     </bean>           
     
     <bean id="helloApi2" class="com.spring.ioc.model.HelloImpl5" scope="prototype">
-        <property name="printer" ref="prototypePrinter"/>
+        <property name="singletonBean" ref="prototypePrinter"/>
         <lookup-method name="createPrototypePrinter" bean="prototypePrinter"/>
         <lookup-method name="createSingletonPrinter" bean="singletonPrinter"/>
     </bean>           
