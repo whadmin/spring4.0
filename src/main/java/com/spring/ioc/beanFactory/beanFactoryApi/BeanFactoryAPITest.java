@@ -1,12 +1,19 @@
 package com.spring.ioc.beanFactory.beanFactoryApi;
 
+import com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarBean;
 import com.spring.ioc.beanFactory.beanObject.SimpleBean;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.ResolvableType;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BeanFactoryAPITest {
 
@@ -109,9 +116,15 @@ public class BeanFactoryAPITest {
 
     @Test
     public void testGetType() {
-        ApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/beanFactory/beanFactoryApi.xml");
-        ConfigurableListableBeanFactory beanFactory = ((ClassPathXmlApplicationContext) context).getBeanFactory();
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        Resource resource = new ClassPathResource("ioc/beanFactory/beanFactoryApi.xml");
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(resource);
+
+        assertThat(beanFactory.getType("carBean")).isEqualTo(CarBean.class);
         Assert.assertEquals(beanFactory.getType("test"), SimpleBean.class);
     }
 }

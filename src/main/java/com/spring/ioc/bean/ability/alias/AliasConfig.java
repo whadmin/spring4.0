@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.javaConfig;
+package com.spring.ioc.bean.ability.alias;
 
 import junit.framework.Assert;
 
@@ -10,11 +10,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.spring.ioc.model.HelloApi;
 import com.spring.ioc.model.HelloApi2;
 
-public class GetBeanContainer {
+public class AliasConfig {
 
     @Test
     public void test1() {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(GetBeanContainer.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AliasConfig.class);
         // 根据类型获取bean
         HelloApi2 helloApi = context.getBean(HelloApi2.class);
         helloApi.sayHello();
@@ -22,7 +22,7 @@ public class GetBeanContainer {
 
     @Test
     public void test2() {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(GetBeanContainer.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AliasConfig.class);
         // 根据id获取bean
         HelloApi bean = context.getBean("auto", HelloApi.class);
         bean.sayHello();
@@ -36,7 +36,7 @@ public class GetBeanContainer {
 
     @Test
     public void test3() {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(GetBeanContainer.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AliasConfig.class);
         // 根据name获取bean
         HelloApi bean = context.getBean("bean2", HelloApi.class);
         bean.sayHello();
@@ -44,7 +44,7 @@ public class GetBeanContainer {
 
     @Test
     public void test4() {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(GetBeanContainer.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AliasConfig.class);
         // 根据id获取bean
         HelloApi bean3 = context.getBean("bean3", HelloApi.class);
         bean3.sayHello();

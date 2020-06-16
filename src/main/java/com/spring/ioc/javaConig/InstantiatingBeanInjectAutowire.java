@@ -1,5 +1,6 @@
 package com.spring.ioc.javaConig;
 
+import com.spring.ioc.model.*;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -7,11 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import com.spring.ioc.model.HelloApi;
-import com.spring.ioc.model.HelloApiDataSource;
-import com.spring.ioc.model.HelloApiDecorator;
-import com.spring.ioc.model.HelloApiDecorator2;
-import com.spring.ioc.model.HelloImpl;
+import com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject;
 import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.ListBean;
 
 @Configuration
@@ -19,13 +16,13 @@ public class InstantiatingBeanInjectAutowire {
 	
 	@Bean
 	@Primary
-	public HelloApi helloApi() {
-		return new HelloImpl();
+	public AliasBeanObject helloApi() {
+		return new AliasBeanObject();
 	}
 	
 	@Bean
-	public HelloApi HelloImpl() {
-		return new HelloImpl();
+	public AliasBeanObject HelloImpl() {
+		return new AliasBeanObject();
 	}
 	
 	@Bean(autowire=Autowire.BY_NAME)
