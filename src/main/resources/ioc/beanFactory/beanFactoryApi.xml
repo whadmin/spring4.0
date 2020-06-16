@@ -14,4 +14,9 @@
 
     <alias alias="alias3" name="simpleBean"/>
     <alias alias="alias4" name="simpleBean"/>
+
+    <import resource="classpath:ioc/bean/specialbean/factoryBean.xml" />
+    <import resource="classpath:ioc/bean/ability/scope/prototypeBean.xml" />
+    <import resource="classpath:ioc/bean/ability/scope/singletonBean.xml" />
+    <import resource="classpath:ioc/bean/ability/lazyinit/lazyinitBean.xml" />
 </beans>

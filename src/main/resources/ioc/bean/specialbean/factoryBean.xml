@@ -4,6 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="car" class="com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean" />
+    <bean id="carBean" class="com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean" lazy-init="false"/>
 
+    <bean id="carBean1" class="com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean" lazy-init="true"/>
+
+    <bean id="carBean2" class="com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean" lazy-init="false">
+        <property name="singleton" value="true"/>
+    </bean>
 </beans>

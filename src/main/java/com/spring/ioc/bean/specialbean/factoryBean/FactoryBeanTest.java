@@ -1,38 +1,138 @@
 package com.spring.ioc.bean.specialbean.factoryBean;
 
-import com.spring.ioc.bean.specialbean.factoryBean.beanObject.Car;
+import com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarBean;
 import com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean;
-import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FactoryBeanTest {
 
-    @Test
-    public void testFactoryBean() {
-        // 使用构造器
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/specialbean/factoryBean.xml");
-        Car car = (Car) beanFactory.getBean("car");
-        Assert.assertNotNull(car);
-    }
 
     @Test
-    public void testFactoryBeanObject() {
-        // 使用构造器
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/specialbean/factoryBean.xml");
-        CarFactoryBean carFactoryBean = (CarFactoryBean) beanFactory.getBean("&car");
-        Assert.assertNotNull(carFactoryBean);
+    public void testAssemblyFactoryBean() throws Exception {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        Resource resource = new ClassPathResource("ioc/bean/specialbean/factoryBean.xml");
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(resource);
+
+        // 3 获取BeanDefinition
+        assertThat(beanFactory.getBeanDefinition("carBean")).isNotNull();
+        assertThat(beanFactory.getBeanDefinition("carBean1")).isNotNull();
+        assertThat(beanFactory.getBeanDefinition("carBean2")).isNotNull();
     }
 
-
+    /**
+     * 非延迟单例工厂Bean,创建单例对象
+     */
     @Test
-    public void testisFactoryBean() {
-        // 使用构造器
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/specialbean/factoryBean.xml");
-        Assert.assertTrue(((ClassPathXmlApplicationContext) beanFactory).getBeanFactory().isFactoryBean("car"));
+    public void testFactoryBean1() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        Resource resource = new ClassPathResource("ioc/bean/specialbean/factoryBean.xml");
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(resource);
+
+
+
+        // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
+        beanFactory.preInstantiateSingletons();
+
+        // 4 从单例缓存池中获取预加载单例Bean,对于FactoryBean,是将单例FactoryBean对象被放到单例对象池中
+        Object beanFactorySingleton = beanFactory.getSingleton("carBean1");
+        assertThat(beanFactorySingleton instanceof CarFactoryBean).isTrue();
+
+        // 5.1 判断获取Bean对象是否是单例的，如果是单例从单例对象池中获取，这里获取的FactoryBean，
+        // 5.2 如果单例对象池中不存在，新创建添加到单例对象池
+        // 5.3 Bean类型是FactoryBean，通过getObjectForBeanInstance获取Bean
+        // 5.4 如果获取"carBean"，表示获取工厂创建对象，调用FactoryBean.getObject()，返回
+        //     如果获取"&carBean",表示获取工厂，返回单例对象池中对象FactoryBean，
+        CarBean carBean1 = beanFactory.getBean("carBean", CarBean.class);
+        CarBean carBean2 = beanFactory.getBean("carBean", CarBean.class);
+        CarFactoryBean carFactoryBean1 = beanFactory.getBean("&carBean", CarFactoryBean.class);
+        CarFactoryBean carFactoryBean2 = beanFactory.getBean("&carBean", CarFactoryBean.class);
+
+
+        // 6 由于carBean 是单例Bean多次获取都是同一个Bean
+        assertThat(carFactoryBean1).isEqualTo(carFactoryBean2);
+
+        // 7 "carBean" FactoryBean.getObject()获取Bean对下每次都是同一个对象
+        assertThat(carBean1).isEqualTo(carBean2);
+
+
+        assertThat(beanFactory.getType("carBean")).isEqualTo(CarBean.class);
     }
+
+
+    /**
+     * 非延迟单例工厂Bean，创建原型对象
+     */
+    @Test
+    public void testFactoryBean2() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        Resource resource = new ClassPathResource("ioc/bean/specialbean/factoryBean.xml");
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(resource);
+
+        // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
+        beanFactory.preInstantiateSingletons();
+
+        // 4 从单例缓存池中获取预加载单例Bean,对于FactoryBean,是将单例FactoryBean对象被放到单例对象池中
+        // 由于carBean1 是延迟加载这里获取为null
+        Object beanFactorySingleton = beanFactory.getSingleton("carBean2");
+        assertThat(beanFactorySingleton instanceof CarFactoryBean).isTrue();
+
+        // 5.1 判断获取Bean对象是否是单例的，如果是单例从单例对象池中获取，这里获取的FactoryBean，
+        // 5.2 如果单例对象池中不存在，新创建添加到单例对象池
+        // 5.3 Bean类型是FactoryBean，通过getObjectForBeanInstance获取Bean
+        // 5.4 如果获取"carBean"，表示获取工厂创建对象，调用FactoryBean.getObject()，返回
+        //     如果获取"&carBean",表示获取工厂，返回单例对象池中对象FactoryBean，
+        CarBean carBean1 = beanFactory.getBean("carBean2", CarBean.class);
+        CarBean carBean2 = beanFactory.getBean("carBean2", CarBean.class);
+        CarFactoryBean carFactoryBean1 = beanFactory.getBean("&carBean2", CarFactoryBean.class);
+        CarFactoryBean carFactoryBean2 = beanFactory.getBean("&carBean2", CarFactoryBean.class);
+
+        // 6 由于carBean 是单例Bean多次获取都是同一个Bean
+        assertThat(carFactoryBean1).isEqualTo(carFactoryBean2);
+
+        // 7 "carBean" FactoryBean.getObject()获取Bean对下每次都是同一个对象
+        assertThat(carBean1).isNotEqualTo(carBean2);
+    }
+
+
+    /**
+     * 延迟单例工厂Bean
+     */
+    @Test
+    public void testFactoryBean3() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        Resource resource = new ClassPathResource("ioc/bean/specialbean/factoryBean.xml");
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(resource);
+
+        // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
+        beanFactory.preInstantiateSingletons();
+
+        // 4 从单例缓存池中获取预加载单例Bean,对于FactoryBean,是将单例FactoryBean对象被放到单例对象池中
+        // 由于carBean1 是延迟加载这里获取为null
+        Object beanFactorySingleton = beanFactory.getSingleton("carBean1");
+        assertThat(beanFactorySingleton).isNull();
+    }
+
+
 }

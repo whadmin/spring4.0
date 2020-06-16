@@ -58,7 +58,7 @@ public class SingletonBeanTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/scope/SingletonBean.xml");
+        Resource resource = new ClassPathResource("ioc/bean/ability/scope/singletonBean.xml");
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
 
@@ -76,13 +76,13 @@ public class SingletonBeanTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/scope/SingletonBean.xml");
+        Resource resource = new ClassPathResource("ioc/bean/ability/scope/singletonBean.xml");
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
         assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("singletonBean2")).isNotNull();
 
-        // 3 预加载单例Bean,已加载单例Bean会放到单例缓存池中(无法加载延迟单例Bean)
+        // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
         beanFactory.preInstantiateSingletons();
 
         // 4 从单例缓存池中获取预加载单例Bean
@@ -113,14 +113,14 @@ public class SingletonBeanTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/scope/SingletonBean.xml");
+        Resource resource = new ClassPathResource("ioc/bean/ability/scope/singletonBean.xml");
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
 
         assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("singletonBean2")).isNotNull();
 
-        // 3 预加载单例Bean,已加载单例Bean会放到单例缓存池中(无法加载延迟单例Bean)
+        // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
         beanFactory.preInstantiateSingletons();
 
         // 4 singletonBean2 是延迟加载Bean 无法通过preInstantiateSingletons预加载到单例缓存池中
