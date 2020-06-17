@@ -10,6 +10,7 @@ public class CarFactoryBean implements FactoryBean<CarBean> {
 
     private boolean singleton = true;
 
+    private static boolean invokegetObject = false;
 
     private CarBean carBean;
 
@@ -19,6 +20,7 @@ public class CarFactoryBean implements FactoryBean<CarBean> {
 
     @Override
     public CarBean getObject() throws Exception {
+        invokegetObject = true;
         if (isSingleton()) {
             return this.carBean;
         } else {
@@ -28,11 +30,16 @@ public class CarFactoryBean implements FactoryBean<CarBean> {
         }
     }
 
+    public static boolean wasinvokegetObject() {
+        return invokegetObject;
+    }
+
     /**
      * 重置
      */
     public static void reset() {
         prototypeCreated = false;
+        invokegetObject=false;
     }
 
     /**

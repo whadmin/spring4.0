@@ -1,122 +1,65 @@
 package com.spring.ioc.bean.ability.alias;
 
-import junit.framework.Assert;
-
+import com.spring.BaseTest;
+import com.spring.ioc.bean.ability.alias.javaConfig.AliasBeanConfig;
+import com.spring.ioc.bean.ability.scope.javaConfig.PrototypeBeanConfig;
 import org.junit.Test;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;
+import org.springframework.context.annotation.AnnotationConfigUtils;
+import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 
-import com.spring.ioc.model.HelloApi;
-import com.spring.ioc.model.HelloApi2;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AliasBeanTest {
+public class AliasBeanTest extends BaseTest {
 
-    @Test
-    public void test1() {
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/ability/alias/aliasBean.xml");
-        // 根据类型获取bean
-        HelloApi2 helloApi = beanFactory.getBean(HelloApi2.class);
-        helloApi.sayHello();
+    static <T> T[] asArray(T... arr) {
+        return arr;
     }
 
     @Test
-    public void test2() {
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/ability/alias/aliasBean.xml");
-        // 根据id获取bean
-        HelloApi bean = beanFactory.getBean("bean1", HelloApi.class);
-        bean.sayHello();
+    public void testXmlConfigAlias() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/ability/alias/aliasBean.xml");
+
+        assertThat(beanFactory.getAliases("alias_bean1")).isEqualTo(asArray("bean1_alias"));
+        assertThat(beanFactory.getAliases("alias_bean2")).isEmpty();
+        assertThat(beanFactory.getAliases("alias_bean3")).isEqualTo(asArray("bean3_alias4","bean3_alias1","bean3_alias2","bean3_alias3"));
+        assertThat(beanFactory.getAliases("alias_bean4")).isEqualTo(asArray("bean4_alias2","bean4_alias1"));
+        assertThat(beanFactory.getAliases("alias_bean5")).isEqualTo(asArray("bean5_alias2","bean5_alias1"));
     }
 
     @Test
-    public void test3() {
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/ability/alias/aliasBean.xml");
-        // 根据name获取bean
-        HelloApi bean = beanFactory.getBean("bean2", HelloApi.class);
-        bean.sayHello();
+    public void testAnnotationConfigAlias() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        annotatedBeanAssembly(beanFactory, AliasBeanConfig.class);
+
+        assertThat(beanFactory.containsBean("alias_bean1")).isTrue();
+        assertThat(beanFactory.getAliases("alias_bean1")).isEmpty();
+
+        assertThat(beanFactory.containsBean("bean2")).isFalse();
+        assertThat(beanFactory.containsBean("alias_bean2")).isTrue();
+        assertThat(beanFactory.getAliases("alias_bean2")).isEmpty();
+
+        assertThat(beanFactory.containsBean("bean3")).isFalse();
+        assertThat(beanFactory.containsBean("alias_bean3")).isTrue();
+        assertThat(beanFactory.getAliases("alias_bean3")).isEqualTo(asArray("bean3_alias1","bean3_alias2"));
+
+        assertThat(beanFactory.containsBean("alias_bean4")).isTrue();
+        assertThat(beanFactory.getAliases("alias_bean4")).isEqualTo(asArray("bean4_alias2","bean4_alias1"));
     }
 
-    @Test
-    public void test4() {
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/ability/alias/aliasBean.xml");
-        // 根据id获取bean
-        HelloApi bean3 = beanFactory.getBean("bean3", HelloApi.class);
-        bean3.sayHello();
-        // 根据别名获取bean
-        HelloApi bean3_alias1 = beanFactory.getBean("bean3_alias1", HelloApi.class);
-        bean3_alias1.sayHello();
-        // 根据id获取bean
-        HelloApi bean4 = beanFactory.getBean("bean4", HelloApi.class);
-        bean4.sayHello();
 
-        String[] bean4Alias = beanFactory.getAliases("bean4");
-        // 因此别名不能和id一样，如果一样则由IoC容器负责消除冲突
-        Assert.assertEquals(0, bean4Alias.length);
-
-    }
-
-    @Test
-    public void test5() {
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/ability/alias/aliasBean.xml");
-        // 根据id获取bean
-        HelloApi bean1 = beanFactory.getBean("bean5", HelloApi.class);
-        bean1.sayHello();
-        // 2根据别名获取bean
-        HelloApi alias11 = beanFactory.getBean("bean5_alias11", HelloApi.class);
-        alias11.sayHello();
-        // 验证确实是四个别名
-        String[] bean1Alias = beanFactory.getAliases("bean5");
-        System.out.println("=======GetBeanContainer.xml bean5 别名========");
-        for (String alias : bean1Alias) {
-            System.out.println(alias);
-        }
-        System.out.println("=======GetBeanContainer.xml bean5 别名========");
-        Assert.assertEquals(4, bean1Alias.length);
-
-        // 根据id获取bean
-        HelloApi bean6 = beanFactory.getBean("bean6", HelloApi.class);
-        bean6.sayHello();
-        // //2根据别名获取bean
-        HelloApi bean6_alias21 = beanFactory.getBean("bean6_alias21", HelloApi.class);
-        bean6_alias21.sayHello();
-        // 验证确实是两个别名
-        String[] bean6Alias = beanFactory.getAliases("bean6");
-        System.out.println("=======namingbean5.xml bean2 别名========");
-        for (String alias : bean6Alias) {
-            System.out.println(alias);
-        }
-        System.out.println("=======namingbean5.xml bean2 别名========");
-        Assert.assertEquals(2, bean6Alias.length);
-
-    }
-
-    @Test
-    public void test6() {
-        BeanFactory beanFactory = new ClassPathXmlApplicationContext(
-                "ioc/bean/ability/alias/aliasBean.xml");
-        // 根据id获取bean
-        HelloApi bean = beanFactory.getBean("bean7", HelloApi.class);
-        bean.sayHello();
-
-        // 根据别名获取bean
-        HelloApi alias1 = beanFactory.getBean("bean7_alias1", HelloApi.class);
-        alias1.sayHello();
-        HelloApi alias2 = beanFactory.getBean("bean7_alias2", HelloApi.class);
-        alias2.sayHello();
-
-        String[] beanAlias = beanFactory.getAliases("bean7");
-        System.out.println("=======namingbean6.xml bean 别名========");
-        for (String alias : beanAlias) {
-            System.out.println(alias);
-        }
-        System.out.println("=======namingbean6.xml bean 别名========");
-        Assert.assertEquals(2, beanAlias.length);
-
-    }
 
 }

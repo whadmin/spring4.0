@@ -8,7 +8,7 @@
 		   http://www.springframework.org/schema/context
 		   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <bean id="prototypeBean" class="com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean"
+    <bean id="prototypeBean" class="com.spring.ioc.bean.ability.scope.beanObject.no_annotation.PrototypeBean"
           scope="prototype"/>
 
 </beans>

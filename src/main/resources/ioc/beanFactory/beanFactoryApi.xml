@@ -8,14 +8,8 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <bean id="simpleBean" class="com.spring.ioc.beanFactory.beanObject.SimpleBean"/>
-    <bean name="simpleBeanName;alias1,alias2" class="com.spring.ioc.beanFactory.beanObject.SimpleBean"/>
-
-    <alias alias="alias3" name="simpleBean"/>
-    <alias alias="alias4" name="simpleBean"/>
-
     <import resource="classpath:ioc/bean/specialbean/factoryBean.xml" />
+    <import resource="classpath:ioc/bean/ability/alias/aliasBean.xml" />
     <import resource="classpath:ioc/bean/ability/scope/prototypeBean.xml" />
     <import resource="classpath:ioc/bean/ability/scope/singletonBean.xml" />
     <import resource="classpath:ioc/bean/ability/lazyinit/lazyinitBean.xml" />

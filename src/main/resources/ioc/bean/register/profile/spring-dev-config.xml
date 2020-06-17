@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+
+	<!-- 定义开发的profile -->
+	<beans profile="dev">
+		<!-- 只扫描开发环境下使用的类 -->
+		<bean name="devHelloService" class="com.spring.ioc.bean.assemblyBean.beanObject.profile.DevHelloServiceImpl2"/>
+		<!-- 加载开发使用的配置文件 -->
+		<util:properties id="config"
+			location="classpath:ioc/bean/register/profile/dev.properties" />
+	</beans>
+</beans>
