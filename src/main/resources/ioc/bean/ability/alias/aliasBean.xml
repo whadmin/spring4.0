@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
 	       http://www.springframework.org/schema/beans
 	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		   http://www.springframework.org/schema/context
 		   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- 一、不指定id，只配置必须的全限定类名，由IoC容器为其生成一个标识， 客户端必须通过接口“T getBean(Class<T> requiredType)”获取Bean, 
-		requiredType 为接口，如果requiredType有多个实现 -->
-	<bean class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/>
 
+    <!-- 指定id和name，id就是id，而name就是别名，必须在Ioc容器中唯一  -->
+    <bean id="alias_bean1" name="bean1_alias" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/>
 
-	<!-- 开启注释报错 -->
-	<!-- <bean class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/> -->
+    <!-- 如果id和name一样，IoC容器能检测到，并消除冲突   -->
+    <bean id="alias_bean2" name="alias_bean2" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/>
 
-	<!-- 二、指定id，必须在Ioc容器中唯一 -->
-	<bean id="bean1" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject" />
-	
-	<!-- 重复的id，XML验证器会报错 -->
-	<!-- <bean id="errorBean" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/> -->
-	<!-- <bean id="errorBean" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/> -->
+    <!-- 五、指定多个name，多个name用","、";"、" "分割，第一个被用作id， 其他的（alias1、alias2、alias3）是别名，所有标识符也必须在Ioc容器中唯一  -->
+    <bean name="alias_bean3;bean3_alias1,bean3_alias2;bean3_alias3,bean3_alias4"
+          class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/>
 
-	<!-- 三、指定beanName，这样name本质就是id，必须在Ioc容器中唯一 -->
-	<bean name="bean2" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject" />
-	
+    <!-- 当指定id时，name指定的标识符全部为别名 -->
+    <bean id="alias_bean4" name="bean4_alias1;bean4_alias2"
+          class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/>
 
-	<!-- 四、指定id和name，id就是id，而name就是别名，必须在Ioc容器中唯一  -->
-	<bean id="bean3" name="bean3_alias1" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject" />
-	<!-- 如果id和name一样，IoC容器能检测到，并消除冲突   -->
-	<bean id="bean4" name="bean4" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject" />
+    <!--六、使用<alias>标签指定别名，别名也必须在IoC容器中唯一 -->
+    <bean name="alias_bean5" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/>
+    <alias alias="bean5_alias1" name="alias_bean5"/>
+    <alias alias="bean5_alias2" name="alias_bean5"/>
 
-	<!-- 五、指定多个name，多个name用","、";"、" "分割，第一个被用作id， 其他的（alias1、alias2、alias3）是别名，所有标识符也必须在Ioc容器中唯一  -->
-	<bean name="bean5;bean5_alias11,bean5_alias12;bean5_alias13,bean5_alias14"
-		class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject" />
-	<!-- 当指定id时，name指定的标识符全部为别名 -->
-	<bean id="bean6" name="bean6_alias21;bean6_alias22" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject" />
-    
-	<!--六、使用<alias>标签指定别名，别名也必须在IoC容器中唯一 -->
-	<bean name="bean7" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject" />
-	<alias alias="bean7_alias1" name="bean7" />
-	<alias alias="bean7_alias2" name="bean7" />
-	
 </beans>

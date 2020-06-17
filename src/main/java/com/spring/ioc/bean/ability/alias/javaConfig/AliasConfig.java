@@ -11,41 +11,23 @@ import com.spring.ioc.model.HelloImpl2;
 @Configuration
 public class AliasConfig {
 
-    
-    /**
-     * 返回类型:为bean实现的接口
-     * 方法名在没有定义name为Id
-     * 当定义name只有一个 name即是id也是name
-     * 当定义name有多个 第一个name即是id也是name，后面是别名
-     * @return
-     */
     @Bean
-    public AliasBeanObject auto() {
+    public AliasBeanObject alias_bean1() {
         return new AliasBeanObject();
     }
 
-    @Bean
-    public AliasBeanObject bean1() {
-        return new AliasBeanObject();
-    }
-
-    @Bean(name = { "bean2" })
+    @Bean(name = {"alias_bean2"})
     public AliasBeanObject bean2() {
         return new AliasBeanObject();
     }
 
-    @Bean(name = { "bean3","bean3_alias1"})
+    @Bean(name = {"alias_bean3", "bean3_alias1", "bean3_alias2"})
     public AliasBeanObject bean3() {
         return new AliasBeanObject();
     }
 
-    @Bean(name = { "bean4" })
-    public AliasBeanObject bean4() {
-        return new AliasBeanObject();
-    }
-
-    @Bean(name = { "bean5","bean5_alias11", "bean5_alias12", "bean5_alias13", "bean5_alias14" })
-    public AliasBeanObject bean5() {
+    @Bean(name = {"alias_bean4", "bean4_alias1", "bean4_alias2"})
+    public AliasBeanObject alias_bean4() {
         return new AliasBeanObject();
     }
 
