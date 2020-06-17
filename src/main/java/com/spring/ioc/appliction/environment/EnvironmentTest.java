@@ -1,10 +1,13 @@
 package com.spring.ioc.appliction.environment;
 
 import com.spring.BaseTest;
+import com.spring.ioc.bean.assemblyBean.javaConfig.profile.ProfileConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.env.CommandLinePropertySource;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
@@ -13,6 +16,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.context.support.StandardServletEnvironment;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Environment 本身是一个属性解析器实现PropertyResolver
@@ -150,13 +154,59 @@ public class EnvironmentTest extends BaseTest {
 
 
     @Test
-    public void testXmlConfigProperties(){
-        //xml装配 非web环境 ApplicationContext实现
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/bean/register/profile/spring-profile-config.xml");
-
-        //读取 <util:properties id="config" location="classpath:profile/common.properties"/> 配置
+    public void testPropertySource(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(ProfileConfig.class);
+        context.refresh();
         assertThat(context.getEnvironment().getProperty("name")).isEqualTo("default");
         assertThat(context.getEnvironment().getProperty("default.name")).isEqualTo("default");
+    }
+
+
+    @Test
+    public void testProfilePropertySource1(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        //开启dev环境
+        context.getEnvironment().setActiveProfiles("dev");
+        context.register(ProfileConfig.class);
+        context.refresh();
+
+        //ProfileConfig中@PropertySource会将属性设置到environment
+        //DevProFileConfig中@PropertySource会将属性设置到environment 被标记为dev环境
+        //ProfileConfig中@PropertySource和DevProFileConfig中@PropertySource由于存在相同属性key "name"，被标记为dev环境作为该属性key的值
+        Assert.assertThat(context.getEnvironment().getProperty("name"), equalTo("dev"));
+        Assert.assertThat(context.getEnvironment().getProperty("default.name"), equalTo("default"));
+    }
+
+
+    @Test
+    public void testProfilePropertySource2(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        //开启dev环境
+        context.getEnvironment().setActiveProfiles("produce");
+        context.register(ProfileConfig.class);
+        context.refresh();
+
+        //ProfileConfig中@PropertySource会将属性设置到environment
+        //ProduceProFileConfig中@PropertySource会将属性设置到environment 被标记为produce环境
+        //ProfileConfig中@PropertySource和ProduceProFileConfig中@PropertySource存在相同属性key "name"，被标记为produce环境作为该属性key的值
+        Assert.assertThat(context.getEnvironment().getProperty("name"), equalTo("produce"));
+        Assert.assertThat(context.getEnvironment().getProperty("default.name"), equalTo("default"));
+    }
+
+    @Test
+    public void testProfilePropertySource3(){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        //开启dev环境
+        context.getEnvironment().setActiveProfiles("produce","dev");
+        context.register(ProfileConfig.class);
+        context.refresh();
+
+        //ProfileConfig中@PropertySource会将属性设置到environment
+        //ProduceProFileConfig中@PropertySource会将属性设置到environment 被标记为produce环境
+        //ProfileConfig中@PropertySource和ProduceProFileConfig中@PropertySource存在相同属性key "name"，被标记为produce环境作为该属性key的值
+        Assert.assertThat(context.getEnvironment().getProperty("name"), equalTo("produce"));
+        Assert.assertThat(context.getEnvironment().getProperty("default.name"), equalTo("default"));
     }
 
 
