@@ -46,6 +46,11 @@ public class SingletonBeanTest extends BaseTest {
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("singletonBean2")).isNotNull();
+
+        // 4 判断是否是单例类型
+        assertThat(beanFactory.isSingleton("singletonBean")).isTrue();
+        assertThat(beanFactory.isSingleton("singletonBean2")).isTrue();
+
     }
 
     /**
@@ -62,6 +67,10 @@ public class SingletonBeanTest extends BaseTest {
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("singletonBean2")).isNotNull();
+
+        // 4 判断是否是单例类型
+        assertThat(beanFactory.isSingleton("singletonBean")).isTrue();
+        assertThat(beanFactory.isSingleton("singletonBean2")).isTrue();
     }
 
 
@@ -79,6 +88,10 @@ public class SingletonBeanTest extends BaseTest {
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("singletonBean2")).isNotNull();
+
+        // 4 判断是否是单例类型
+        assertThat(beanFactory.isSingleton("singletonBean")).isTrue();
+        assertThat(beanFactory.isSingleton("singletonBean2")).isTrue();
     }
 
     /**

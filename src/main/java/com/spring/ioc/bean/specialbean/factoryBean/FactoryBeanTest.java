@@ -27,6 +27,9 @@ public class FactoryBeanTest {
         assertThat(beanFactory.getBeanDefinition("carBean")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("carBean1")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("carBean2")).isNotNull();
+
+        assertThat(beanFactory.getType("carBean")).isEqualTo(CarBean.class);
+        assertThat(beanFactory.getType("&carBean")).isEqualTo(CarFactoryBean.class);
     }
 
     /**
@@ -60,16 +63,14 @@ public class FactoryBeanTest {
         CarBean carBean2 = beanFactory.getBean("carBean", CarBean.class);
         CarFactoryBean carFactoryBean1 = beanFactory.getBean("&carBean", CarFactoryBean.class);
         CarFactoryBean carFactoryBean2 = beanFactory.getBean("&carBean", CarFactoryBean.class);
-
+        assertThat(beanFactory.getType("carBean")).isEqualTo(CarBean.class);
+        assertThat(beanFactory.getType("&carBean")).isEqualTo(CarFactoryBean.class);
 
         // 6 由于carBean 是单例Bean多次获取都是同一个Bean
         assertThat(carFactoryBean1).isEqualTo(carFactoryBean2);
 
         // 7 "carBean" FactoryBean.getObject()获取Bean对下每次都是同一个对象
         assertThat(carBean1).isEqualTo(carBean2);
-
-
-        assertThat(beanFactory.getType("carBean")).isEqualTo(CarBean.class);
     }
 
 

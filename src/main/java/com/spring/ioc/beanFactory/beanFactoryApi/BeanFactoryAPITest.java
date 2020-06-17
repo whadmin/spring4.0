@@ -38,7 +38,7 @@ public class BeanFactoryAPITest extends BaseTest {
         BeanFactory beanFactory = lbf;
 
         // 传入名称可以是 BeanId
-        SimpleBean simpleBean = (SimpleBean) beanFactory.getBean("simpleBean");
+        AliasBeanObject simpleBean = (AliasBeanObject) beanFactory.getBean("simpleBean");
         assertThat(simpleBean).isNotNull();
 
         // 传入名称可以是 Bean别名
@@ -169,6 +169,9 @@ public class BeanFactoryAPITest extends BaseTest {
         assertThat(beanFactory.containsBean("&carBean")).isTrue();
     }
 
+    /**
+     * 判断是否是单例类型
+     */
     @Test
     public void testIsSingleton() {
         // 1.初始化容器
@@ -177,8 +180,14 @@ public class BeanFactoryAPITest extends BaseTest {
         // 2 xml配置文件装配Bean
         xmlAssembly(lbf, "ioc/beanFactory/beanFactoryApi.xml");
         BeanFactory beanFactory = lbf;
+
+        assertThat(beanFactory.isSingleton("singletonBean")).isTrue();
+        assertThat(beanFactory.isSingleton("singletonBean2")).isTrue();
     }
 
+    /**
+     * 判断是否是原型类型
+     */
     @Test
     public void testIsPrototype() {
         // 1.初始化容器
@@ -187,26 +196,41 @@ public class BeanFactoryAPITest extends BaseTest {
         // 2 xml配置文件装配Bean
         xmlAssembly(lbf, "ioc/beanFactory/beanFactoryApi.xml");
         BeanFactory beanFactory = lbf;
+
+        // 4 判断是否是原型类型
+        assertThat(beanFactory.isPrototype("prototypeBean")).isTrue();
     }
 
+    /**
+     * 判断类型是否匹配（使用ResolvableType作为匹配条件）
+     */
     @Test
     public void testisTypeMatchResolvableType() {
-        ApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/beanFactory/beanFactoryApi.xml");
-        ConfigurableListableBeanFactory beanFactory = ((ClassPathXmlApplicationContext) context).getBeanFactory();
-        Assert.assertTrue(beanFactory.isTypeMatch("test", ResolvableType.forClass(SimpleBean.class)));
+        // 1.初始化容器
+        DefaultListableBeanFactory lbf = new DefaultListableBeanFactory();
+
+        // 2 xml配置文件装配Bean
+        xmlAssembly(lbf, "ioc/beanFactory/beanFactoryApi.xml");
+        BeanFactory beanFactory = lbf;
+        assertThat(beanFactory.isTypeMatch("simpleBean", ResolvableType.forClass(AliasBeanObject.class))).isTrue();
     }
 
+    /**
+     * 判断类型是否匹配（使用ResolvableType作为匹配条件）
+     */
     @Test
     public void testisTypeMatchClass() {
-        ApplicationContext context = new ClassPathXmlApplicationContext(
-                "ioc/beanFactory/beanFactoryApi.xml");
-        ConfigurableListableBeanFactory beanFactory = ((ClassPathXmlApplicationContext) context).getBeanFactory();
-        Assert.assertTrue(beanFactory.isTypeMatch("test", SimpleBean.class));
+        // 1.初始化容器
+        DefaultListableBeanFactory lbf = new DefaultListableBeanFactory();
+
+        // 2 xml配置文件装配Bean
+        xmlAssembly(lbf, "ioc/beanFactory/beanFactoryApi.xml");
+        BeanFactory beanFactory = lbf;
+        assertThat(beanFactory.isTypeMatch("simpleBean", AliasBeanObject.class)).isTrue();
     }
 
     @Test
-    public void testGetType() {
+    public void testgetType() {
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
@@ -216,6 +240,26 @@ public class BeanFactoryAPITest extends BaseTest {
         reader.loadBeanDefinitions(resource);
 
         assertThat(beanFactory.getType("carBean")).isEqualTo(CarBean.class);
-        Assert.assertEquals(beanFactory.getType("test"), SimpleBean.class);
+        assertThat(beanFactory.getType("&carBean")).isEqualTo(CarFactoryBean.class);
+    }
+
+
+    @Test
+    public void testgetAliases(){
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/ability/alias/aliasBean.xml");
+
+        assertThat(beanFactory.getAliases("alias_bean1")).isEqualTo(asArray("bean1_alias"));
+        assertThat(beanFactory.getAliases("alias_bean2")).isEmpty();
+        assertThat(beanFactory.getAliases("alias_bean3")).isEqualTo(asArray("bean3_alias4","bean3_alias1","bean3_alias2","bean3_alias3"));
+        assertThat(beanFactory.getAliases("alias_bean4")).isEqualTo(asArray("bean4_alias2","bean4_alias1"));
+        assertThat(beanFactory.getAliases("alias_bean5")).isEqualTo(asArray("bean5_alias2","bean5_alias1"));
+    }
+
+    static <T> T[] asArray(T... arr) {
+        return arr;
     }
 }

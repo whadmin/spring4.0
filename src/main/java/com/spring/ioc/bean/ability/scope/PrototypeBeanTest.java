@@ -33,6 +33,9 @@ public class PrototypeBeanTest extends BaseTest {
 
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("prototypeBean")).isNotNull();
+
+        // 4 判断是否是原型类型
+        assertThat(beanFactory.isPrototype("prototypeBean")).isTrue();
     }
 
     /**
@@ -46,6 +49,9 @@ public class PrototypeBeanTest extends BaseTest {
         xmlAssembly(beanFactory, "ioc/bean/ability/scope/prototypeBean.xml");
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("prototypeBean")).isNotNull();
+
+        // 4 判断是否是原型类型
+        assertThat(beanFactory.isPrototype("prototypeBean")).isTrue();
     }
 
 
@@ -62,6 +68,9 @@ public class PrototypeBeanTest extends BaseTest {
 
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("prototypeBean")).isNotNull();
+
+        // 4 判断是否是原型类型
+        assertThat(beanFactory.isPrototype("prototypeBean")).isTrue();
     }
 
 

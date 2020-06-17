@@ -1,6 +1,7 @@
 package com.spring.ioc.bean.getBean.createBeanInstance.application.core;
 
 
+import com.spring.BaseTest;
 import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.annotation.AutowireByConstructorQualifierBean;
 import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.AutowireByConstructorMultipleMatches;
 import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.ConstructorHaveParamBean;
@@ -23,23 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * xml构造方法创建bean,API实现
  */
-public class ConstructorBuildBeanCoreTest {
-
-    @Test
-    public void readSouceCode() {
-        Resource resource = new ClassPathResource("ioc/bean/getBean/createBeanInstance/constructorBuildBean.xml");
-        // 2.初始化容器
-        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
-
-		System.out.println(Arrays.toString(beanFactory.getBeanDefinitionNames()));
-		for (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) {
-			BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanDefinitionName);
-			System.out.println(ReflectionToStringBuilder.toString(beanDefinition, ToStringStyle.MULTI_LINE_STYLE));
-		}
-    }
+public class ConstructorBuildBeanCoreTest extends BaseTest {
 
     @Test
     public void testConstructorDefaultBean() throws ClassNotFoundException {
