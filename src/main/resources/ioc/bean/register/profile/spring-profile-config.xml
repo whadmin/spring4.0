@@ -6,12 +6,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
-    <!-- 定义生产使用的profile -->
-    <beans profile="produce">
-        <!-- 只扫描生产环境下使用的类 -->
-        <bean name="produceHelloService" class="com.spring.ioc.bean.assemblyBean.beanObject.profile.ProduceHelloServiceImpl2"/>
-        <!-- 加载生产使用的配置文件 -->
-        <util:properties id="config"
-                         location="classpath:profile/produce.properties"/>
-    </beans>
+
+    <!-- 加载通用配置文件 -->
+    <util:properties id="config"
+                     location="classpath:ioc/bean/register/profile/common.properties"/>
+
+
+    <bean name="commonService" class="com.spring.ioc.bean.assemblyBean.beanObject.profile.CommonServiceImpl2">
+    </bean>
+
+    <context:annotation-config/>
+
+    <import resource="spring-dev-config.xml"></import>
+
+    <import resource="spring-produce-config.xml"></import>
+
 </beans>

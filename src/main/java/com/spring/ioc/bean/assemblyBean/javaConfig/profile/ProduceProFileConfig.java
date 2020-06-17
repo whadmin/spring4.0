@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @Profile("produce")
-@PropertySource("classpath:profile/produce.properties")
+@PropertySource("classpath:ioc/bean/register/profile/produce.properties")
 public class ProduceProFileConfig {
 
 	@Bean

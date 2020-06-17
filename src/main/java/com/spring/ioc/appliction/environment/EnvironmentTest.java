@@ -149,6 +149,19 @@ public class EnvironmentTest extends BaseTest {
     }
 
 
+    @Test
+    public void testXmlConfigProperties(){
+        //xml装配 非web环境 ApplicationContext实现
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/bean/register/profile/spring-profile-config.xml");
+
+        //读取 <util:properties id="config" location="classpath:profile/common.properties"/> 配置
+        assertThat(context.getEnvironment().getProperty("name")).isEqualTo("default");
+        assertThat(context.getEnvironment().getProperty("default.name")).isEqualTo("default");
+    }
+
+
+
+
 
 
 }

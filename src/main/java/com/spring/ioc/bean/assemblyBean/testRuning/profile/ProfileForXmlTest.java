@@ -17,7 +17,7 @@ public class ProfileForXmlTest {
      */
     @Test
     public void testProfileDefault() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:profile/spring-profile-config.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/bean/register/profile/spring-profile-config.xml");
         context.refresh();
 
         //spring-profile-config.xml 装配commonService
@@ -46,7 +46,7 @@ public class ProfileForXmlTest {
      */
     @Test
     public void testProfileDev() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:profile/spring-profile-config.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/bean/register/profile/spring-profile-config.xml");
         //开启dev环境
         context.getEnvironment().setActiveProfiles("dev");
         context.refresh();
@@ -85,7 +85,7 @@ public class ProfileForXmlTest {
      */
     @Test
     public void testProfileProduce() {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:profile/spring-profile-config.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/bean/register/profile/spring-profile-config.xml");
 		//开启dev环境
 		context.getEnvironment().setActiveProfiles("produce");
 		context.refresh();
@@ -121,7 +121,7 @@ public class ProfileForXmlTest {
 	 */
 	@Test
 	public void testProfileProduceAndDev() {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:profile/spring-profile-config.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/bean/register/profile/spring-profile-config.xml");
 		//开启dev环境
 		context.getEnvironment().setActiveProfiles("produce","dev");
 		context.refresh();
