@@ -11,7 +11,7 @@ public class SmartCartFactoryBean implements SmartFactoryBean<CarBean> {
 
     private boolean singleton = true;
 
-    private boolean invokegetObject = false;
+    private static boolean invokegetObject = false;
 
     private CarBean carBean;
 
@@ -31,11 +31,16 @@ public class SmartCartFactoryBean implements SmartFactoryBean<CarBean> {
         }
     }
 
+    public static boolean wasinvokegetObject() {
+        return invokegetObject;
+    }
+
     /**
      * 重置
      */
     public static void reset() {
         prototypeCreated = false;
+        invokegetObject=false;
     }
 
     /**

@@ -21,7 +21,7 @@ public class FactoryBeanTest extends BaseTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        xmlAssembly(beanFactory,"ioc/bean/specialbean/factoryBean.xml");
+        xmlAssembly(beanFactory, "ioc/bean/specialbean/factoryBean.xml");
 
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("carBean")).isNotNull();
@@ -41,13 +41,13 @@ public class FactoryBeanTest extends BaseTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        xmlAssembly(beanFactory,"ioc/bean/specialbean/factoryBean.xml");
+        xmlAssembly(beanFactory, "ioc/bean/specialbean/factoryBean.xml");
 
         // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
         beanFactory.preInstantiateSingletons();
 
         // 4 从单例缓存池中获取预加载单例Bean,对于FactoryBean,是将单例FactoryBean对象被放到单例对象池中
-        Object beanFactorySingleton = beanFactory.getSingleton("carBean1");
+        Object beanFactorySingleton = beanFactory.getSingleton("carBean");
         assertThat(beanFactorySingleton instanceof CarFactoryBean).isTrue();
 
         // 5.1 判断获取Bean对象是否是单例的，如果是单例从单例对象池中获取，这里获取的FactoryBean，
@@ -80,9 +80,7 @@ public class FactoryBeanTest extends BaseTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/specialbean/factoryBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
+        xmlAssembly(beanFactory, "ioc/bean/specialbean/factoryBean.xml");
 
         // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
         beanFactory.preInstantiateSingletons();
@@ -105,8 +103,8 @@ public class FactoryBeanTest extends BaseTest {
         // 6 由于carBean 是单例Bean多次获取都是同一个Bean
         assertThat(carFactoryBean1).isEqualTo(carFactoryBean2);
 
-        // 7 "carBean" FactoryBean.getObject()获取Bean对下每次都是同一个对象
-        assertThat(carBean1).isNotEqualTo(carBean2);
+        // 7 "carBean" FactoryBean.getObject()获取Bean对下每次都不是同一个对象
+        assertThat(carBean1==carBean2).isFalse();
     }
 
 
@@ -119,9 +117,7 @@ public class FactoryBeanTest extends BaseTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/specialbean/factoryBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
+        xmlAssembly(beanFactory, "ioc/bean/specialbean/factoryBean.xml");
 
         // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
         beanFactory.preInstantiateSingletons();
@@ -139,18 +135,27 @@ public class FactoryBeanTest extends BaseTest {
      */
     @Test
     public void testSmartFactoryBean1() {
+        CarFactoryBean.reset();
+        SmartCartFactoryBean.reset();
+
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        xmlAssembly(beanFactory,"ioc/bean/specialbean/factoryBean.xml");
+        xmlAssembly(beanFactory, "ioc/bean/specialbean/factoryBean.xml");
 
         // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
         beanFactory.preInstantiateSingletons();
 
+
         // 4 从单例缓存池中获取预加载单例Bean,对于FactoryBean,是将单例FactoryBean对象被放到单例对象池中
-        Object beanFactorySingleton = beanFactory.getSingleton("carBean3");
-        assertThat(beanFactorySingleton instanceof SmartCartFactoryBean).isTrue();
+        Object beanFactorySingleton1 = beanFactory.getSingleton("carBean");
+        assertThat(beanFactorySingleton1 instanceof CarFactoryBean).isTrue();
+        assertThat(CarFactoryBean.wasinvokegetObject()).isFalse();
+
+        Object beanFactorySingleton2 = beanFactory.getSingleton("carBean3");
+        assertThat(beanFactorySingleton2 instanceof SmartCartFactoryBean).isTrue();
+        assertThat(SmartCartFactoryBean.wasinvokegetObject()).isTrue();
     }
 
 }

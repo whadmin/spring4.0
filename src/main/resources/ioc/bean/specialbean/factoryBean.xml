@@ -9,7 +9,7 @@
     <bean id="carBean1" class="com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean" lazy-init="true"/>
 
     <bean id="carBean2" class="com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean" lazy-init="false">
-        <property name="singleton" value="true"/>
+        <property name="singleton" value="false"/>
     </bean>
 
     <bean id="carBean3" class="com.spring.ioc.bean.specialbean.factoryBean.beanObject.SmartCartFactoryBean" lazy-init="false"/>
