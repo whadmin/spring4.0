@@ -1,4 +1,4 @@
-package com.spring.ioc.core.beanFactory.beanFactoryPostProcessor;
+package com.spring.ioc.beanFactory.beanFactoryPostProcessor;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.MutablePropertyValues;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.Ordered;
 
-public class MyBeanFactoryPostProcessor1 implements BeanFactoryPostProcessor, Ordered {
+public class MyBeanFactoryPostProcessor2 implements BeanFactoryPostProcessor, Ordered {
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
@@ -15,11 +15,11 @@ public class MyBeanFactoryPostProcessor1 implements BeanFactoryPostProcessor, Or
         // 获取指定的 BeanDefinition
         BeanDefinition bd = beanFactory.getBeanDefinition("bean");
         MutablePropertyValues pvs = bd.getPropertyValues();
-        pvs.addPropertyValue("message", "message1");
+        pvs.addPropertyValue("message", "message2");
     }
 
     @Override
     public int getOrder() {
-        return 1;
+        return 2;
     }
 }

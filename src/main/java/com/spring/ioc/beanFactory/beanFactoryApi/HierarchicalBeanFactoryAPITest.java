@@ -1,4 +1,4 @@
-package com.spring.ioc.beanFactory.hierarchicalBeanFactory;
+package com.spring.ioc.beanFactory.beanFactoryApi;
 
 import org.junit.Assert;
 import org.junit.Test;

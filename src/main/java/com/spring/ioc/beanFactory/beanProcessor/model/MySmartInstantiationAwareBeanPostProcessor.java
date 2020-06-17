@@ -1,4 +1,4 @@
-package com.spring.ioc.core.beanFactory.beanProcessor.model;
+package com.spring.ioc.beanFactory.beanProcessor.model;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;

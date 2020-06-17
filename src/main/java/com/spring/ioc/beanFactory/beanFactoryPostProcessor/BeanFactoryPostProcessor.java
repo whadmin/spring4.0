@@ -1,4 +1,4 @@
-package com.spring.ioc.core.beanFactory.beanFactoryPostProcessor;
+package com.spring.ioc.beanFactory.beanFactoryPostProcessor;
 
 import com.spring.ioc.model.HelloApi;
 import org.junit.Test;

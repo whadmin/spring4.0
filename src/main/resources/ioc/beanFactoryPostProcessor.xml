@@ -7,6 +7,6 @@
     <bean name="bean" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"
           destroy-method="destroy" init-method="init" />
 
-    <bean class="com.spring.ioc.core.beanFactory.beanFactoryPostProcessor.MyBeanFactoryPostProcessor1"/>
-    <bean class="com.spring.ioc.core.beanFactory.beanFactoryPostProcessor.MyBeanFactoryPostProcessor2"/>
+    <bean class="com.spring.ioc.beanFactory.beanFactoryPostProcessor.MyBeanFactoryPostProcessor1"/>
+    <bean class="com.spring.ioc.beanFactory.beanFactoryPostProcessor.MyBeanFactoryPostProcessor2"/>
 </beans>

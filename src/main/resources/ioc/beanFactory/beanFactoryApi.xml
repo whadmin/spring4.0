@@ -8,25 +8,6 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <!-- 一、不指定id，只配置必须的全限定类名，由IoC容器为其生成一个标识， 客户端必须通过接口“T getBean(Class<T> requiredType)”获取Bean,
-		requiredType 为接口，如果requiredType有多个实现 -->
-    <bean class="com.spring.ioc.beanFactory.beanObject.SimpleBean"/>
-
-    <!-- 开启注释报错 -->
-    <!-- <bean class="com.spring.ioc.beanFactory.beanObject.SimpleBean"/> -->
-
-    <!-- 二、指定id，必须在Ioc容器中唯一 -->
-    <bean id="simpleBean" class="com.spring.ioc.beanFactory.beanObject.SimpleBean" />
-
-    <!-- 重复的id，XML验证器会报错 -->
-    <!-- <bean id="errorBean" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/> -->
-    <!-- <bean id="errorBean" class="com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject"/> -->
-
-    <!-- 三、指定beanName，这样name本质就是id，必须在Ioc容器中唯一 -->
-    <bean name="bean2" class="com.spring.ioc.beanFactory.beanObject.SimpleBean" />
-
-
     <import resource="classpath:ioc/bean/specialbean/factoryBean.xml" />
     <import resource="classpath:ioc/bean/ability/alias/aliasBean.xml" />
     <import resource="classpath:ioc/bean/ability/scope/prototypeBean.xml" />
