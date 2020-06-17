@@ -1,11 +1,12 @@
 package com.spring.ioc.bean.specialbean.factoryBean.beanObject;
 
-import lombok.Data;
-import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.SmartFactoryBean;
 
-@Data
-public class CarFactoryBean implements FactoryBean<CarBean> {
-
+/**
+ * @Author: wuhao.w
+ * @Date: 2020/6/17 16:39
+ */
+public class SmartCartFactoryBean implements SmartFactoryBean<CarBean> {
     private static boolean prototypeCreated;
 
     private boolean singleton = true;
@@ -14,7 +15,7 @@ public class CarFactoryBean implements FactoryBean<CarBean> {
 
     private CarBean carBean;
 
-    public CarFactoryBean() {
+    public SmartCartFactoryBean() {
         this.carBean = new CarBean("singleton");
     }
 
@@ -51,5 +52,12 @@ public class CarFactoryBean implements FactoryBean<CarBean> {
     @Override
     public boolean isSingleton() {
         return singleton;
+    }
+
+    /**
+     * 是否在beanFactory.preInstantiateSingletons()预加载单例工厂Bean时候，创建工厂对象
+     */
+    public boolean isEagerInit() {
+        return true;
     }
 }
