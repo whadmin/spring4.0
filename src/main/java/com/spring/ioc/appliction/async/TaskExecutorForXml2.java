@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.spring.ioc.appliction.async.model.AsyncTaskService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:taskExecutor/taskExecutorConfig2.xml" })
+@ContextConfiguration(locations = {"classpath:ioc/application/taskExecutor/taskExecutorConfig2.xml"})
 public class TaskExecutorForXml2 {
 
 	@Autowired

@@ -9,7 +9,7 @@
 
     <!-- 加载通用配置文件 -->
     <util:properties id="config"
-                     location="classpath:ioc/bean/register/profile/common.properties"/>
+                     location="classpath:ioc/application/environment/common.properties"/>
 
 
     <bean name="commonService" class="com.spring.ioc.bean.assemblyBean.beanObject.profile.CommonServiceImpl2">

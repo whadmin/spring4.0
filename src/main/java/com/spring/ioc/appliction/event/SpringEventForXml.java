@@ -59,7 +59,7 @@ public class SpringEventForXml {
 	 */
 	@Test
 	public void test() throws NoSuchFieldException {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:event/spring-event.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/application/event/spring-event.xml");
 		ApplicationEventMulticaster eventMulticaster = (ApplicationEventMulticaster)context.getBean(AbstractApplicationContext.APPLICATION_EVENT_MULTICASTER_BEAN_NAME);
 		eventMulticaster.multicastEvent(new CustomizeEvent(context));
 	}
@@ -76,7 +76,7 @@ public class SpringEventForXml {
 	 */
 	@Test
 	public void test1() throws NoSuchFieldException {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:event/spring-event.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/application/event/spring-event.xml");
 		ApplicationEventMulticaster eventMulticaster = (ApplicationEventMulticaster)context.getBean(AbstractApplicationContext.APPLICATION_EVENT_MULTICASTER_BEAN_NAME);
 		eventMulticaster.multicastEvent(new GenericTestEvent<>(context, "string"));
 		eventMulticaster.multicastEvent(new GenericTestEvent<>(context, "longEvent"));
@@ -107,7 +107,7 @@ public class SpringEventForXml {
 	 */
 	@Test
 	public void test2() throws NoSuchFieldException {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:event/spring-event.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/application/event/spring-event.xml");
 		ApplicationEventMulticaster eventMulticaster = (ApplicationEventMulticaster)context.getBean(AbstractApplicationContext.APPLICATION_EVENT_MULTICASTER_BEAN_NAME);
 		eventMulticaster.multicastEvent(new GenericTestEvent<>(context, "string"),getGenericApplicationEventType("stringEvent"));
 		eventMulticaster.multicastEvent(new GenericTestEvent<>(context, 123L),getGenericApplicationEventType("longEvent"));

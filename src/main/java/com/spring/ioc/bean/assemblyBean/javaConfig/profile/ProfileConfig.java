@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @Import({ DevProFileConfig.class, ProduceProFileConfig.class })
-@PropertySource("classpath:ioc/bean/register/profile/common.properties")
+@PropertySource("classpath:ioc/application/environment/common.properties")
 public class ProfileConfig {
 
 	@Bean
