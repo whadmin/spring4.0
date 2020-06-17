@@ -64,6 +64,7 @@ public class PrototypeBeanTest {
 
         SingletonBean singletonBean1 = beanFactory.getBean("prototypeBean", SingletonBean.class);
         SingletonBean singletonBean2 = beanFactory.getBean("prototypeBean", SingletonBean.class);
-        System.out.println(singletonBean1.equals(singletonBean2));
+        System.out.println(singletonBean1!=singletonBean2);
+
     }
 }
