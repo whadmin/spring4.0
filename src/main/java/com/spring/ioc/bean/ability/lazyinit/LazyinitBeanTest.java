@@ -1,6 +1,9 @@
 package com.spring.ioc.bean.ability.lazyinit;
 
-import com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean;
+import com.spring.BaseTest;
+import com.spring.ioc.bean.ability.lazyinit.beanObject.no_annotation.LazyinitBean;
+import com.spring.ioc.bean.ability.lazyinit.javaConfig.LazyinitBeanConfig;
+import com.spring.ioc.bean.ability.scope.javaConfig.PrototypeBeanConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -17,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @Author: wuhao.w
  * @Date: 2020/6/16 12:13
  */
-public class LazyinitBeanTest {
+public class LazyinitBeanTest extends BaseTest {
 
     /**
      * 手动装配单例延迟Bean
@@ -53,17 +56,31 @@ public class LazyinitBeanTest {
     }
 
     /**
-     * 使用 XmlBeanDefinitionReader 装配单例延迟Bean
+     * xml配置文件装配一个单例延迟Bean
      */
     @Test
     public void testAssemblySingleton2() {
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/lazyinit/lazyinitBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
+        // 2 xml配置文件装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/ability/lazyinit/lazyinitBean.xml");
+
+        // 3 获取BeanDefinition
+        assertThat(beanFactory.getBeanDefinition("nolazyinit")).isNotNull();
+        assertThat(beanFactory.getBeanDefinition("lazyinit")).isNotNull();
+    }
+
+    /**
+     * Java注解类装配Bean一个原型Bean
+     */
+    @Test
+    public void testAssemblyPrototype3() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 Java注解类装配Bean
+        annotatedBeanAssembly(beanFactory, LazyinitBeanConfig.class);
 
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("nolazyinit")).isNotNull();
@@ -78,32 +95,30 @@ public class LazyinitBeanTest {
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/lazyinit/lazyinitBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
-        assertThat(beanFactory.getBeanDefinition("nolazyinit")).isNotNull();
-        assertThat(beanFactory.getBeanDefinition("lazyinit")).isNotNull();
+        // 2 xml配置文件装配Bean
+        //xmlAssembly(beanFactory, "ioc/bean/ability/lazyinit/lazyinitBean.xml");
+        // 2 Java注解类装配Bean
+        annotatedBeanAssembly(beanFactory, LazyinitBeanConfig.class);
 
         // 3 预加载单例Bean,已加载单例Bean会放到单例缓存池中(无法加载延迟单例Bean)
         beanFactory.preInstantiateSingletons();
 
         // 4 从单例缓存池中获取预加载单例Bean
-        Object singletonBean1 = beanFactory.getSingleton("nolazyinit");
-        assertThat(singletonBean1).isNotNull();
+        Object lazyinitBean1 = beanFactory.getSingleton("nolazyinit");
+        assertThat(lazyinitBean1).isNotNull();
 
         // 5 获取单例bean,如果单例缓存池中存在，从单例缓存池中获取，不存在新创建并放入单例缓存池
-        SingletonBean singletonBean2 = beanFactory.getBean("nolazyinit", SingletonBean.class);
-        SingletonBean singletonBean3 = beanFactory.getBean("nolazyinit", SingletonBean.class);
-        assertThat(singletonBean2).isNotNull();
-        assertThat(singletonBean3).isNotNull();
+        LazyinitBean lazyinitBean2 = beanFactory.getBean("nolazyinit", LazyinitBean.class);
+        LazyinitBean lazyinitBean3 = beanFactory.getBean("nolazyinit", LazyinitBean.class);
+        assertThat(lazyinitBean2).isNotNull();
+        assertThat(lazyinitBean3).isNotNull();
 
         // 6 多次获取单例Bean是同一个实例
-        assertThat(singletonBean2).isEqualTo(singletonBean3);
+        assertThat(lazyinitBean2).isEqualTo(lazyinitBean3);
 
         // 7 多次换取单例Bean 来与单例缓存
-        assertThat(singletonBean1).isEqualTo(singletonBean2);
-        assertThat(singletonBean1).isEqualTo(singletonBean3);
+        assertThat(lazyinitBean1).isEqualTo(lazyinitBean2);
+        assertThat(lazyinitBean1).isEqualTo(lazyinitBean3);
     }
 
 
@@ -115,10 +130,10 @@ public class LazyinitBeanTest {
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/lazyinit/lazyinitBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
+        // 2 xml配置文件装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/ability/lazyinit/lazyinitBean.xml");
+        // 2 Java注解类装配Bean
+        //annotatedBeanAssembly(beanFactory, LazyinitBeanConfig.class);
 
         assertThat(beanFactory.getBeanDefinition("nolazyinit")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("lazyinit")).isNotNull();
@@ -127,24 +142,24 @@ public class LazyinitBeanTest {
         beanFactory.preInstantiateSingletons();
 
         // 4 singletonBean2 是延迟加载Bean 无法通过preInstantiateSingletons预加载到单例缓存池中
-        Object singletonBean1 = beanFactory.getSingleton("lazyinit");
-        assertThat(singletonBean1).isNull();
+        Object lazyinitBean1 = beanFactory.getSingleton("lazyinit");
+        assertThat(lazyinitBean1).isNull();
 
         // 5 获取单例bean,如果单例缓存池中存在，从单例缓存池中获取，不存在新创建并放入单例缓存池
-        SingletonBean singletonBean2 = beanFactory.getBean("lazyinit", SingletonBean.class);
-        SingletonBean singletonBean3 = beanFactory.getBean("lazyinit", SingletonBean.class);
-        assertThat(singletonBean2).isNotNull();
-        assertThat(singletonBean3).isNotNull();
+        LazyinitBean lazyinitBean2 = beanFactory.getBean("lazyinit", LazyinitBean.class);
+        LazyinitBean lazyinitBean3 = beanFactory.getBean("lazyinit", LazyinitBean.class);
+        assertThat(lazyinitBean2).isNotNull();
+        assertThat(lazyinitBean3).isNotNull();
 
         // 6 多次获取单例Bean是同一个实例
-        assertThat(singletonBean2).isEqualTo(singletonBean3);
+        assertThat(lazyinitBean2).isEqualTo(lazyinitBean3);
 
         // 7 从单例缓存池中获取预加载单例Bean
-        singletonBean1 = beanFactory.getSingleton("lazyinit");
+        lazyinitBean1 = beanFactory.getSingleton("lazyinit");
 
         // 8 多次换取单例Bean 来与单例缓存
-        assertThat(singletonBean1).isEqualTo(singletonBean2);
-        assertThat(singletonBean1).isEqualTo(singletonBean3);
+        assertThat(lazyinitBean1).isEqualTo(lazyinitBean2);
+        assertThat(lazyinitBean1).isEqualTo(lazyinitBean3);
     }
 
     @Test

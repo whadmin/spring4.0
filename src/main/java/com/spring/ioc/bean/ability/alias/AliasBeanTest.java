@@ -1,6 +1,8 @@
 package com.spring.ioc.bean.ability.alias;
 
-import com.spring.ioc.bean.ability.alias.javaConfig.AliasConfig;
+import com.spring.BaseTest;
+import com.spring.ioc.bean.ability.alias.javaConfig.AliasBeanConfig;
+import com.spring.ioc.bean.ability.scope.javaConfig.PrototypeBeanConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -14,7 +16,7 @@ import org.springframework.core.io.Resource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AliasBeanTest {
+public class AliasBeanTest extends BaseTest {
 
     static <T> T[] asArray(T... arr) {
         return arr;
@@ -26,9 +28,7 @@ public class AliasBeanTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/alias/aliasBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
+        xmlAssembly(beanFactory, "ioc/bean/ability/alias/aliasBean.xml");
 
         assertThat(beanFactory.getAliases("alias_bean1")).isEqualTo(asArray("bean1_alias"));
         assertThat(beanFactory.getAliases("alias_bean2")).isEmpty();
@@ -43,14 +43,7 @@ public class AliasBeanTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 2 装配Bean
-        AnnotatedBeanDefinitionReader reader = new AnnotatedBeanDefinitionReader(beanFactory);
-        reader.register(AliasConfig.class);
-
-        //使用ConfigurationClassPostProcessor
-        //从已装配Bean中去读取被@Configuration注解或派送注解修饰的类作为注解配置类
-        //对注解配置类中Bean实现装配
-        ConfigurationClassPostProcessor configurationClassPostProcessor = beanFactory.getBean(AnnotationConfigUtils.CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME, ConfigurationClassPostProcessor.class);
-        configurationClassPostProcessor.postProcessBeanFactory(beanFactory);
+        annotatedBeanAssembly(beanFactory, AliasBeanConfig.class);
 
         assertThat(beanFactory.containsBean("alias_bean1")).isTrue();
         assertThat(beanFactory.getAliases("alias_bean1")).isEmpty();

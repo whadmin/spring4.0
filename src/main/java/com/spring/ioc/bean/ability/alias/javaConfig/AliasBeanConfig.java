@@ -9,7 +9,7 @@ import com.spring.ioc.model.HelloApi2;
 import com.spring.ioc.model.HelloImpl2;
 
 @Configuration
-public class AliasConfig {
+public class AliasBeanConfig {
 
     @Bean
     public AliasBeanObject alias_bean1() {

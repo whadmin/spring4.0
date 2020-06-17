@@ -1,21 +1,20 @@
 package com.spring.ioc.bean.ability.scope;
 
+import com.spring.BaseTest;
 import com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean;
+import com.spring.ioc.bean.ability.scope.javaConfig.SingletonBeanConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @Author: wuhao.w
  * @Date: 2020/6/16 10:20
  */
-public class SingletonBeanTest {
+public class SingletonBeanTest extends BaseTest {
 
 
     /**
@@ -50,17 +49,32 @@ public class SingletonBeanTest {
     }
 
     /**
-     * XmlBeanDefinitionReader 装配一个单例Bean
+     * xml配置文件装配一个单例Bean
      */
     @Test
     public void testAssemblySingleton2() {
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/scope/singletonBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
+        // 2 xml配置文件装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/ability/scope/singletonBean.xml");
+
+        // 3 获取BeanDefinition
+        assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
+        assertThat(beanFactory.getBeanDefinition("singletonBean2")).isNotNull();
+    }
+
+
+    /**
+     * Java注解类装配Bean一个原型Bean
+     */
+    @Test
+    public void testAssemblySingleton3() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 Java注解类装配Bean
+        annotatedBeanAssembly(beanFactory, SingletonBeanConfig.class);
 
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
@@ -75,12 +89,10 @@ public class SingletonBeanTest {
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/scope/singletonBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
-        assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
-        assertThat(beanFactory.getBeanDefinition("singletonBean2")).isNotNull();
+        // 2 xml配置文件装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/ability/scope/singletonBean.xml");
+        // 2 Java注解类装配Bean
+        //annotatedBeanAssembly(beanFactory, SingletonBeanConfig.class);
 
         // 3 预加载单例Bean,已加载单例Bean会放到单例对象池中(无法加载延迟单例Bean)
         beanFactory.preInstantiateSingletons();
@@ -112,10 +124,10 @@ public class SingletonBeanTest {
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/scope/singletonBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
+        // 2 xml配置文件装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/ability/scope/singletonBean.xml");
+        // 2 Java注解类装配Bean
+        //annotatedBeanAssembly(beanFactory, SingletonBeanConfig.class);
 
         assertThat(beanFactory.getBeanDefinition("singletonBean")).isNotNull();
         assertThat(beanFactory.getBeanDefinition("singletonBean2")).isNotNull();

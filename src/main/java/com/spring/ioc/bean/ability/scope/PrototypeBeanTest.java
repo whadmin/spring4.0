@@ -1,22 +1,22 @@
 package com.spring.ioc.bean.ability.scope;
 
-import com.spring.ioc.bean.ability.scope.beanObject.no_annotation.SingletonBean;
+import com.spring.BaseTest;
+import com.spring.ioc.bean.ability.scope.beanObject.no_annotation.PrototypeBean;
+import com.spring.ioc.bean.ability.scope.javaConfig.PrototypeBeanConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PrototypeBeanTest {
+public class PrototypeBeanTest extends BaseTest {
 
 
     /**
-     * 手动装配一个单例Bean
+     * 手动装配一个原型Bean
      */
     @Test
     public void testAssemblyPrototype1() throws Exception {
@@ -36,17 +36,29 @@ public class PrototypeBeanTest {
     }
 
     /**
-     * XmlBeanDefinitionReader 装配一个单例Bean
+     * xml配置文件装配一个原型Bean
      */
     @Test
     public void testAssemblyPrototype2() {
         // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        // 2 xml配置文件装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/ability/scope/prototypeBean.xml");
+        // 3 获取BeanDefinition
+        assertThat(beanFactory.getBeanDefinition("prototypeBean")).isNotNull();
+    }
 
-        // 2 装配Bean
-        Resource resource = new ClassPathResource("ioc/bean/ability/scope/prototypeBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
+
+    /**
+     * Java注解类装配Bean一个原型Bean
+     */
+    @Test
+    public void testAssemblyPrototype3() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 Java注解类装配Bean
+        annotatedBeanAssembly(beanFactory, PrototypeBeanConfig.class);
 
         // 3 获取BeanDefinition
         assertThat(beanFactory.getBeanDefinition("prototypeBean")).isNotNull();
@@ -54,16 +66,16 @@ public class PrototypeBeanTest {
 
 
     @Test
-    public void testPrototype() throws Exception {
-        // 2.初始化容器
+    public void testPrototype() {
+        // 1.初始化容器
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        // 2 xml配置文件装配Bean
+        //xmlAssembly(beanFactory, "ioc/bean/ability/scope/prototypeBean.xml");
+        // 2 Java注解类装配Bean
+        annotatedBeanAssembly(beanFactory,PrototypeBeanConfig.class);
 
-        Resource resource = new ClassPathResource("ioc/bean/ability/scope/prototypeBean.xml");
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(resource);
-
-        SingletonBean singletonBean1 = beanFactory.getBean("prototypeBean", SingletonBean.class);
-        SingletonBean singletonBean2 = beanFactory.getBean("prototypeBean", SingletonBean.class);
-        System.out.println(singletonBean1.equals(singletonBean2));
+        PrototypeBean singletonBean1 = beanFactory.getBean("prototypeBean", PrototypeBean.class);
+        PrototypeBean singletonBean2 = beanFactory.getBean("prototypeBean", PrototypeBean.class);
+        assertThat(singletonBean1 == (singletonBean2)).isFalse();
     }
 }
