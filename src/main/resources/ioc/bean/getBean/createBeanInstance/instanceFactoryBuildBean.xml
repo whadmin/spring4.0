@@ -14,6 +14,7 @@
     <!-- 通过实例工厂参数索引方式依赖注入 -->
     <bean id="instanceFactoryBuildBean_byIndex" factory-bean="instanceFactory"
           factory-method="newInstance">
+    <!-- 指定方法的参数-->
         <constructor-arg index="0" value="Hello World!"/>
     </bean>
 

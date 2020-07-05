@@ -7,7 +7,8 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
-
+<!--    init-method="init" ：指定初始化方法;
+        destroy-method="destroy"：指定销毁方法，只有“singleton”作用域能销毁-->
     <bean name="bean" class="com.spring.ioc.bean.assemblyBean.beanObject.no_annotation.BeanObject"
           destroy-method="destroy" init-method="init"/>
 

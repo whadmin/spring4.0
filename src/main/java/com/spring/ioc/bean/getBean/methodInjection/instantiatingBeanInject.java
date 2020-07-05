@@ -1,15 +1,16 @@
-package com.spring.ioc.bean.getBean.javaConfig;
+package com.spring.ioc.bean.getBean.methodInjection;
 
+import com.spring.BaseTest;
 import junit.framework.Assert;
 
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.spring.ioc.javaConig.InstantiatingBeanInjectAutowire;
+import com.spring.ioc.bean.getBean.createBeanInstance.javaConfig.InstantiatingBeanInjectAutowire;
 import com.spring.ioc.model.HelloApiDataSource;
 import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.ListBean;
 
-public class instantiatingBeanInject {
+public class instantiatingBeanInject extends BaseTest {
 
 	@Test
 	public void instantiatingBeanInjectByName() {

@@ -5,7 +5,8 @@
 	       http://www.springframework.org/schema/beans
 	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		   ">
-
+    <!--设置自动装载autowire="constructor"，根据类型注入构造器参数；
+        当获取autowire_Byconstructor的bean时，会自动装载其他的bean-->
     <bean id="autowire_Byconstructor"
           class="com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.AutowireByConstructor"
           autowire="constructor"/>

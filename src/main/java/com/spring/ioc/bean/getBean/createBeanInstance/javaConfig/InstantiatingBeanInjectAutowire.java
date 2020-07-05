@@ -1,7 +1,9 @@
-package com.spring.ioc.javaConig;
+package com.spring.ioc.bean.getBean.createBeanInstance.javaConfig;
 
+//实例化Bean自动注入
 import com.spring.ioc.model.*;
 import org.springframework.beans.factory.annotation.Autowire;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,8 @@ public class InstantiatingBeanInjectAutowire {
 	public AliasBeanObject HelloImpl() {
 		return new AliasBeanObject();
 	}
+
+
 	
 	@Bean(autowire=Autowire.BY_NAME)
 	public HelloApiDataSource bean_byName() {
@@ -45,7 +49,11 @@ public class InstantiatingBeanInjectAutowire {
 		 return new HelloApiDecorator2();
 	}
 	
-	
+
+
+
+
+
 	@Bean
 	@Qualifier(value="mysqlDataSource")
 	public DriverManagerDataSource mysqlDataSourceBean(){

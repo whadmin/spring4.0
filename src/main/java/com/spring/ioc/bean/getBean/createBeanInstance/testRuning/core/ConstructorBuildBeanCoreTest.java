@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.createBeanInstance.application.core;
+package com.spring.ioc.bean.getBean.createBeanInstance.testRuning.core;
 
 
 import com.spring.BaseTest;
@@ -16,8 +16,6 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.createBeanInstance.application.core;
+package com.spring.ioc.bean.getBean.createBeanInstance.testRuning.core;
 
 import java.util.Arrays;
 

@@ -5,7 +5,7 @@
 	       http://www.springframework.org/schema/beans
 	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		   ">
-    
+    <!-- 自动装载时，配置primary=true, 当依赖存在多个相同类型时报错,通过Primary 设置优先匹配注入规则   -->
     <bean id="autowire_Byconstructor_primary"
           class="com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.AutowireByConstructorMultipleMatches"
           autowire="constructor"/>
@@ -21,4 +21,5 @@
     <bean id="message" class="java.lang.String">
         <constructor-arg index="0" value="Hello World!"/>
     </bean>
+
 </beans>

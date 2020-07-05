@@ -1,5 +1,6 @@
-package com.spring.ioc.bean.getBean;
+package com.spring.ioc.bean.getBean.populateBean.application;
 
+import com.spring.ioc.bean.getBean.LifeCycleBean;
 import org.junit.Test;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;

@@ -1,0 +1,166 @@
+package com.spring.ioc.bean.getBean.createBeanInstance.testRuning;
+
+import com.spring.BaseTest;
+import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.annotation.AutowireByConstructorQualifierBean;
+import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.AutowireByConstructorMultipleMatches;
+import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.AutowireByConstructor;
+import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.ConstructorNoParamBean;
+import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.ConstructorHaveParamBean;
+import org.junit.Test;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigUtils;
+import org.springframework.context.annotation.ConfigurationClassPostProcessor;
+import org.springframework.context.annotation.ContextAnnotationAutowireCandidateResolver;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
+
+
+/**
+ * 通过XML配置，调用构造函数创建Bean实例
+ */
+public class ConstructorBuildBeanTest extends BaseTest {
+
+    /**
+     * 使用默认构造函数实例化bean
+     */
+    @Test
+    public void testConstructorNoParamBean() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/getBean/createBeanInstance/constructorBuildBean.xml");
+
+        // 3 使用默认构造函数实例化bean
+        ConstructorNoParamBean bean = beanFactory.getBean("constructorDefaultBean", ConstructorNoParamBean.class);
+        assertThat(bean.getMessage()).isNotNull();
+    }
+
+    /**
+     * 使用有参数构造函数实例化bean,参数手动配置
+     */
+    @Test
+    public void testConstructorHaveParamBean() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/getBean/createBeanInstance/constructorBuildBean.xml");
+
+        // 获取根据参数索引依赖注入的Bean
+        ConstructorHaveParamBean byIndex = beanFactory.getBean("constructorParamBean_byIndex", ConstructorHaveParamBean.class);
+        System.out.println(byIndex.getMessage().toString());
+        assertThat(byIndex.getMessage()).isNotNull();
+
+        // 获取根据参数类型依赖注入的Bean
+        ConstructorHaveParamBean byType = beanFactory.getBean("constructorParamBean_byType", ConstructorHaveParamBean.class);
+        assertThat(byType.getMessage()).isNotNull();
+        System.out.println("byType：" + byType.getMessage().toString());
+
+        // 获取根据参数名字依赖注入的Bean
+        ConstructorHaveParamBean byName = beanFactory.getBean("constructorParamBean_byName", ConstructorHaveParamBean.class);
+        assertThat(byName.getMessage()).isNotNull();
+        System.out.println("byName：" + byType.getMessage().toString());
+
+        ConstructorHaveParamBean bean2_byRef = beanFactory.getBean("constructorParamBean_byRef",
+                ConstructorHaveParamBean.class);
+        assertThat(bean2_byRef.getMessage()).isNotNull();
+        System.out.println("byRef：" + byType.getMessage().toString());
+    }
+
+    /**
+     * 使用有参数构造函数实例化bean，通过 ByConstructor 自动注入 参数，通过类型自动注入（名称优先，类型之后）
+     */
+    @Test
+    public void testAutowireByConstructor() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2 装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/getBean/createBeanInstance/autowireByConstructor.xml");
+
+        // 获取根据参数索引依赖注入的Bean
+        AutowireByConstructor bean_true = beanFactory.getBean("autowire_Byconstructor", AutowireByConstructor.class);
+        assertThat(bean_true.getMysqlDataSource()).isNotNull();
+        assertThat(bean_true.getOracleDataSource()).isNotNull();
+        assertThat(bean_true.getMessage()).isNotNull();
+    }
+
+    /**
+     * 使用有参数构造函数实例化bean，通过 ByConstructor 自动注入 参数通过类型自动注入（名称优先，类型之后）
+     * 依赖存在多个相同类型时报错
+     */
+    @Test(expected = Exception.class)
+    public void testAutowireByConstructorError() {
+        // 使用构造器
+        ApplicationContext context = new ClassPathXmlApplicationContext(
+                "ioc/bean/getBean/createBeanInstance/autowireByConstructorError.xml");
+    }
+
+    /**
+     * 使用有参数构造函数实例化bean 通过 ByConstructor 自动注入 参数通过类型自动注入（名称优先，类型之后）
+     * 依赖存在多个相同类型时报错,通过Primary 设置优先匹配注入规则
+     */
+    @Test
+    public void testAutowireByConstructorPrimary() {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        // 2 装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/getBean/createBeanInstance/autowireByConstructorPrimary.xml");
+        // 获取根据参数索引依赖注入的Bean
+        AutowireByConstructorMultipleMatches bean_error = beanFactory.getBean("autowire_Byconstructor_primary", AutowireByConstructorMultipleMatches.class);
+        assertThat(bean_error.getDataSource()).isNotNull();
+    }
+
+
+    /**
+     * 使用有参数构造函数实例化bean 通过 ByConstructor 自动注入 参数通过类型自动注入（名称优先，类型之后）
+     * 依赖存在多个相同类型时报错,通过Qualifier 设置优先匹配注入规则
+     * <p>
+     * 使用Qualifier功能
+     * 1 xml配置<context:annotation-config/>XmlBeanDefinitionReader会读取装配设置自动装配器ContextAnnotationAutowireCandidateResolver
+     */
+    @Test
+    public void testAutowireByConstructorQualifier() throws Exception {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        // 2 装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/getBean/createBeanInstance/autowireByConstructorQualifierTrue.xml");
+
+        assertThat(beanFactory.getAutowireCandidateResolver() instanceof ContextAnnotationAutowireCandidateResolver);
+
+        AutowireByConstructorQualifierBean bean1 = beanFactory.getBean("autowire_Byconstructor_qualifier",
+                AutowireByConstructorQualifierBean.class);
+        assertThat(bean1.getMysqlDataSource()).isNotNull();
+        assertThat(bean1.getOracleDataSource()).isNotNull();
+    }
+
+
+    /**
+     * 使用有参数构造函数实例化bean 通过 ByConstructor 自动注入 参数通过类型自动注入（名称优先，类型之后）
+     * 依赖存在多个相同类型时报错,通过Qualifier 设置优先匹配注入规则
+     * <p>
+     * 使用Qualifier功能
+     * 1 设置自动装配器ContextAnnotationAutowireCandidateResolver
+     */
+    @Test
+    public void testAutowireByConstructorQualifier2() throws Exception {
+        // 1.初始化容器
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        // 2 装配Bean
+        xmlAssembly(beanFactory, "ioc/bean/getBean/createBeanInstance/autowireByConstructorQualifierFalse.xml");
+
+        beanFactory.setAutowireCandidateResolver(new ContextAnnotationAutowireCandidateResolver());
+
+        AutowireByConstructorQualifierBean bean1 = beanFactory.getBean("autowire_Byconstructor_qualifier",
+                AutowireByConstructorQualifierBean.class);
+        assertThat(bean1.getMysqlDataSource()).isNotNull();
+        assertThat(bean1.getOracleDataSource()).isNotNull();
+    }
+
+
+
+}
