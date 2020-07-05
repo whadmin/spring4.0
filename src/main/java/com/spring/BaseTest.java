@@ -29,7 +29,15 @@ public class BaseTest {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
 
-        PostProcessorRegistrationDelegate.registerBeanPostProcessors(beanFactory,null);
+        if (beanFactory.containsBean(AnnotationConfigUtils.COMMON_ANNOTATION_PROCESSOR_BEAN_NAME)) {
+            CommonAnnotationBeanPostProcessor commonAnnotationBeanPostProcessor = beanFactory.getBean(AnnotationConfigUtils.COMMON_ANNOTATION_PROCESSOR_BEAN_NAME, CommonAnnotationBeanPostProcessor.class);
+            beanFactory.addBeanPostProcessor(commonAnnotationBeanPostProcessor);
+        }
+
+        if (beanFactory.containsBean(AnnotationConfigUtils.AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME)) {
+            AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor = beanFactory.getBean(AnnotationConfigUtils.AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME, AutowiredAnnotationBeanPostProcessor.class);
+            beanFactory.addBeanPostProcessor(autowiredAnnotationBeanPostProcessor);
+        }
     }
 
     /**
@@ -46,10 +54,14 @@ public class BaseTest {
         ConfigurationClassPostProcessor configurationClassPostProcessor = beanFactory.getBean(AnnotationConfigUtils.CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME, ConfigurationClassPostProcessor.class);
         configurationClassPostProcessor.postProcessBeanFactory(beanFactory);
 
+        CommonAnnotationBeanPostProcessor commonAnnotationBeanPostProcessor = beanFactory.getBean(AnnotationConfigUtils.COMMON_ANNOTATION_PROCESSOR_BEAN_NAME, CommonAnnotationBeanPostProcessor.class);
+        beanFactory.addBeanPostProcessor(commonAnnotationBeanPostProcessor);
+
+        AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor = beanFactory.getBean(AnnotationConfigUtils.AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME, AutowiredAnnotationBeanPostProcessor.class);
+        beanFactory.addBeanPostProcessor(autowiredAnnotationBeanPostProcessor);
+
         beanFactory.removeBeanDefinition(AnnotationConfigUtils.EVENT_LISTENER_PROCESSOR_BEAN_NAME);
     }
-
-
 
 
 }

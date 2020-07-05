@@ -1,7 +1,9 @@
 package com.spring.ioc.bean.getBean.populateBean.beanObject.annotation;
 
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +15,7 @@ import javax.sql.DataSource;
  * @Date: 2020/1/3 17:28
  */
 @ToString
-@Getter
+@Data
 public class AutowireByAnnBean {
 
     @Autowired(required = false)

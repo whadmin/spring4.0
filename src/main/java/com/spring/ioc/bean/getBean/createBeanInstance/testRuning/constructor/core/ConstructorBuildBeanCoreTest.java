@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.createBeanInstance.testRuning.core;
+package com.spring.ioc.bean.getBean.createBeanInstance.testRuning.constructor.core;
 
 
 import com.spring.BaseTest;
