@@ -1,9 +1,10 @@
 package com.spring.ioc.bean.getBean.createBeanInstance.javaConfig;
 
 //实例化Bean自动注入
-import com.spring.ioc.model.*;
+import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.HelloApiDataSource;
+import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.HelloApiDecorator;
+import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.HelloApiDecorator2;
 import org.springframework.beans.factory.annotation.Autowire;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

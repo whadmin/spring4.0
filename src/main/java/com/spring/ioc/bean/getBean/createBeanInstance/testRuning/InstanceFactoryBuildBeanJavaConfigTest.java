@@ -4,7 +4,6 @@ import com.spring.BaseTest;
 import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.ConstructorHaveParamBean;
 import com.spring.ioc.bean.getBean.createBeanInstance.beanObject.no_annotation.ConstructorNoParamBean;
 import com.spring.ioc.bean.getBean.createBeanInstance.javaConfig.ConfigurationBean;
-import com.spring.ioc.model.HelloApi;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;

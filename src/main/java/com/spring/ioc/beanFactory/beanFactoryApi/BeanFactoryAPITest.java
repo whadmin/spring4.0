@@ -5,21 +5,13 @@ import com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject;
 import com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarBean;
 import com.spring.ioc.bean.specialbean.factoryBean.beanObject.CarFactoryBean;
 import com.spring.ioc.beanFactory.beanObject.SimpleBean;
-import com.spring.ioc.model.HelloApi;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
-import java.io.IOException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

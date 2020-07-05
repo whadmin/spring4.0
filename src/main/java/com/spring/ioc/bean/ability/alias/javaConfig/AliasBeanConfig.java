@@ -4,9 +4,6 @@ import com.spring.ioc.bean.ability.alias.beanObject.AliasBeanObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.spring.ioc.model.HelloApi;
-import com.spring.ioc.model.HelloApi2;
-import com.spring.ioc.model.HelloImpl2;
 
 @Configuration
 public class AliasBeanConfig {

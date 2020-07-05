@@ -1,9 +1,11 @@
 package com.spring.ioc.bean.getBean.populateBean.testRuning;
 
+import com.spring.BaseTest;
 import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -11,14 +13,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author wuhao.w
  *
  */
-public class XmlNoAutowireBeanTest {
+public class XmlNoAutowireBeanTest extends BaseTest {
 
 	/**
 	 * 通过 <property></property> 注入Integer
 	 */
 	@Test
 	public void testStringInject() {
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
+		// 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
+
 		IntegerTestBean bean4_1 = beanFactory.getBean("bean4_1", IntegerTestBean.class);
 		bean4_1.sayHello();
 
@@ -31,7 +37,11 @@ public class XmlNoAutowireBeanTest {
 	 */
 	@Test
 	public void testIntegerInject() {
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
+		// 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
+
 		StringTestBean bean5_1 = beanFactory.getBean("bean5_1", StringTestBean.class);
 		bean5_1.sayHello();
 
@@ -44,8 +54,10 @@ public class XmlNoAutowireBeanTest {
 	 */
 	@Test
 	public void testBooleanInject() {
-
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
+		// 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
 
 		BooleanTestBean bean1 = beanFactory.getBean("bean6_1", BooleanTestBean.class);
 		System.out.println(bean1.isSuccess());
@@ -66,8 +78,12 @@ public class XmlNoAutowireBeanTest {
 	 */
 	@Test
 	public void testListInject() {
+        // 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
 
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
+
 		ListTestBean listBean = beanFactory.getBean("bean8", ListTestBean.class);
 		System.out.println(listBean.getValues().size());
 		Assert.assertEquals(3, listBean.getValues().size());
@@ -79,8 +95,11 @@ public class XmlNoAutowireBeanTest {
 	 */
 	@Test
 	public void testSetInject() {
+		// 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
 
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
 		SetTestBean setBean = beanFactory.getBean("bean9", SetTestBean.class);
 		System.out.println(setBean.getValues().size());
 		Assert.assertEquals(3, setBean.getValues().size());
@@ -92,8 +111,10 @@ public class XmlNoAutowireBeanTest {
 	 */
 	@Test
 	public void testCollectionInject() {
-
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
+		// 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
 
 		// 本质是List类型
 		CollectionTestBean collectionBean1 = beanFactory.getBean("bean10_1", CollectionTestBean.class);
@@ -114,8 +135,11 @@ public class XmlNoAutowireBeanTest {
 	 */
 	@Test
 	public void testArrayInject() {
+		// 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
 
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
 		ArrayTestBean arrayBean = beanFactory.getBean("bean11", ArrayTestBean.class);
 		System.out.println(arrayBean.getArray().length);
 		System.out.println(arrayBean.getArray2().length);
@@ -129,7 +153,11 @@ public class XmlNoAutowireBeanTest {
 	 */
 	@Test
 	public void testMapInject() {
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
+		// 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
+
 		MapTestBean mapBean = beanFactory.getBean("bean12", MapTestBean.class);
 		System.out.println(mapBean.getValues().size());
 	}
@@ -139,7 +167,11 @@ public class XmlNoAutowireBeanTest {
 	 */
 	@Test
 	public void testPropertiesInject() {
-		BeanFactory beanFactory = new ClassPathXmlApplicationContext("ioc/bean/getBean/populateBean/noAutowireBean.xml");
+		// 1.初始化容器
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		// 2 装配Bean
+		xmlAssembly(beanFactory, "ioc/bean/getBean/populateBean/noAutowireBean.xml");
+
 		PropertiesTestBean propertiesBean = beanFactory.getBean("bean13_1", PropertiesTestBean.class);
 		System.out.println(propertiesBean.getValues().size());
 		System.out.println(propertiesBean.getValues().containsValue("22"));

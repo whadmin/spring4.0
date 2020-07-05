@@ -1,6 +1,8 @@
 package com.spring;
 
+import com.spring.ioc.bean.getBean.PostProcessorRegistrationDelegate;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -26,6 +28,8 @@ public class BaseTest {
         Resource resource = new ClassPathResource(path);
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(resource);
+
+        PostProcessorRegistrationDelegate.registerBeanPostProcessors(beanFactory,null);
     }
 
     /**

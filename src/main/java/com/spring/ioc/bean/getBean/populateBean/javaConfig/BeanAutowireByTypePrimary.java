@@ -1,5 +1,6 @@
 package com.spring.ioc.bean.getBean.populateBean.javaConfig;
 
+import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.AutowireByTypePrimaryBean;
 import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.AutowirebyTypeBean;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +16,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class BeanAutowireByTypePrimary {
 
     @Bean(name = "bean_byType_primary", autowire = Autowire.BY_TYPE)
-    public AutowirebyTypeBean bean_byName() {
-        return new AutowirebyTypeBean();
+    public AutowireByTypePrimaryBean bean_byName() {
+        return new AutowireByTypePrimaryBean();
     }
 
     @Bean(name = "mysqlDataSource")
