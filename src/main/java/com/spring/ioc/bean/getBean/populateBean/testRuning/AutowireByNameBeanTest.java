@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.populateBean.application;
+package com.spring.ioc.bean.getBean.populateBean.testRuning;
 
 import java.io.IOException;
 

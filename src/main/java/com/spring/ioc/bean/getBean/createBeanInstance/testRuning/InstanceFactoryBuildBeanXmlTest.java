@@ -243,15 +243,5 @@ public class InstanceFactoryBuildBeanXmlTest extends BaseTest {
     }
 
 
-    /**
-     * 通过ConfigurationBean配置本质是使用实例工厂实例化bean
-     */
-    @Test
-    public void testInstanceFactoryBuildBeanJavaConfig() {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-                ConfigurationBean.class);
-        // 获取根据参数名字依赖注入的Bean
-        ConstructorNoParamBean byName = context.getBean("buildBean", ConstructorNoParamBean.class);
-        assertThat(byName.getMessage()).isNotNull();
-    }
+
 }

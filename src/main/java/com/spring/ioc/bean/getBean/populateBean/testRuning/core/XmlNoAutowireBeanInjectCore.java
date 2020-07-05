@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.populateBean.application.core;
+package com.spring.ioc.bean.getBean.populateBean.testRuning.core;
 
 import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.IntegerTestBean;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;

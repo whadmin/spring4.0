@@ -1,4 +1,4 @@
-package com.spring.ioc.bean.getBean.populateBean.application;
+package com.spring.ioc.bean.getBean.populateBean.testRuning;
 
 import com.spring.ioc.bean.getBean.populateBean.beanObject.no_annotation.*;
 import org.junit.Assert;
