@@ -38,6 +38,8 @@ public class EnvironmentTest extends BaseTest {
     public void environmentType() {
         //xml装配 非web环境 ApplicationContext实现
         ClassPathXmlApplicationContext context1 = new ClassPathXmlApplicationContext();
+
+
         //java注解配置 非web环境 ApplicationContext实现
         AnnotationConfigApplicationContext context2 = new AnnotationConfigApplicationContext();
         //非web环境IOC Environment 类型为 StandardEnvironment

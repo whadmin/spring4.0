@@ -72,7 +72,7 @@ public class PropertySourcesPropertyResolverTest {
         Map<String, Object> map = new HashMap<>();
         map.put("key", "value1");
         map.put("SPRING_APPLICATION_JSON", "value2");
-        map.put("spring.application.json", "value3");
+        //map.put("spring.application.json", "value3");
         PropertySource propertySource1 = new MapPropertySource("resource1", map);
 
         Properties props = new Properties();

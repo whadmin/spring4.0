@@ -9,6 +9,7 @@ public class ResourceLoaderTest {
     @Test
     public void testResourceLoad() {
         ResourceLoader loader = new DefaultResourceLoader();
+
         Resource resource = loader.getResource("classpath:com/spring/common/resource/test1.txt");
         //验证返回的是ClassPathResource
         Assert.assertEquals(ClassPathResource.class, resource.getClass());
